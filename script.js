@@ -29,8 +29,18 @@
         });
     }
 
+    function expandLocation(el) {
+        if (!el || el.classList.contains('is-expanded')) return;
+        el.classList.add('is-expanded');
+    }
+
     if (reduceMotion) {
-        revealElements.forEach((el) => el.classList.add('is-visible'));
+        revealElements.forEach((el) => {
+            el.classList.add('is-visible');
+            if (el.classList.contains('location')) {
+                expandLocation(el);
+            }
+        });
         showSnakeInstant();
     } else {
         const observer = new IntersectionObserver(
@@ -43,6 +53,13 @@
                     if (el.classList.contains('schedule')) {
                         el.classList.add('is-visible');
                         playSnake();
+                        obs.unobserve(el);
+                        return;
+                    }
+
+                    if (el.classList.contains('location')) {
+                        el.classList.add('is-visible');
+                        window.setTimeout(() => expandLocation(el), 420);
                         obs.unobserve(el);
                         return;
                     }
