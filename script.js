@@ -118,6 +118,45 @@
         updateLocationFocus();
     }
 
+    const gallery = document.querySelector('.dress-gallery');
+    const galleryTrack = gallery && gallery.querySelector('.dress-gallery-track');
+    const galleryPrev = gallery && gallery.querySelector('.dress-gallery-btn--prev');
+    const galleryNext = gallery && gallery.querySelector('.dress-gallery-btn--next');
+
+    if (galleryTrack && galleryPrev && galleryNext) {
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+        const getStep = () => {
+            const item = galleryTrack.querySelector('.dress-gallery-item');
+            if (!item) return galleryTrack.clientWidth * 0.6;
+            const styles = window.getComputedStyle(galleryTrack);
+            const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+            return item.getBoundingClientRect().width + gap;
+        };
+
+        const updateGalleryButtons = () => {
+            if (!finePointer.matches) return;
+            const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+            const left = galleryTrack.scrollLeft;
+            galleryPrev.disabled = left <= 2;
+            galleryNext.disabled = left >= maxScroll - 2;
+        };
+
+        const scrollGalleryBy = (direction) => {
+            galleryTrack.scrollBy({
+                left: direction * getStep(),
+                behavior: reduceMotion ? 'auto' : 'smooth',
+            });
+        };
+
+        galleryPrev.addEventListener('click', () => scrollGalleryBy(-1));
+        galleryNext.addEventListener('click', () => scrollGalleryBy(1));
+        galleryTrack.addEventListener('scroll', updateGalleryButtons, { passive: true });
+        window.addEventListener('resize', updateGalleryButtons);
+        finePointer.addEventListener('change', updateGalleryButtons);
+        updateGalleryButtons();
+    }
+
     const target = new Date('2026-05-15T00:00:00').getTime();
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');

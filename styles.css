@@ -726,7 +726,7 @@ body {
     stroke-linejoin: round;
     stroke-dasharray: 100;
     stroke-dashoffset: 100;
-    transition: stroke-dashoffset 2.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: stroke-dashoffset 2.4s linear;
 }
 
 .snake.is-drawn .snake-line {
@@ -865,6 +865,120 @@ body {
     font-size: 0.78rem;
     letter-spacing: 0.06em;
     color: var(--text-muted);
+    margin-bottom: 1.6rem;
+}
+
+.dress-gallery {
+    position: relative;
+    margin-inline: -24px;
+}
+
+.dress-gallery-track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 24px;
+    padding: 4px 24px 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 18px,
+        #000 calc(100% - 18px),
+        transparent 100%
+    );
+}
+
+.dress-gallery-track::-webkit-scrollbar {
+    display: none;
+}
+
+.dress-gallery-btn {
+    display: none;
+}
+
+.dress-gallery-item {
+    flex: 0 0 auto;
+    width: min(42vw, 168px);
+    aspect-ratio: 3 / 4;
+    margin: 0;
+    scroll-snap-align: start;
+    overflow: hidden;
+    background:
+        linear-gradient(145deg, var(--azurite), var(--mountain) 55%, var(--contrail));
+}
+
+.dress-gallery-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    pointer-events: none;
+    transition: transform 0.55s ease, filter 0.55s ease;
+    filter: saturate(0.88) contrast(1.04);
+}
+
+.dress-gallery-item:hover img {
+    transform: scale(1.04);
+    filter: saturate(1) contrast(1.06);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .dress-gallery-track {
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        mask-image: none;
+        padding-inline: 40px;
+        scroll-padding-inline: 40px;
+    }
+
+    .dress-gallery-btn {
+        appearance: none;
+        display: grid;
+        place-items: center;
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        width: 36px;
+        height: 36px;
+        margin: 0;
+        padding: 0;
+        border: 1px solid rgba(220, 224, 227, 0.18);
+        border-radius: 50%;
+        background: rgba(10, 20, 24, 0.72);
+        color: var(--dove);
+        cursor: pointer;
+        transform: translateY(-50%);
+        transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .dress-gallery-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .dress-gallery-btn:hover:not(:disabled) {
+        background: rgba(19, 34, 40, 0.92);
+        border-color: rgba(220, 224, 227, 0.35);
+        color: var(--white);
+    }
+
+    .dress-gallery-btn:disabled {
+        opacity: 0.28;
+        cursor: default;
+    }
+
+    .dress-gallery-btn--prev {
+        left: 4px;
+    }
+
+    .dress-gallery-btn--next {
+        right: 4px;
+    }
 }
 
 /* ============================================================
@@ -989,6 +1103,20 @@ body {
     .sheet-inner {
         padding-left: 18px;
         padding-right: 18px;
+    }
+
+    .dress-gallery {
+        margin-inline: -18px;
+    }
+
+    .dress-gallery-track {
+        scroll-padding-inline: 18px;
+        padding-inline: 18px;
+        gap: 10px;
+    }
+
+    .dress-gallery-item {
+        width: min(48vw, 148px);
     }
 
     .snake-node {
