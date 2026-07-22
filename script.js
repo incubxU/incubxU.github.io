@@ -2,33 +2,66 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealElements = document.querySelectorAll('.reveal');
     const snake = document.querySelector('.snake');
+    const snakeLine = snake && snake.querySelector('.snake-line');
     const snakeItems = snake
         ? Array.from(snake.querySelectorAll('.snake-item'))
         : [];
     const locationSection = document.querySelector('.location');
     const locationPhoto = document.querySelector('.location-photo');
 
-    function showSnakeInstant() {
-        if (!snake) return;
-        snake.classList.add('is-drawn');
-        snakeItems.forEach((item) => item.classList.add('is-visible'));
+    let snakeProgressMax = 0;
+    let snakeCompleteScheduled = false;
+    let dresscodePending = false;
+    let dresscodeUnlocked = false;
+    const dresscodeSection = document.querySelector('.dresscode');
+    const AFTER_SNAKE_DELAY_MS = 700;
+
+    function tryRevealDresscode() {
+        if (!dresscodeSection || !dresscodeUnlocked || !dresscodePending) return;
+        if (dresscodeSection.classList.contains('is-visible')) return;
+        dresscodeSection.classList.add('is-visible');
     }
 
-    function playSnake() {
-        if (!snake || snake.dataset.played === '1') return;
-        snake.dataset.played = '1';
-        snake.classList.add('is-drawn');
+    function scheduleDresscodeAfterSnake() {
+        if (snakeCompleteScheduled) return;
+        snakeCompleteScheduled = true;
+        window.setTimeout(() => {
+            dresscodeUnlocked = true;
+            tryRevealDresscode();
+        }, AFTER_SNAKE_DELAY_MS);
+    }
 
-        const durationMs = 2400;
+    function showSnakeInstant() {
+        if (!snake) return;
+        snakeProgressMax = 1;
+        if (snakeLine) snakeLine.style.strokeDashoffset = '0';
+        snakeItems.forEach((item) => item.classList.add('is-visible'));
+        dresscodeUnlocked = true;
+    }
+
+    function updateSnake() {
+        if (!snake || !snakeLine || reduceMotion) return;
+
+        const rect = snake.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        // Reveal line: snake draws only up to what has scrolled past ~60% of the viewport
+        const revealY = vh * 0.6;
+        let progress = (revealY - rect.top) / Math.max(rect.height, 1);
+        progress = Math.max(0, Math.min(1, progress));
+
+        snakeProgressMax = Math.max(snakeProgressMax, progress);
+        snakeLine.style.strokeDashoffset = String(100 - snakeProgressMax * 100);
 
         snakeItems.forEach((item) => {
-            const at = Number(item.dataset.at || 0);
-            const delay = (at / 100) * durationMs;
-
-            window.setTimeout(() => {
+            const at = Number(item.dataset.at || 0) / 100;
+            if (snakeProgressMax + 0.02 >= at) {
                 item.classList.add('is-visible');
-            }, delay);
+            }
         });
+
+        if (snakeProgressMax >= 0.99) {
+            scheduleDresscodeAfterSnake();
+        }
     }
 
     function expandLocation(el) {
@@ -79,9 +112,9 @@
 
                     const el = entry.target;
 
-                    if (el.classList.contains('schedule')) {
-                        el.classList.add('is-visible');
-                        playSnake();
+                    if (el.classList.contains('dresscode')) {
+                        dresscodePending = true;
+                        tryRevealDresscode();
                         obs.unobserve(el);
                         return;
                     }
@@ -110,12 +143,14 @@
             focusRaf = window.requestAnimationFrame(() => {
                 focusRaf = 0;
                 updateLocationFocus();
+                updateSnake();
             });
         };
 
         window.addEventListener('scroll', onScrollOrResize, { passive: true });
         window.addEventListener('resize', onScrollOrResize);
         updateLocationFocus();
+        updateSnake();
     }
 
     const gallery = document.querySelector('.dress-gallery');
