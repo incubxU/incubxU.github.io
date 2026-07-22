@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ДЕНИС & ВЕРОНИКА · Свадьба</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Raleway:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="page-bg" aria-hidden="true"></div>
+
+    <!-- HERO — overlapping lens circles -->
+    <header class="hero">
+        <div class="hero-venn reveal">
+            <svg class="hero-rings" viewBox="0 0 400 520" aria-hidden="true">
+                <defs>
+                    <filter id="hero-lens-blur" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="6" />
+                    </filter>
+                    <filter id="hero-soft-glow" x="-80%" y="-80%" width="260%" height="260%">
+                        <feGaussianBlur stdDeviation="14" result="blur" />
+                        <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                    <radialGradient id="hero-fill-top" cx="50%" cy="48%" r="52%">
+                        <stop offset="0%" stop-color="rgba(10,20,24,0.72)" />
+                        <stop offset="55%" stop-color="rgba(19,34,40,0.58)" />
+                        <stop offset="78%" stop-color="rgba(111,117,126,0.12)" />
+                        <stop offset="90%" stop-color="rgba(192,196,201,0.28)" />
+                        <stop offset="97%" stop-color="rgba(220,224,227,0.55)" />
+                        <stop offset="100%" stop-color="rgba(192,196,201,0.18)" />
+                    </radialGradient>
+                    <radialGradient id="hero-fill-bottom" cx="50%" cy="52%" r="52%">
+                        <stop offset="0%" stop-color="rgba(10,20,24,0.72)" />
+                        <stop offset="55%" stop-color="rgba(19,34,40,0.58)" />
+                        <stop offset="78%" stop-color="rgba(111,117,126,0.12)" />
+                        <stop offset="90%" stop-color="rgba(192,196,201,0.28)" />
+                        <stop offset="97%" stop-color="rgba(220,224,227,0.55)" />
+                        <stop offset="100%" stop-color="rgba(192,196,201,0.18)" />
+                    </radialGradient>
+                </defs>
+
+                <circle class="hero-ring hero-ring--top" cx="200" cy="168" r="148" fill="url(#hero-fill-top)" />
+                <circle class="hero-ring hero-ring--bottom" cx="200" cy="352" r="148" fill="url(#hero-fill-bottom)" />
+
+                <circle class="hero-ring-halo hero-ring-halo--top" cx="200" cy="168" r="150" fill="none" filter="url(#hero-lens-blur)" />
+                <circle class="hero-ring-halo hero-ring-halo--bottom" cx="200" cy="352" r="150" fill="none" filter="url(#hero-lens-blur)" />
+
+                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="118" ry="28" filter="url(#hero-lens-blur)" />
+                <line class="hero-intersection-line" x1="72" y1="260" x2="328" y2="260" filter="url(#hero-lens-blur)" />
+
+                <circle class="hero-ring-edge hero-ring-edge--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-soft-glow)" />
+                <circle class="hero-ring-edge hero-ring-edge--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-soft-glow)" />
+
+                <path id="hero-arc-upper" d="M 78 278 A 122 122 0 0 1 322 278" fill="none" />
+                <path id="hero-arc-lower" d="M 322 242 A 122 122 0 0 1 78 242" fill="none" />
+                <path id="hero-arc-foot" d="M 92 468 A 108 108 0 0 0 308 468" fill="none" />
+
+                <g class="hero-lens-mark hero-lens-mark--left" transform="translate(52 258)">
+                    <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
+                </g>
+                <g class="hero-lens-mark hero-lens-mark--right" transform="translate(348 258)">
+                    <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
+                </g>
+            </svg>
+
+            <div class="hero-venn-content">
+                <h1 class="hero-names">
+                    <span>ДЕНИС</span>
+                    <span class="hero-cross" aria-hidden="true">×</span>
+                    <span>ВЕРОНИКА</span>
+                </h1>
+                <p class="hero-wedding-day">Wedding&nbsp;Day</p>
+                <p class="hero-date">16.11.2026</p>
+            </div>
+        </div>
+
+        <div class="hero-scroll" aria-hidden="true">
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Content sheet — blurs background -->
+    <main class="sheet">
+        <div class="sheet-inner">
+
+            <!-- INTRO -->
+            <section class="section intro reveal">
+                <p class="intro-greeting">Дорогие и любимые!</p>
+                <p>
+                    Рады сообщить о важном событии — мы создаём семью!
+                    Будем счастливы провести этот день с близкими и родными нам людьми.
+                </p>
+                <p>
+                    Мы приглашаем Вас вместе открыть новую главу нашей истории
+                    и разделить с нами особенный день нашей жизни —
+                    <strong>нашу свадьбу!</strong>
+                </p>
+            </section>
+
+            <!-- QUOTE -->
+            <section class="section quote reveal">
+                <div class="quote-mark" aria-hidden="true">“</div>
+                <blockquote>
+                    Счастье — это когда ты нашёл того, кто искал тебя
+                </blockquote>
+            </section>
+
+            <!-- DATE -->
+            <section class="section date-block reveal">
+                <p class="section-label">Дата</p>
+                <div class="calendar" aria-label="Май">
+                    <div class="calendar-month">НОЯБРЬ</div>
+                    <div class="calendar-grid">
+                        <span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span>1</span>
+                        <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+                        <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+                        <span class="is-active">16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span>
+                        <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
+                        <span>30</span>
+                    </div>
+                </div>
+                <p class="date-weekday">понедельник</p>
+            </section>
+
+            <!-- LOCATION -->
+            <section class="section location reveal">
+                <div class="icon-wrap" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" fill="none">
+                        <path d="M32 56S14 40 14 26a18 18 0 1 1 36 0c0 14-18 30-18 30z" stroke="currentColor" stroke-width="2" />
+                        <path d="M32 32a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" stroke="currentColor" stroke-width="2" />
+                        <path d="M29.5 24.5c1-.8 2.2-1 3.4-.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <p class="section-label">Место проведения</p>
+                <h2 class="location-name">Platinum Heritage Desert</h2>
+                <p class="location-place">Дубай, ОАЭ</p>
+                <p class="location-note">
+                    Трогательная церемония и последующий уютный вечер
+                    будут проходить в атмосфере пустыни.
+                </p>
+            </section>
+
+            <!-- SCHEDULE -->
+            <section class="section schedule reveal">
+                <p class="section-label">Программа дня</p>
+                <div class="snake" aria-label="Программа дня">
+                    <svg class="snake-svg" viewBox="0 0 360 420" fill="none" aria-hidden="true">
+                        <path
+                            class="snake-line"
+                            pathLength="100"
+                            d="M 80 50
+                               H 280
+                               A 50 50 0 0 1 280 150
+                               H 80
+                               A 50 50 0 0 0 80 250
+                               H 280
+                               A 50 50 0 0 1 280 350
+                               H 80"
+                        />
+                    </svg>
+                    <ol class="snake-list">
+                        <li class="snake-item snake-item--left" style="--x: 80; --y: 50" data-at="0">
+                            <div class="snake-node" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <circle cx="18" cy="24" r="9" stroke="currentColor" stroke-width="1.8" />
+                                    <circle cx="30" cy="24" r="9" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="M35 16.5c1.2-.2 2.2.5 2.4 1.6.1.6-.1 1.1-.5 1.5l-2.2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="snake-body">
+                                <span class="time">14:00</span>
+                                <span class="event">Сбор гостей</span>
+                            </div>
+                        </li>
+                        <li class="snake-item snake-item--right" style="--x: 330; --y: 100" data-at="22">
+                            <div class="snake-node" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <path d="M24 10c-1.8 2.6-4.4 4.5-7.4 5.8C20 17.2 22.6 19 24 21.6c1.4-2.6 4-4.4 7.4-5.8C28.4 14.5 25.8 12.6 24 10z" fill="currentColor" />
+                                    <path d="M14 28h20M16 28c0 8 3.5 12 8 12s8-4 8-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="snake-body">
+                                <span class="time">15:00</span>
+                                <span class="event">Церемония</span>
+                            </div>
+                        </li>
+                        <li class="snake-item snake-item--left" style="--x: 30; --y: 200" data-at="50">
+                            <div class="snake-node" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <path d="M16 14v22M32 14v22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M13 14h6c0 4-1.5 7-3 7s-3-3-3-7zM29 14h6c0 4-1.5 7-3 7s-3-3-3-7z" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="M16 36h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M11 18l2-2M37 18l-2-2M24 12l1-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="snake-body">
+                                <span class="time">16:00</span>
+                                <span class="event">Банкет</span>
+                            </div>
+                        </li>
+                        <li class="snake-item snake-item--right" style="--x: 330; --y: 300" data-at="78">
+                            <div class="snake-node" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <path d="M18 30c0-6 2.5-10 6-12 3.5 2 6 6 6 12H18z" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="M16 30h16v2a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4v-2z" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="M24 12v6M20 14l4 2 4-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="snake-body">
+                                <span class="time">20:00</span>
+                                <span class="event">Торт</span>
+                            </div>
+                        </li>
+                        <li class="snake-item snake-item--left snake-item--end" style="--x: 80; --y: 350" data-at="100">
+                            <div class="snake-node" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <path d="M24 38V22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                                    <path d="M24 22l-8-6M24 22l8-6M24 18l-5-8M24 18l5-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                                    <circle cx="16" cy="16" r="1.5" fill="currentColor" />
+                                    <circle cx="32" cy="16" r="1.5" fill="currentColor" />
+                                    <circle cx="19" cy="10" r="1.2" fill="currentColor" />
+                                    <circle cx="29" cy="10" r="1.2" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <div class="snake-body">
+                                <span class="time">22:00</span>
+                                <span class="event">Окончание</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- DRESS CODE -->
+            <section class="section dresscode reveal">
+                <p class="section-label">Дресс-код</p>
+                <p class="section-text">
+                    Мы очень старались сделать праздник красивым и будем рады,
+                    если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы:
+                </p>
+                <div class="palette" aria-label="Цветовая палитра">
+                    <span class="swatch swatch--azurite" title="Azurite"></span>
+                    <span class="swatch swatch--mountain" title="Mountain View"></span>
+                    <span class="swatch swatch--contrail" title="Contrail"></span>
+                    <span class="swatch swatch--silver" title="Silver"></span>
+                    <span class="swatch swatch--dove" title="Dove Gray"></span>
+                </div>
+                <p class="palette-hint">Глубокий синий · Лесной зелёный · Благородный серый</p>
+            </section>
+
+            <!-- GIFTS -->
+            <section class="section gifts reveal">
+                <div class="icon-wrap" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" fill="none">
+                        <rect x="14" y="26" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2" />
+                        <path d="M14 34h36M32 26v28" stroke="currentColor" stroke-width="2" />
+                        <path d="M32 26c-4-8-12-8-12-2 0 4 6 6 12 8 6-2 12-4 12-8 0-6-8-6-12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <p class="section-label">Подарки</p>
+                <p class="section-text">
+                    Сразу после свадьбы мы улетаем в свадебное путешествие,
+                    поэтому не успеем насладиться красотой подаренных цветов.
+                    Будем рады, если вместо цветов Вы решите подарить нам
+                    <strong>бутылочку хорошего вина</strong>.
+                </p>
+            </section>
+
+            <!-- RSVP -->
+            <section class="section rsvp reveal">
+                <p class="section-label">Подтвердите присутствие</p>
+                <p class="section-text">
+                    Мы очень старались сделать праздник незабываемым,
+                    поэтому будем рады, если Вы подтвердите своё присутствие
+                    до <strong>16.11.2026</strong>
+                </p>
+                <p class="rsvp-date">16 / 11 / 2026</p>
+                <button type="button" class="btn-rsvp">Подтвердить</button>
+            </section>
+
+            <!-- COORDINATOR -->
+            <section class="section coordinator reveal">
+                <p class="section-text">
+                    По всем организационным вопросам Вы можете связаться
+                    с нашим организатором:
+                </p>
+                <p class="coordinator-name">Юлия</p>
+                <p class="coordinator-role">Организатор</p>
+            </section>
+
+            <footer class="footer reveal">
+                <div class="ornament" aria-hidden="true">
+                    <svg viewBox="0 0 120 24" fill="none">
+                        <path d="M10 12h28M82 12h28" stroke="currentColor" stroke-width="1" />
+                        <path d="M60 4c-2.5 3.5-6 6-10 8 4 2 7.5 4.5 10 8 2.5-3.5 6-6 10-8-4-2-7.5-4.5-10-8z" fill="currentColor" />
+                    </svg>
+                </div>
+                <p>Денис &amp; Вероника</p>
+            </footer>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
