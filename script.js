@@ -5,6 +5,8 @@
     const snakeItems = snake
         ? Array.from(snake.querySelectorAll('.snake-item'))
         : [];
+    const locationSection = document.querySelector('.location');
+    const locationPhoto = document.querySelector('.location-photo');
 
     function showSnakeInstant() {
         if (!snake) return;
@@ -34,6 +36,33 @@
         el.classList.add('is-expanded');
     }
 
+    let locationFocusMax = 0;
+
+    function updateLocationFocus() {
+        if (!locationSection || !locationPhoto || reduceMotion) return;
+
+        const rect = locationSection.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const start = vh * 0.42;
+        const end = vh * 0.08 + 3;
+        let progress = (start - rect.top) / (start - end);
+        progress = Math.max(0, Math.min(1, progress));
+
+        const eased = 1 - Math.pow(1 - progress, 2.6);
+        locationFocusMax = Math.max(locationFocusMax, eased);
+
+        const blur = (1 - locationFocusMax) * 28;
+        const scale = 1 + (1 - locationFocusMax) * 0.12;
+
+        locationPhoto.style.setProperty('--photo-blur', `${blur.toFixed(2)}px`);
+        locationPhoto.style.setProperty('--photo-scale', scale.toFixed(4));
+
+        // Expand cylinder only when photo is nearly sharp
+        if (locationFocusMax >= 0.88) {
+            expandLocation(locationSection);
+        }
+    }
+
     if (reduceMotion) {
         revealElements.forEach((el) => {
             el.classList.add('is-visible');
@@ -59,7 +88,6 @@
 
                     if (el.classList.contains('location')) {
                         el.classList.add('is-visible');
-                        window.setTimeout(() => expandLocation(el), 420);
                         obs.unobserve(el);
                         return;
                     }
@@ -75,6 +103,19 @@
         );
 
         revealElements.forEach((el) => observer.observe(el));
+
+        let focusRaf = 0;
+        const onScrollOrResize = () => {
+            if (focusRaf) return;
+            focusRaf = window.requestAnimationFrame(() => {
+                focusRaf = 0;
+                updateLocationFocus();
+            });
+        };
+
+        window.addEventListener('scroll', onScrollOrResize, { passive: true });
+        window.addEventListener('resize', onScrollOrResize);
+        updateLocationFocus();
     }
 
     const target = new Date('2026-05-15T00:00:00').getTime();

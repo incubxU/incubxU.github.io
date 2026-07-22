@@ -515,7 +515,7 @@ body {
    Location — photo circle as cylinder cap + shared glow frame
    ============================================================ */
 .location-stage {
-    --frame-size: 210px;
+    --frame-size: min(90vw, 340px);
     display: flex;
     justify-content: center;
     margin: 0.4rem auto 0;
@@ -594,7 +594,11 @@ body {
             rgba(10, 20, 24, 0.08) 0%,
             rgba(10, 20, 24, 0.42) 100%
         ),
-        url('images/hero.jpg') center / cover no-repeat;
+        url('images/location.jpg') center / cover no-repeat;
+    filter: blur(var(--photo-blur, 28px));
+    transform: scale(var(--photo-scale, 1.12));
+    transform-origin: center;
+    will-change: filter, transform;
 }
 
 .location-cylinder {
@@ -611,23 +615,23 @@ body {
     );
     opacity: 0;
     transition:
-        max-height 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.4s ease;
+        max-height 2.2s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.9s ease 0.1s;
 }
 
 .location.is-expanded .location-cylinder {
-    max-height: 320px;
+    max-height: 520px;
     opacity: 1;
 }
 
 .location-details {
-    padding: 0.55rem 1.2rem 1.85rem;
+    padding: 1.15rem 1.55rem 2.7rem;
     text-align: center;
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(18px);
     transition:
-        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.28s,
-        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.28s;
+        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.75s,
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.75s;
 }
 
 .location.is-expanded .location-details {
@@ -638,26 +642,27 @@ body {
 .location-name {
     font-family: 'Tenor Sans', sans-serif;
     font-weight: 400;
-    font-size: 1.05rem;
+    font-size: 1.28rem;
     letter-spacing: 0.06em;
     color: var(--white);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
     line-height: 1.35;
 }
 
 .location-place {
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--silver);
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 .location-note {
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     color: var(--text-soft);
-    line-height: 1.6;
-    margin: 0 auto 0.6rem;
+    line-height: 1.65;
+    margin: 0 auto 0.75rem;
+    max-width: 18em;
 }
 
 .location-note:last-child {
@@ -668,12 +673,20 @@ body {
     .location-frame,
     .location-frame::before,
     .location-cylinder,
-    .location-details {
+    .location-details,
+    .location-photo {
         transition: none;
     }
 
+    .location-photo {
+        --photo-blur: 0px;
+        --photo-scale: 1;
+        filter: none;
+        transform: none;
+    }
+
     .location-cylinder {
-        max-height: 320px;
+        max-height: 520px;
         opacity: 1;
     }
 
