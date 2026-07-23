@@ -1,23 +1,25 @@
 /* ============================================================
-   Palette (unchanged)
-   Azurite #1b2b41 · Mountain View #2e3d30 · Contrail #6f757e
-   Silver #c0c4c9 · Dove Gray #dce0e3
+   Endless Horizon × Ethereal Editorial
+   Monochrome ash · fine film grain · paper grain · soft bloom
    ============================================================ */
 
 :root {
-    --bg-deep: #0a1418;
-    --bg-mid: #132228;
-    --azurite: #1b2b41;
-    --mountain: #2e3d30;
-    --contrail: #6f757e;
-    --silver: #c0c4c9;
-    --dove: #dce0e3;
-    --white: #ffffff;
-    --text: #dce0e3;
-    --text-soft: #c0c4c9;
-    --text-muted: #6f757e;
+    --bg-deep: #141516;
+    --bg-mid: #1e2022;
+    --azurite: #2b2b2b;
+    --mountain: #3a3d3a;
+    --contrail: #8a8a8a;
+    --silver: #d4d3d1;
+    --dove: #e8e7e5;
+    --warm-glow: #f0efed;
+    --white: #f2f1ef;
+    --text: #e8e7e5;
+    --text-soft: rgba(242, 241, 239, 0.72);
+    --text-muted: rgba(242, 241, 239, 0.42);
+    --glow: rgba(242, 241, 239, 0.5);
+    --frost: rgba(242, 241, 239, 0.08);
     --max: 440px;
-    --sheet-radius: 28px;
+    --sheet-radius: 32px;
 }
 
 *,
@@ -34,29 +36,103 @@ html {
 
 body {
     min-height: 100vh;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-weight: 300;
     color: var(--text);
-    line-height: 1.7;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
     background: var(--bg-deep);
 }
 
 /* ============================================================
-   Fixed photo background — sharp behind hero, blurred under sheet
+   Fixed photo background — matte print, soft blur + low contrast
    ============================================================ */
 .page-bg {
     position: fixed;
-    inset: 0;
+    inset: -4px;
     z-index: 0;
     background:
         linear-gradient(
             180deg,
-            rgba(10, 20, 24, 0.25) 0%,
-            rgba(10, 20, 24, 0.15) 40%,
-            rgba(10, 20, 24, 0.45) 100%
+            rgba(20, 21, 22, 0.38) 0%,
+            rgba(20, 21, 22, 0.2) 36%,
+            rgba(20, 21, 22, 0.42) 72%,
+            rgba(20, 21, 22, 0.72) 100%
         ),
-        url('images/hero.jpg') center / cover no-repeat;
+        url('images/hero2.png') center / cover no-repeat;
+    filter: saturate(0.5) contrast(0.96) brightness(0.9) blur(0.8px);
     pointer-events: none;
+}
+
+/* Soft bloom — diffused light over bright zones */
+.page-bloom {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: soft-light;
+    background:
+        radial-gradient(
+            ellipse 55% 42% at 50% 38%,
+            rgba(242, 241, 239, 0.42) 0%,
+            rgba(242, 241, 239, 0.12) 42%,
+            rgba(242, 241, 239, 0) 72%
+        ),
+        radial-gradient(
+            ellipse 80% 55% at 50% 18%,
+            rgba(236, 236, 236, 0.18) 0%,
+            rgba(236, 236, 236, 0) 65%
+        );
+    filter: blur(28px);
+}
+
+/* Paper grain — matte print texture */
+.paper-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 48;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(232, 231, 229, 0.03) 0%,
+            rgba(20, 21, 22, 0) 40%,
+            rgba(20, 21, 22, 0.04) 100%
+        ),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: auto, 320px 320px;
+}
+
+/* Film grain — fine, quiet atmospheric texture */
+.film-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 160px 160px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .film-grain {
+        opacity: 0.04;
+    }
+
+    .paper-grain {
+        opacity: 0.03;
+    }
+
+    .page-bloom {
+        opacity: 0.35;
+        filter: blur(20px);
+    }
 }
 
 /* ============================================================
@@ -79,12 +155,18 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-        ellipse 85% 70% at 50% 42%,
-        rgba(10, 20, 24, 0.05) 0%,
-        rgba(10, 20, 24, 0.45) 72%,
-        rgba(10, 20, 24, 0.72) 100%
-    );
+    background:
+        radial-gradient(
+            ellipse 70% 55% at 50% 42%,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0) 55%
+        ),
+        radial-gradient(
+            ellipse 85% 70% at 50% 42%,
+            rgba(20, 21, 22, 0.05) 0%,
+            rgba(20, 21, 22, 0.42) 72%,
+            rgba(20, 21, 22, 0.78) 100%
+        );
     pointer-events: none;
     z-index: 0;
 }
@@ -108,58 +190,59 @@ body {
 
 .hero-ring {
     mix-blend-mode: screen;
-    opacity: 0.92;
+    opacity: 0.95;
+    filter: blur(0.4px);
 }
 
 .hero-ring-halo {
-    stroke: rgba(220, 224, 227, 0.22);
-    stroke-width: 10;
-    opacity: 0.7;
+    stroke: rgba(255, 255, 255, 0.28);
+    stroke-width: 14;
+    opacity: 0.85;
 }
 
 .hero-intersection-glow {
-    fill: rgba(220, 224, 227, 0.08);
-    opacity: 0.9;
+    fill: rgba(255, 255, 255, 0.14);
+    opacity: 1;
 }
 
 .hero-intersection-line {
-    stroke: rgba(220, 224, 227, 0.2);
-    stroke-width: 1.5;
-    opacity: 0.85;
+    stroke: rgba(255, 255, 255, 0.35);
+    stroke-width: 1.2;
+    opacity: 0.9;
 }
 
 .hero-ring-edge {
-    stroke: rgba(220, 224, 227, 0.42);
-    stroke-width: 1.2;
-    opacity: 0.85;
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 1;
+    opacity: 0.9;
 }
 
 .hero-ring-edge--top {
-    stroke: rgba(220, 224, 227, 0.48);
+    stroke: rgba(255, 255, 255, 0.62);
 }
 
 .hero-ring-edge--bottom {
-    stroke: rgba(192, 196, 201, 0.38);
+    stroke: rgba(255, 255, 255, 0.48);
 }
 
 .hero-arc-text {
-    font-family: 'Cormorant Garamond', 'Tenor Sans', serif;
+    font-family: 'Cormorant Garamond', 'Jost', serif;
     font-size: 11px;
     letter-spacing: 0.28em;
-    fill: rgba(192, 196, 201, 0.72);
+    fill: rgba(184, 189, 191, 0.72);
     text-transform: uppercase;
 }
 
 .hero-arc-text--foot {
     font-size: 10px;
     letter-spacing: 0.22em;
-    fill: rgba(111, 117, 126, 0.85);
+    fill: rgba(122, 128, 127, 0.85);
 }
 
 .hero-lens-mark path {
     fill: none;
-    stroke: rgba(220, 224, 227, 0.55);
-    stroke-width: 1;
+    stroke: rgba(255, 255, 255, 0.45);
+    stroke-width: 0.9;
 }
 
 .hero-venn-content {
@@ -178,18 +261,21 @@ body {
     width: 58%;
     max-width: 11.5em;
     margin: 0;
-    font-family: 'Cormorant Garamond', 'Tenor Sans', serif;
-    font-weight: 400;
+    font-family: 'Cormorant Garamond', 'Jost', serif;
+    font-weight: 300;
     font-size: clamp(1.05rem, 4.2vw, 1.35rem);
-    line-height: 1.15;
-    letter-spacing: 0.14em;
-    color: var(--dove);
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    color: var(--white);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.08em;
-    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
+    gap: 0.12em;
+    text-shadow:
+        0 0 36px rgba(242, 241, 239, 0.16),
+        0 0 64px rgba(242, 241, 239, 0.06),
+        0 1px 18px rgba(0, 0, 0, 0.32);
 }
 
 .hero-names span {
@@ -217,15 +303,16 @@ body {
     width: 52%;
     max-width: 9.3em;
     margin: 0;
-    font-family: 'Cormorant Garamond', 'Tenor Sans', serif;
-    font-weight: 400;
-    font-size: clamp(1.05rem, 4.2vw, 1.35rem);
+    font-family: 'Cormorant Garamond', 'Jost', serif;
+    font-weight: 300;
+    font-size: clamp(1.1rem, 4.4vw, 1.45rem);
     line-height: 1.15;
-    letter-spacing: 0.04em;
-    color: var(--dove);
+    letter-spacing: 0.08em;
+    color: var(--white);
     text-shadow:
-        0 0 40px rgba(220, 224, 227, 0.25),
-        0 2px 24px rgba(0, 0, 0, 0.45);
+        0 0 56px rgba(242, 241, 239, 0.28),
+        0 0 96px rgba(242, 241, 239, 0.1),
+        0 2px 24px rgba(0, 0, 0, 0.38);
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
@@ -239,12 +326,14 @@ body {
     width: 58%;
     max-width: 10em;
     margin: 0;
-    font-family: 'Cormorant Garamond', 'Tenor Sans', serif;
-    font-weight: 400;
+    font-family: 'Cormorant Garamond', 'Jost', serif;
+    font-weight: 300;
     font-size: clamp(1.15rem, 4.8vw, 1.5rem);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.2em;
     color: var(--dove);
-    text-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
+    text-shadow:
+        0 0 40px rgba(242, 241, 239, 0.14),
+        0 1px 20px rgba(0, 0, 0, 0.38);
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
@@ -257,12 +346,13 @@ body {
     transform: translateX(-50%);
     width: 22px;
     height: 36px;
-    border: 1.5px solid rgba(220, 224, 227, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 12px;
     display: grid;
     place-items: start center;
     padding-top: 8px;
     z-index: 2;
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.08);
 }
 
 .hero-scroll span {
@@ -286,36 +376,58 @@ body {
     z-index: 2;
     margin-top: -32px;
     border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
-    background: rgba(10, 20, 24, 0.08);
-    backdrop-filter: blur(7px) saturate(1.05);
-    -webkit-backdrop-filter: blur(5px) saturate(1.05);
-    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
-    border-top: 1px solid rgba(220, 224, 227, 0.06);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(232, 231, 229, 0.07) 0%,
+            rgba(236, 236, 236, 0.03) 28%,
+            rgba(20, 21, 22, 0.2) 100%
+        );
+    backdrop-filter: blur(18px) saturate(0.8) brightness(1.03);
+    -webkit-backdrop-filter: blur(14px) saturate(0.8) brightness(1.03);
+    box-shadow: none;
+    border-top: 1px solid rgba(232, 231, 229, 0.08);
     overflow: clip;
 }
 
+.sheet::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.045;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+}
+
 .sheet-inner {
+    position: relative;
+    z-index: 1;
     width: min(100%, var(--max));
     margin: 0 auto;
-    padding: 40px 24px 72px;
+    padding: 48px 28px 88px;
 }
 
 .section {
     text-align: center;
-    padding: 48px 0;
+    padding: 56px 0;
 }
 
 .section + .section {
-    border-top: 1px solid rgba(192, 196, 201, 0.1);
+    border-top: 1px solid rgba(232, 231, 229, 0.12);
 }
 
 .section-label {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.35em;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.68rem;
+    letter-spacing: 0.42em;
     text-transform: uppercase;
-    color: var(--silver);
-    margin-bottom: 1.4rem;
+    color: var(--text-muted);
+    margin-bottom: 1.6rem;
 }
 
 .section-text {
@@ -398,15 +510,17 @@ body {
    Intro
    ============================================================ */
 .intro {
-    padding-top: 28px;
+    padding-top: 36px;
 }
 
 .intro-greeting {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: clamp(1.6rem, 6vw, 2rem);
-    letter-spacing: 0.04em;
-    color: var(--dove);
-    margin-bottom: 1.6rem !important;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.75rem, 6.4vw, 2.25rem);
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-bottom: 1.8rem !important;
+    text-shadow: 0 0 48px rgba(242, 241, 239, 0.1);
 }
 
 .intro p {
@@ -428,26 +542,29 @@ body {
    Quote
    ============================================================ */
 .quote {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 48px;
+    padding-bottom: 48px;
 }
 
 .quote-mark {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 3.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 4rem;
     line-height: 1;
-    color: var(--mountain);
-    opacity: 0.9;
-    margin-bottom: 0.2rem;
+    color: var(--white);
+    opacity: 0.35;
+    margin-bottom: 0.35rem;
+    text-shadow: 0 0 48px rgba(242, 241, 239, 0.16);
 }
 
 .quote blockquote {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.25rem;
-    line-height: 1.55;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.4rem;
+    line-height: 1.65;
     color: var(--dove);
-    font-style: normal;
-    letter-spacing: 0.02em;
+    font-style: italic;
+    letter-spacing: 0.04em;
 }
 
 /* ============================================================
@@ -459,11 +576,12 @@ body {
 }
 
 .calendar-month {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.4em;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 0.48em;
     color: var(--white);
-    margin-bottom: 1rem;
+    margin-bottom: 1.15rem;
 }
 
 .calendar-grid {
@@ -491,15 +609,16 @@ body {
 
 .calendar-grid .is-active {
     color: var(--bg-deep);
-    background: var(--silver);
+    background: var(--white);
     border-radius: 50%;
-    font-weight: 600;
+    font-weight: 500;
+    box-shadow: 0 0 24px rgba(242, 241, 239, 0.28);
     animation: pulse-date 2.8s ease-in-out infinite;
 }
 
 @keyframes pulse-date {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(192, 196, 201, 0.35); }
-    50% { box-shadow: 0 0 0 8px rgba(192, 196, 201, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(242, 241, 239, 0.28); }
+    50% { box-shadow: 0 0 0 12px rgba(242, 241, 239, 0); }
 }
 
 .date-strip {
@@ -509,26 +628,22 @@ body {
     gap: 0;
     width: 100%;
     max-width: 320px;
-    margin: 1.6rem auto 0;
-    padding: 0.85rem 1.1rem;
-    border-radius: 14px;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(27, 43, 65, 0.92) 0%,
-            rgba(10, 20, 24, 0.95) 100%
-        );
-    border: 1px solid rgba(192, 196, 201, 0.28);
+    margin: 1.8rem auto 0;
+    padding: 0.95rem 1.15rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px) saturate(0.9);
+    -webkit-backdrop-filter: blur(16px) saturate(0.9);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
-        inset 0 1px 0 rgba(220, 224, 227, 0.18),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.35),
-        0 8px 24px rgba(0, 0, 0, 0.28);
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 40px rgba(255, 255, 255, 0.04);
 }
 
 .date-strip-month,
 .date-strip-weekday {
     position: relative;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 0.68rem;
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -545,7 +660,7 @@ body {
     top: 50%;
     width: 1px;
     height: 1.35em;
-    background: rgba(192, 196, 201, 0.35);
+    background: rgba(255, 255, 255, 0.18);
     transform: translateY(-50%);
 }
 
@@ -560,12 +675,12 @@ body {
 .date-strip-day {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.85rem;
-    font-weight: 500;
+    font-weight: 300;
     line-height: 1;
     color: var(--white);
     text-align: center;
     padding: 0 1.1rem;
-    text-shadow: 0 0 18px rgba(220, 224, 227, 0.35);
+    text-shadow: 0 0 28px rgba(242, 241, 239, 0.22);
 }
 
 /* ============================================================
@@ -591,11 +706,11 @@ body {
     box-sizing: border-box;
     border-radius: 999px;
     overflow: visible;
-    background: rgba(19, 34, 40, 0.22);
-    backdrop-filter: blur(18px) saturate(1.12);
-    -webkit-backdrop-filter: blur(18px) saturate(1.12);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(22px) saturate(0.85) brightness(1.08);
+    -webkit-backdrop-filter: blur(22px) saturate(0.85) brightness(1.08);
     /* body edge only when expanded — photo has its own full ring */
-    border: 1.2px solid transparent;
+    border: 1px solid transparent;
     box-shadow: none;
     transition: box-shadow 0.85s ease, border-color 0.85s ease;
 }
@@ -614,13 +729,13 @@ body {
 }
 
 .location.is-expanded .location-frame {
-    border-color: rgba(220, 224, 227, 0.48);
-    box-shadow: 0 18px 40px rgba(10, 20, 24, 0.4);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 0 48px rgba(255, 255, 255, 0.06);
 }
 
 .location.is-expanded .location-frame::after {
-    border-color: rgba(220, 224, 227, 0.28);
-    box-shadow: inset 0 0 18px rgba(220, 224, 227, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.06);
 }
 
 /* Full circular glow around the photo (not just the capsule top) */
@@ -631,12 +746,12 @@ body {
     aspect-ratio: 1;
     flex-shrink: 0;
     border-radius: 50%;
-    /* crisp lens edge */
+    /* luminous lens edge */
     box-shadow:
-        0 0 0 1.2px rgba(220, 224, 227, 0.42),
-        0 0 0 2px rgba(220, 224, 227, 0.1),
-        0 0 14px 2px rgba(220, 224, 227, 0.22),
-        0 0 36px 8px rgba(220, 224, 227, 0.1);
+        0 0 0 1px rgba(255, 255, 255, 0.35),
+        0 0 0 2px rgba(255, 255, 255, 0.08),
+        0 0 20px 4px rgba(255, 255, 255, 0.16),
+        0 0 48px 12px rgba(255, 255, 255, 0.08);
     transition: box-shadow 0.85s ease;
 }
 
@@ -644,11 +759,11 @@ body {
 .location-photo-wrap::before {
     content: '';
     position: absolute;
-    inset: -12px;
+    inset: -14px;
     border-radius: 50%;
-    border: 12px solid rgba(220, 224, 227, 0.22);
-    filter: blur(8px);
-    opacity: 0.75;
+    border: 14px solid rgba(255, 255, 255, 0.22);
+    filter: blur(10px);
+    opacity: 0.8;
     pointer-events: none;
     z-index: -1;
     transition: opacity 0.85s ease;
@@ -656,10 +771,10 @@ body {
 
 .location.is-expanded .location-photo-wrap {
     box-shadow:
-        0 0 0 1.2px rgba(220, 224, 227, 0.48),
-        0 0 0 2px rgba(220, 224, 227, 0.12),
-        0 0 18px 3px rgba(220, 224, 227, 0.26),
-        0 0 42px 10px rgba(220, 224, 227, 0.12);
+        0 0 0 1px rgba(255, 255, 255, 0.42),
+        0 0 0 2px rgba(255, 255, 255, 0.1),
+        0 0 24px 5px rgba(255, 255, 255, 0.2),
+        0 0 56px 14px rgba(255, 255, 255, 0.1);
 }
 
 .location.is-expanded .location-photo-wrap::before {
@@ -675,8 +790,8 @@ body {
     background:
         linear-gradient(
             180deg,
-            rgba(10, 20, 24, 0.08) 0%,
-            rgba(10, 20, 24, 0.42) 100%
+            rgba(18, 20, 22, 0.1) 0%,
+            rgba(18, 20, 22, 0.45) 100%
         ),
         url('images/location.jpg') center / cover no-repeat;
     filter: blur(var(--photo-blur, 28px));
@@ -721,10 +836,10 @@ body {
 }
 
 .location-name {
-    font-family: 'Tenor Sans', sans-serif;
-    font-weight: 400;
-    font-size: 1.28rem;
-    letter-spacing: 0.06em;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.45rem;
+    letter-spacing: 0.12em;
     color: var(--white);
     margin-bottom: 0.4rem;
     line-height: 1.35;
@@ -750,29 +865,33 @@ body {
     display: inline-block;
     margin-top: 0.85rem;
     appearance: none;
-    border: 1px solid rgba(220, 224, 227, 0.28);
-    background: transparent;
+    border: 1px solid rgba(242, 241, 239, 0.2);
+    background: rgba(242, 241, 239, 0.04);
     color: var(--dove);
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 13px 28px;
+    padding: 14px 32px;
     cursor: pointer;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    box-shadow: inset 0 0 24px rgba(242, 241, 239, 0.035);
+    transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .btn-map:hover {
-    background: rgba(220, 224, 227, 0.1);
-    border-color: rgba(220, 224, 227, 0.55);
+    background: rgba(242, 241, 239, 0.09);
+    border-color: rgba(242, 241, 239, 0.38);
     color: var(--white);
-    transform: translateY(-2px);
+    box-shadow:
+        inset 0 0 28px rgba(242, 241, 239, 0.06),
+        0 0 32px rgba(242, 241, 239, 0.07);
+    transform: none;
 }
 
 .btn-map:active {
-    transform: translateY(0);
+    background: rgba(242, 241, 239, 0.07);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -827,8 +946,8 @@ body {
 
 .snake-line {
     fill: none;
-    stroke: rgba(192, 196, 201, 0.45);
-    stroke-width: 1.5;
+    stroke: rgba(255, 255, 255, 0.28);
+    stroke-width: 1.2;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 100;
@@ -874,11 +993,14 @@ body {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: 1px solid rgba(192, 196, 201, 0.28);
-    background: rgba(10, 20, 24, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: grid;
     place-items: center;
     color: var(--silver);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.06);
     transform: translate(-50%, -50%) scale(0.72);
     transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -920,9 +1042,10 @@ body {
 }
 
 .snake-body .time {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 0.08em;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.35rem;
+    letter-spacing: 0.12em;
     color: var(--white);
     line-height: 1.2;
 }
@@ -954,12 +1077,14 @@ body {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: transform 0.35s ease;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .swatch:hover {
     transform: scale(1.1);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.14);
 }
 
 .swatch--azurite { background: var(--azurite); }
@@ -1026,12 +1151,12 @@ body {
     object-position: center 20%;
     pointer-events: none;
     transition: transform 0.55s ease, filter 0.55s ease;
-    filter: saturate(0.88) contrast(1.04);
+    filter: saturate(0.5) contrast(1.02) brightness(0.92);
 }
 
 .dress-gallery-item:hover img {
     transform: scale(1.04);
-    filter: saturate(1) contrast(1.06);
+    filter: saturate(0.58) contrast(1.04) brightness(0.96);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1054,9 +1179,9 @@ body {
         height: 36px;
         margin: 0;
         padding: 0;
-        border: 1px solid rgba(220, 224, 227, 0.18);
+        border: 1px solid rgba(184, 189, 191, 0.2);
         border-radius: 50%;
-        background: rgba(10, 20, 24, 0.72);
+        background: rgba(18, 20, 22, 0.78);
         color: var(--dove);
         cursor: pointer;
         transform: translateY(-50%);
@@ -1069,8 +1194,8 @@ body {
     }
 
     .dress-gallery-btn:hover:not(:disabled) {
-        background: rgba(19, 34, 40, 0.92);
-        border-color: rgba(220, 224, 227, 0.35);
+        background: rgba(28, 33, 36, 0.94);
+        border-color: rgba(184, 189, 191, 0.38);
         color: var(--white);
     }
 
@@ -1103,45 +1228,55 @@ body {
 }
 
 .rsvp-date {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.2em;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.75rem;
+    letter-spacing: 0.28em;
     color: var(--white);
     margin-bottom: 1.8rem;
+    text-shadow: 0 0 40px rgba(242, 241, 239, 0.14);
 }
 
 .btn-rsvp {
     appearance: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: var(--mountain);
+    border: 1px solid rgba(242, 241, 239, 0.24);
+    background: rgba(242, 241, 239, 0.07);
     color: var(--white);
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    padding: 16px 40px;
+    padding: 17px 44px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow:
+        inset 0 0 32px rgba(242, 241, 239, 0.05),
+        0 0 0 rgba(242, 241, 239, 0);
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .btn-rsvp:hover {
-    background: #11045a;
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(46, 61, 48, 0.35);
+    background: rgba(242, 241, 239, 0.12);
+    border-color: rgba(242, 241, 239, 0.42);
+    transform: none;
+    box-shadow:
+        inset 0 0 40px rgba(242, 241, 239, 0.08),
+        0 0 40px rgba(242, 241, 239, 0.1);
 }
 
 .btn-rsvp:active {
-    transform: translateY(0);
+    transform: none;
+    background: rgba(242, 241, 239, 0.09);
 }
 
 /* ============================================================
    Coordinator + footer
    ============================================================ */
 .coordinator-name {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.18em;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.65rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--white);
     margin-top: 1.2rem;
@@ -1157,17 +1292,18 @@ body {
 
 .footer {
     text-align: center;
-    padding-top: 40px;
-    border-top: 1px solid rgba(192, 196, 201, 0.1);
+    padding-top: 48px;
+    border-top: 1px solid rgba(232, 231, 229, 0.12);
 }
 
 .footer p {
-    margin-top: 1.4rem;
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.22em;
+    margin-top: 1.6rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.8rem;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--contrail);
+    color: var(--text-muted);
 }
 
 /* ============================================================
@@ -1261,10 +1397,18 @@ body {
 /* Fallback when backdrop-filter is unsupported */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .sheet {
-        background: rgba(10, 20, 24, 0.55);
+        background: rgba(24, 25, 26, 0.72);
     }
 
     .location-frame {
-        background: rgba(19, 34, 40, 0.72);
+        background: rgba(30, 32, 34, 0.82);
+    }
+
+    .date-strip {
+        background: rgba(36, 38, 40, 0.88);
+    }
+
+    .snake-node {
+        background: rgba(28, 30, 32, 0.9);
     }
 }

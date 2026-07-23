@@ -6,42 +6,46 @@
     <title>ДЕНИС & ВЕРОНИКА · Свадьба</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Raleway:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
     <div class="page-bg" aria-hidden="true"></div>
+    <div class="page-bloom" aria-hidden="true"></div>
+    <div class="paper-grain" aria-hidden="true"></div>
+    <div class="film-grain" aria-hidden="true"></div>
 
     <!-- HERO — overlapping lens circles -->
     <header class="hero">
         <div class="hero-venn reveal">
             <svg class="hero-rings" viewBox="0 0 400 520" aria-hidden="true">
                 <defs>
-                    <filter id="hero-lens-blur" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="6" />
+                    <filter id="hero-lens-blur" x="-60%" y="-60%" width="220%" height="220%">
+                        <feGaussianBlur stdDeviation="11" />
                     </filter>
-                    <filter id="hero-soft-glow" x="-80%" y="-80%" width="260%" height="260%">
-                        <feGaussianBlur stdDeviation="14" result="blur" />
+                    <filter id="hero-soft-glow" x="-90%" y="-90%" width="280%" height="280%">
+                        <feGaussianBlur stdDeviation="22" result="blur" />
                         <feMerge>
+                            <feMergeNode in="blur" />
                             <feMergeNode in="blur" />
                             <feMergeNode in="SourceGraphic" />
                         </feMerge>
                     </filter>
                     <radialGradient id="hero-fill-top" cx="50%" cy="48%" r="52%">
-                        <stop offset="0%" stop-color="rgba(10,20,24,0.72)" />
-                        <stop offset="55%" stop-color="rgba(19,34,40,0.58)" />
-                        <stop offset="78%" stop-color="rgba(111,117,126,0.12)" />
-                        <stop offset="90%" stop-color="rgba(192,196,201,0.28)" />
-                        <stop offset="97%" stop-color="rgba(220,224,227,0.55)" />
-                        <stop offset="100%" stop-color="rgba(192,196,201,0.18)" />
+                        <stop offset="0%" stop-color="rgba(255,255,255,0.04)" />
+                        <stop offset="42%" stop-color="rgba(248,248,248,0.06)" />
+                        <stop offset="68%" stop-color="rgba(236,236,236,0.1)" />
+                        <stop offset="82%" stop-color="rgba(255,255,255,0.22)" />
+                        <stop offset="92%" stop-color="rgba(255,255,255,0.48)" />
+                        <stop offset="100%" stop-color="rgba(255,255,255,0.12)" />
                     </radialGradient>
                     <radialGradient id="hero-fill-bottom" cx="50%" cy="52%" r="52%">
-                        <stop offset="0%" stop-color="rgba(10,20,24,0.72)" />
-                        <stop offset="55%" stop-color="rgba(19,34,40,0.58)" />
-                        <stop offset="78%" stop-color="rgba(111,117,126,0.12)" />
-                        <stop offset="90%" stop-color="rgba(192,196,201,0.28)" />
-                        <stop offset="97%" stop-color="rgba(220,224,227,0.55)" />
-                        <stop offset="100%" stop-color="rgba(192,196,201,0.18)" />
+                        <stop offset="0%" stop-color="rgba(255,255,255,0.04)" />
+                        <stop offset="42%" stop-color="rgba(248,248,248,0.06)" />
+                        <stop offset="68%" stop-color="rgba(236,236,236,0.1)" />
+                        <stop offset="82%" stop-color="rgba(255,255,255,0.22)" />
+                        <stop offset="92%" stop-color="rgba(255,255,255,0.48)" />
+                        <stop offset="100%" stop-color="rgba(255,255,255,0.12)" />
                     </radialGradient>
                 </defs>
 
@@ -262,13 +266,13 @@
                     если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы:
                 </p>
                 <div class="palette" aria-label="Цветовая палитра">
-                    <span class="swatch swatch--azurite" title="Azurite"></span>
-                    <span class="swatch swatch--mountain" title="Mountain View"></span>
-                    <span class="swatch swatch--contrail" title="Contrail"></span>
+                    <span class="swatch swatch--azurite" title="Steel"></span>
+                    <span class="swatch swatch--mountain" title="Moss"></span>
+                    <span class="swatch swatch--contrail" title="Ash"></span>
                     <span class="swatch swatch--silver" title="Silver"></span>
-                    <span class="swatch swatch--dove" title="Dove Gray"></span>
+                    <span class="swatch swatch--dove" title="Pewter"></span>
                 </div>
-                <p class="palette-hint">Глубокий синий · Лесной зелёный · Благородный серый</p>
+                <p class="palette-hint">Монохром · Сталь · Пепел · Мох</p>
                 <div class="dress-gallery" aria-label="Примеры образов в цветах дресс-кода">
                     <button type="button" class="dress-gallery-btn dress-gallery-btn--prev" aria-label="Предыдущие фото">
                         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
