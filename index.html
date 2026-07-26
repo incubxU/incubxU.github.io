@@ -11,59 +11,70 @@
 </head>
 <body>
     <div class="page-bg" aria-hidden="true"></div>
-    <div class="page-bloom" aria-hidden="true"></div>
     <div class="paper-grain" aria-hidden="true"></div>
     <div class="film-grain" aria-hidden="true"></div>
 
     <!-- HERO — overlapping lens circles -->
     <header class="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="page-bloom" aria-hidden="true"></div>
         <div class="hero-venn reveal">
             <svg class="hero-rings" viewBox="0 0 400 520" aria-hidden="true">
                 <defs>
-                    <filter id="hero-lens-blur" x="-60%" y="-60%" width="220%" height="220%">
-                        <feGaussianBlur stdDeviation="11" />
+                    <filter id="hero-lens-blur" x="-120%" y="-120%" width="340%" height="340%">
+                        <feGaussianBlur stdDeviation="22" />
                     </filter>
-                    <filter id="hero-soft-glow" x="-90%" y="-90%" width="280%" height="280%">
-                        <feGaussianBlur stdDeviation="22" result="blur" />
+                    <!-- Soft bloom — diffused line + outer glow -->
+                    <filter id="hero-soft-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="mid" />
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide" />
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="42" result="bloom" />
                         <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
+                            <feMergeNode in="bloom" />
+                            <feMergeNode in="bloom" />
+                            <feMergeNode in="wide" />
+                            <feMergeNode in="wide" />
+                            <feMergeNode in="mid" />
+                        </feMerge>
+                    </filter>
+                    <filter id="hero-core-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="3.8" result="soft" />
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="near" />
+                        <feMerge>
+                            <feMergeNode in="soft" />
+                            <feMergeNode in="near" />
                         </feMerge>
                     </filter>
                     <radialGradient id="hero-fill-top" cx="50%" cy="48%" r="52%">
-                        <stop offset="0%" stop-color="rgba(255,255,255,0.04)" />
-                        <stop offset="42%" stop-color="rgba(248,248,248,0.06)" />
-                        <stop offset="68%" stop-color="rgba(236,236,236,0.1)" />
-                        <stop offset="82%" stop-color="rgba(255,255,255,0.22)" />
-                        <stop offset="92%" stop-color="rgba(255,255,255,0.48)" />
-                        <stop offset="100%" stop-color="rgba(255,255,255,0.12)" />
+                        <stop offset="0%" stop-color="rgba(120,138,152,0.06)" />
+                        <stop offset="55%" stop-color="rgba(150,168,182,0.04)" />
+                        <stop offset="78%" stop-color="rgba(190,206,216,0.08)" />
+                        <stop offset="90%" stop-color="rgba(220,232,240,0.12)" />
+                        <stop offset="96%" stop-color="rgba(236,244,248,0.18)" />
+                        <stop offset="100%" stop-color="rgba(160,178,190,0.06)" />
                     </radialGradient>
                     <radialGradient id="hero-fill-bottom" cx="50%" cy="52%" r="52%">
-                        <stop offset="0%" stop-color="rgba(255,255,255,0.04)" />
-                        <stop offset="42%" stop-color="rgba(248,248,248,0.06)" />
-                        <stop offset="68%" stop-color="rgba(236,236,236,0.1)" />
-                        <stop offset="82%" stop-color="rgba(255,255,255,0.22)" />
-                        <stop offset="92%" stop-color="rgba(255,255,255,0.48)" />
-                        <stop offset="100%" stop-color="rgba(255,255,255,0.12)" />
+                        <stop offset="0%" stop-color="rgba(110,128,142,0.07)" />
+                        <stop offset="55%" stop-color="rgba(140,158,172,0.04)" />
+                        <stop offset="78%" stop-color="rgba(180,196,208,0.09)" />
+                        <stop offset="90%" stop-color="rgba(214,226,234,0.14)" />
+                        <stop offset="96%" stop-color="rgba(232,242,248,0.17)" />
+                        <stop offset="100%" stop-color="rgba(148,166,178,0.06)" />
                     </radialGradient>
                 </defs>
 
                 <circle class="hero-ring hero-ring--top" cx="200" cy="168" r="148" fill="url(#hero-fill-top)" />
                 <circle class="hero-ring hero-ring--bottom" cx="200" cy="352" r="148" fill="url(#hero-fill-bottom)" />
 
-                <circle class="hero-ring-halo hero-ring-halo--top" cx="200" cy="168" r="150" fill="none" filter="url(#hero-lens-blur)" />
-                <circle class="hero-ring-halo hero-ring-halo--bottom" cx="200" cy="352" r="150" fill="none" filter="url(#hero-lens-blur)" />
+                <circle class="hero-ring-halo hero-ring-halo--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-lens-blur)" />
+                <circle class="hero-ring-halo hero-ring-halo--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-lens-blur)" />
 
-                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="118" ry="28" filter="url(#hero-lens-blur)" />
-                <line class="hero-intersection-line" x1="72" y1="260" x2="328" y2="260" filter="url(#hero-lens-blur)" />
+                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="104" ry="36" filter="url(#hero-lens-blur)" />
 
                 <circle class="hero-ring-edge hero-ring-edge--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-soft-glow)" />
                 <circle class="hero-ring-edge hero-ring-edge--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-soft-glow)" />
-
-                <path id="hero-arc-upper" d="M 78 278 A 122 122 0 0 1 322 278" fill="none" />
-                <path id="hero-arc-lower" d="M 322 242 A 122 122 0 0 1 78 242" fill="none" />
-                <path id="hero-arc-foot" d="M 92 468 A 108 108 0 0 0 308 468" fill="none" />
+                <circle class="hero-ring-core hero-ring-core--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-core-glow)" />
+                <circle class="hero-ring-core hero-ring-core--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-core-glow)" />
 
                 <g class="hero-lens-mark hero-lens-mark--left" transform="translate(52 258)">
                     <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
@@ -79,7 +90,7 @@
                     <span class="hero-cross" aria-hidden="true">×</span>
                     <span>ВЕРОНИКА</span>
                 </h1>
-                <p class="hero-wedding-day">Wedding&nbsp;Day</p>
+                <p class="hero-wedding-day">мы&nbsp;женимся</p>
                 <p class="hero-date">16.11.2026</p>
             </div>
         </div>
@@ -89,7 +100,7 @@
         </div>
     </header>
 
-    <!-- Content sheet — blurs background -->
+    <!-- Content sheet -->
     <main class="sheet">
         <div class="sheet-inner">
 
@@ -266,13 +277,13 @@
                     если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы:
                 </p>
                 <div class="palette" aria-label="Цветовая палитра">
-                    <span class="swatch swatch--azurite" title="Steel"></span>
-                    <span class="swatch swatch--mountain" title="Moss"></span>
-                    <span class="swatch swatch--contrail" title="Ash"></span>
-                    <span class="swatch swatch--silver" title="Silver"></span>
-                    <span class="swatch swatch--dove" title="Pewter"></span>
+                    <span class="swatch swatch--azurite" title="Графитовая сталь"></span>
+                    <span class="swatch swatch--mountain" title="Дымчатый серый"></span>
+                    <span class="swatch swatch--contrail" title="Холодный туман"></span>
+                    <span class="swatch swatch--silver" title="Серебро"></span>
+                    <span class="swatch swatch--dove" title="Жемчуг"></span>
                 </div>
-                <p class="palette-hint">Монохром · Сталь · Пепел · Мох</p>
+                <p class="palette-hint">Сталь · Дымка · Серебро · Жемчуг</p>
                 <div class="dress-gallery" aria-label="Примеры образов в цветах дресс-кода">
                     <button type="button" class="dress-gallery-btn dress-gallery-btn--prev" aria-label="Предыдущие фото">
                         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

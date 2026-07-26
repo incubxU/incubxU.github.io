@@ -45,46 +45,19 @@ body {
 }
 
 /* ============================================================
-   Fixed photo background — matte print, soft blur + low contrast
+   Fixed page background — continuation below the hero
    ============================================================ */
 .page-bg {
     position: fixed;
     inset: -4px;
     z-index: 0;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(20, 21, 22, 0.38) 0%,
-            rgba(20, 21, 22, 0.2) 36%,
-            rgba(20, 21, 22, 0.42) 72%,
-            rgba(20, 21, 22, 0.72) 100%
-        ),
-        url('images/hero2.png') center / cover no-repeat;
-    filter: saturate(0.5) contrast(0.96) brightness(0.9) blur(0.8px);
+    background: url('images/bg-continuation.png') center / cover no-repeat;
     pointer-events: none;
 }
 
-/* Soft bloom — diffused light over bright zones */
+/* Soft bloom — disabled; atmosphere image shows unfiltered */
 .page-bloom {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.55;
-    mix-blend-mode: soft-light;
-    background:
-        radial-gradient(
-            ellipse 55% 42% at 50% 38%,
-            rgba(242, 241, 239, 0.42) 0%,
-            rgba(242, 241, 239, 0.12) 42%,
-            rgba(242, 241, 239, 0) 72%
-        ),
-        radial-gradient(
-            ellipse 80% 55% at 50% 18%,
-            rgba(236, 236, 236, 0.18) 0%,
-            rgba(236, 236, 236, 0) 65%
-        );
-    filter: blur(28px);
+    display: none;
 }
 
 /* Paper grain — matte print texture */
@@ -149,30 +122,25 @@ body {
     padding: 56px 20px 88px;
     text-align: center;
     overflow: hidden;
+    isolation: isolate;
+}
+
+/* Atmosphere plate — wide plate, full-bleed on all viewports */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: url('images/bg-atmosphere.png') center center / cover no-repeat;
 }
 
 .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(
-            ellipse 70% 55% at 50% 42%,
-            rgba(255, 255, 255, 0.06) 0%,
-            rgba(255, 255, 255, 0) 55%
-        ),
-        radial-gradient(
-            ellipse 85% 70% at 50% 42%,
-            rgba(20, 21, 22, 0.05) 0%,
-            rgba(20, 21, 22, 0.42) 72%,
-            rgba(20, 21, 22, 0.78) 100%
-        );
-    pointer-events: none;
-    z-index: 0;
+    content: none;
 }
 
 .hero-venn {
     position: relative;
+    z-index: 1;
     width: min(92vw, 400px);
     aspect-ratio: 400 / 520;
     flex-shrink: 0;
@@ -190,38 +158,46 @@ body {
 
 .hero-ring {
     mix-blend-mode: screen;
-    opacity: 0.95;
-    filter: blur(0.4px);
+    opacity: 0.85;
+    filter: blur(0.6px);
 }
 
 .hero-ring-halo {
-    stroke: rgba(255, 255, 255, 0.28);
-    stroke-width: 14;
-    opacity: 0.85;
+    stroke: rgba(255, 255, 255, 0.42);
+    stroke-width: 22;
+    opacity: 0.7;
 }
 
 .hero-intersection-glow {
-    fill: rgba(255, 255, 255, 0.14);
+    fill: rgba(255, 255, 255, 0.16);
     opacity: 1;
 }
 
-.hero-intersection-line {
-    stroke: rgba(255, 255, 255, 0.35);
-    stroke-width: 1.2;
-    opacity: 0.9;
-}
-
 .hero-ring-edge {
-    stroke: rgba(255, 255, 255, 0.55);
-    stroke-width: 1;
-    opacity: 0.9;
+    stroke: rgba(255, 255, 255, 0.72);
+    stroke-width: 3.2;
+    opacity: 0.95;
 }
 
 .hero-ring-edge--top {
-    stroke: rgba(255, 255, 255, 0.62);
+    stroke: rgba(255, 255, 255, 0.78);
 }
 
 .hero-ring-edge--bottom {
+    stroke: rgba(255, 255, 255, 0.64);
+}
+
+.hero-ring-core {
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 1.6;
+    opacity: 0.85;
+}
+
+.hero-ring-core--top {
+    stroke: rgba(255, 255, 255, 0.62);
+}
+
+.hero-ring-core--bottom {
     stroke: rgba(255, 255, 255, 0.48);
 }
 
@@ -265,17 +241,17 @@ body {
     font-weight: 300;
     font-size: clamp(1.05rem, 4.2vw, 1.35rem);
     line-height: 1.2;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.28em;
     color: var(--white);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.12em;
+    gap: 0.18em;
     text-shadow:
-        0 0 36px rgba(242, 241, 239, 0.16),
-        0 0 64px rgba(242, 241, 239, 0.06),
-        0 1px 18px rgba(0, 0, 0, 0.32);
+        0 0 28px rgba(255, 255, 255, 0.45),
+        0 0 64px rgba(220, 236, 246, 0.35),
+        0 1px 18px rgba(0, 0, 0, 0.28);
 }
 
 .hero-names span {
@@ -300,22 +276,25 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 52%;
-    max-width: 9.3em;
+    width: 72%;
+    max-width: none;
     margin: 0;
-    font-family: 'Cormorant Garamond', 'Jost', serif;
+    font-family: 'Jost', 'Cormorant Garamond', sans-serif;
     font-weight: 300;
-    font-size: clamp(1.1rem, 4.4vw, 1.45rem);
+    font-size: clamp(0.58rem, 2.4vw, 0.72rem);
     line-height: 1.15;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.48em;
+    text-indent: 0.48em;
+    text-transform: uppercase;
     color: var(--white);
     text-shadow:
-        0 0 56px rgba(242, 241, 239, 0.28),
-        0 0 96px rgba(242, 241, 239, 0.1),
-        0 2px 24px rgba(0, 0, 0, 0.38);
+        0 0 24px rgba(255, 255, 255, 0.4),
+        0 0 56px rgba(210, 228, 240, 0.28),
+        0 1px 14px rgba(0, 0, 0, 0.28);
     white-space: nowrap;
-    overflow: hidden;
+    overflow: visible;
     text-align: center;
+    opacity: 0.92;
 }
 
 .hero-date {
@@ -329,11 +308,12 @@ body {
     font-family: 'Cormorant Garamond', 'Jost', serif;
     font-weight: 300;
     font-size: clamp(1.15rem, 4.8vw, 1.5rem);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.28em;
     color: var(--dove);
     text-shadow:
-        0 0 40px rgba(242, 241, 239, 0.14),
-        0 1px 20px rgba(0, 0, 0, 0.38);
+        0 0 28px rgba(255, 255, 255, 0.4),
+        0 0 56px rgba(210, 228, 240, 0.3),
+        0 1px 18px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
@@ -369,25 +349,21 @@ body {
 }
 
 /* ============================================================
-   Sheet (podlozhka) — frosted glass over photo
+   Sheet (podlozhka) — soft crop + light frost over page background
    ============================================================ */
 .sheet {
     position: relative;
     z-index: 2;
     margin-top: -32px;
+    width: 100%;
     border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(232, 231, 229, 0.07) 0%,
-            rgba(236, 236, 236, 0.03) 28%,
-            rgba(20, 21, 22, 0.2) 100%
-        );
-    backdrop-filter: blur(18px) saturate(0.8) brightness(1.03);
-    -webkit-backdrop-filter: blur(14px) saturate(0.8) brightness(1.03);
+    background: rgba(20, 24, 28, 0.18);
+    backdrop-filter: blur(14px) saturate(0.92);
+    -webkit-backdrop-filter: blur(14px) saturate(0.92);
     box-shadow: none;
-    border-top: 1px solid rgba(232, 231, 229, 0.08);
+    border-top: 1px solid rgba(232, 231, 229, 0.12);
     overflow: clip;
+    isolation: isolate;
 }
 
 .sheet::before {
@@ -712,7 +688,7 @@ body {
     /* body edge only when expanded — photo has its own full ring */
     border: 1px solid transparent;
     box-shadow: none;
-    transition: box-shadow 0.85s ease, border-color 0.85s ease;
+    transition: box-shadow 1.8s cubic-bezier(0.4, 0, 0.2, 1), border-color 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* inner edge highlight on capsule body */
@@ -725,7 +701,7 @@ body {
     box-shadow: none;
     pointer-events: none;
     z-index: 3;
-    transition: border-color 0.85s ease, box-shadow 0.85s ease;
+    transition: border-color 1.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .location.is-expanded .location-frame {
@@ -752,7 +728,7 @@ body {
         0 0 0 2px rgba(255, 255, 255, 0.08),
         0 0 20px 4px rgba(255, 255, 255, 0.16),
         0 0 48px 12px rgba(255, 255, 255, 0.08);
-    transition: box-shadow 0.85s ease;
+    transition: box-shadow 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* soft outer halo — full 360° */
@@ -766,7 +742,7 @@ body {
     opacity: 0.8;
     pointer-events: none;
     z-index: -1;
-    transition: opacity 0.85s ease;
+    transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .location.is-expanded .location-photo-wrap {
@@ -810,8 +786,8 @@ body {
     background: transparent;
     opacity: 0;
     transition:
-        max-height 2.2s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.9s ease 0.1s;
+        max-height 2.9s cubic-bezier(0.33, 0.05, 0.2, 1),
+        opacity 1.35s cubic-bezier(0.4, 0, 0.2, 1) 0.12s;
 }
 
 .location.is-expanded .location-cylinder {
@@ -824,10 +800,10 @@ body {
     text-align: center;
     background: transparent;
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(20px);
     transition:
-        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.75s,
-        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.75s;
+        opacity 1.2s cubic-bezier(0.33, 0.05, 0.2, 1) 0.95s,
+        transform 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.9s;
 }
 
 .location.is-expanded .location-details {
@@ -1325,19 +1301,23 @@ body {
 
     .hero-names {
         font-size: 1.4rem;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.3em;
     }
 
     .hero-wedding-day {
-        font-size: 1.85rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.5em;
+        text-indent: 0.5em;
     }
 
     .hero-date {
         font-size: 1.55rem;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.3em;
     }
 
     .sheet {
+        margin-inline: 0;
+        width: 100%;
         border-radius: 36px 36px 0 0;
     }
 }
@@ -1397,18 +1377,867 @@ body {
 /* Fallback when backdrop-filter is unsupported */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .sheet {
-        background: rgba(24, 25, 26, 0.72);
+        background: rgba(24, 30, 36, 0.72);
     }
 
     .location-frame {
-        background: rgba(30, 32, 34, 0.82);
+        background: rgba(30, 32, 34, 0.55);
     }
 
     .date-strip {
-        background: rgba(36, 38, 40, 0.88);
+        background: rgba(36, 38, 40, 0.55);
     }
 
     .snake-node {
-        background: rgba(28, 30, 32, 0.9);
+        background: rgba(28, 30, 32, 0.6);
+    }
+}
+
+/* ============================================================
+   Silver mist art direction
+   ============================================================ */
+:root {
+    --bg-deep: #8d98a3;
+    --bg-mid: #b6c0c8;
+    --azurite: #4d5b67;
+    --mountain: #77848e;
+    --contrail: #aab4bc;
+    --silver: #d7e0e6;
+    --dove: #edf2f5;
+    --warm-glow: #f7fafc;
+    --white: #f8fbfd;
+    --text: #eef3f5;
+    --text-soft: rgba(238, 243, 245, 0.78);
+    --text-muted: rgba(232, 240, 244, 0.48);
+    --glow: rgba(235, 245, 251, 0.72);
+    --frost: rgba(231, 238, 243, 0.3);
+}
+
+body {
+    color: var(--text);
+    background: #9da8b1;
+    text-rendering: geometricPrecision;
+}
+
+.page-bg {
+    inset: 0;
+    background: url('images/bg-continuation.png') center / cover no-repeat;
+    filter: none;
+}
+
+.hero-bg {
+    filter: none;
+}
+
+.page-bg::before,
+.page-bg::after {
+    content: none;
+}
+
+.page-bloom {
+    display: none;
+}
+
+.paper-grain {
+    opacity: 0.13;
+    mix-blend-mode: soft-light;
+}
+
+.film-grain {
+    opacity: 0.11;
+    mix-blend-mode: overlay;
+}
+
+.hero::before {
+    content: none;
+}
+
+.hero-venn::before {
+    content: '';
+    position: absolute;
+    inset: 4% 2%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 31%, rgba(61, 78, 91, 0.5), transparent 38%),
+        radial-gradient(circle at 50% 68%, rgba(55, 73, 87, 0.5), transparent 39%);
+    filter: blur(20px);
+}
+
+.hero-ring {
+    mix-blend-mode: screen;
+    opacity: 0.9;
+    filter: blur(0.8px);
+}
+
+.hero-ring-halo {
+    stroke: rgba(247, 251, 255, 0.5);
+    stroke-width: 24;
+    opacity: 0.75;
+}
+
+.hero-ring-edge {
+    stroke: rgba(250, 253, 255, 0.88);
+    stroke-width: 3.4;
+    opacity: 1;
+}
+
+.hero-ring-edge--top {
+    stroke: rgba(255, 255, 255, 0.94);
+}
+
+.hero-ring-edge--bottom {
+    stroke: rgba(239, 247, 252, 0.8);
+}
+
+.hero-ring-core {
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke-width: 1.8;
+    opacity: 0.9;
+}
+
+.hero-ring-core--top {
+    stroke: rgba(255, 255, 255, 0.78);
+}
+
+.hero-ring-core--bottom {
+    stroke: rgba(239, 247, 252, 0.62);
+}
+
+.hero-intersection-glow {
+    fill: rgba(248, 252, 255, 0.28);
+}
+
+.hero-lens-mark path {
+    stroke: rgba(250, 253, 255, 0.7);
+}
+
+.hero-names,
+.hero-wedding-day,
+.hero-date {
+    color: #fbfdff;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 22px rgba(255, 255, 255, 0.55),
+        0 0 56px rgba(220, 238, 250, 0.4),
+        0 1px 14px rgba(40, 54, 66, 0.45);
+}
+
+.hero-names {
+    letter-spacing: 0.32em;
+}
+
+.hero-wedding-day {
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(0.56rem, 2.3vw, 0.7rem);
+    width: 78%;
+    max-width: none;
+    letter-spacing: 0.5em;
+    text-indent: 0.5em;
+    overflow: visible;
+}
+
+.hero-date {
+    letter-spacing: 0.3em;
+}
+
+.hero-cross {
+    color: #f5f9fc;
+}
+
+.hero-scroll {
+    border-color: rgba(246, 251, 255, 0.58);
+    background: rgba(226, 236, 243, 0.08);
+    box-shadow: 0 0 28px rgba(245, 251, 255, 0.22);
+}
+
+.sheet {
+    margin-inline: 0;
+    width: 100%;
+    background: rgba(36, 48, 58, 0.22);
+    backdrop-filter: blur(16px) saturate(0.88);
+    -webkit-backdrop-filter: blur(16px) saturate(0.88);
+    border-top-color: rgba(248, 252, 255, 0.22);
+    box-shadow: 0 -8px 40px rgba(20, 28, 34, 0.12);
+}
+
+.sheet::before {
+    opacity: 0.08;
+    mix-blend-mode: soft-light;
+}
+
+.section + .section,
+.footer {
+    border-color: rgba(39, 54, 65, 0.14);
+}
+
+.section-label {
+    color: var(--text-muted);
+    letter-spacing: 0.5em;
+}
+
+.intro-greeting,
+.intro strong,
+.calendar-month,
+.date-strip-day,
+.location-name,
+.snake-body .time,
+.rsvp-date,
+.coordinator-name,
+.section-text strong {
+    color: var(--white);
+    text-shadow: 0 0 34px rgba(248, 252, 255, 0.34);
+}
+
+.intro p,
+.section-text,
+.location-note {
+    color: var(--text-soft);
+}
+
+.quote-mark {
+    color: rgba(245, 250, 253, 0.9);
+    opacity: 0.7;
+    text-shadow: 0 0 38px rgba(255, 255, 255, 0.58);
+}
+
+.quote blockquote {
+    color: var(--dove);
+}
+
+.calendar-grid span {
+    color: var(--text-soft);
+}
+
+.calendar-grid .is-active {
+    color: #2a3842;
+    background: rgba(246, 250, 252, 0.92);
+    box-shadow: 0 0 25px rgba(248, 252, 255, 0.72);
+}
+
+@keyframes pulse-date {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245, 251, 255, 0.58); }
+    50% { box-shadow: 0 0 0 12px rgba(245, 251, 255, 0); }
+}
+
+.date-strip {
+    background: rgba(238, 244, 248, 0.24);
+    border-color: rgba(248, 252, 255, 0.56);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        0 0 40px rgba(248, 252, 255, 0.16);
+}
+
+.date-strip-month,
+.date-strip-weekday {
+    color: var(--dove);
+}
+
+.date-strip-month::after,
+.date-strip-weekday::before {
+    background: rgba(248, 252, 255, 0.22);
+}
+
+.location-frame {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.location.is-expanded .location-frame {
+    border-color: rgba(248, 252, 255, 0.68);
+    box-shadow:
+        0 0 44px rgba(245, 251, 255, 0.28),
+        0 16px 50px rgba(57, 73, 84, 0.1);
+}
+
+.location.is-expanded .location-frame::after {
+    border-color: rgba(74, 91, 103, 0.12);
+    box-shadow: inset 0 0 28px rgba(255, 255, 255, 0.24);
+}
+
+.location-photo-wrap,
+.location.is-expanded .location-photo-wrap {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.84),
+        0 0 0 2px rgba(133, 151, 164, 0.2),
+        0 0 24px 6px rgba(245, 251, 255, 0.44),
+        0 0 58px 15px rgba(221, 234, 243, 0.26);
+}
+
+.location-photo-wrap::before {
+    border-color: rgba(241, 248, 252, 0.52);
+}
+
+.location-photo {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(202, 216, 225, 0.18) 0%,
+            rgba(68, 84, 96, 0.42) 100%
+        ),
+        url('images/hero.jpg') center / cover no-repeat;
+    background-blend-mode: screen, normal;
+    filter:
+        blur(var(--photo-blur, 28px))
+        grayscale(0.76)
+        saturate(0.38)
+        contrast(0.86)
+        brightness(1.08);
+}
+
+.location-place {
+    color: var(--text-soft);
+}
+
+.btn-map,
+.btn-rsvp {
+    color: var(--white);
+    border-color: rgba(249, 252, 254, 0.42);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 28px rgba(243, 250, 253, 0.1);
+}
+
+.btn-map:hover,
+.btn-rsvp:hover {
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow:
+        inset 0 0 30px rgba(255, 255, 255, 0.12),
+        0 0 34px rgba(246, 251, 254, 0.22);
+}
+
+.snake-line {
+    stroke: rgba(244, 250, 253, 0.78);
+    filter: drop-shadow(0 0 5px rgba(244, 250, 253, 0.46));
+}
+
+.snake-node {
+    color: var(--silver);
+    border-color: rgba(249, 252, 254, 0.42);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 24px rgba(245, 251, 254, 0.16);
+}
+
+.snake-body .event,
+.palette-hint,
+.coordinator-role,
+.footer p {
+    color: var(--text-muted);
+}
+
+.icon-wrap,
+.ornament {
+    color: var(--contrail);
+}
+
+.swatch {
+    border-color: rgba(251, 253, 255, 0.68);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.32),
+        0 0 18px rgba(245, 251, 254, 0.22);
+}
+
+.swatch:hover {
+    box-shadow: 0 0 28px rgba(248, 252, 255, 0.58);
+}
+
+.dress-gallery-item {
+    border: 1px solid rgba(248, 252, 255, 0.42);
+    background: linear-gradient(145deg, #53636f, #87949d 55%, #cbd4da);
+    box-shadow: 0 12px 30px rgba(54, 70, 81, 0.12);
+}
+
+.dress-gallery-item img {
+    filter: grayscale(0.74) saturate(0.28) contrast(0.88) brightness(1.03);
+}
+
+.dress-gallery-item:hover img {
+    filter: grayscale(0.62) saturate(0.34) contrast(0.92) brightness(1.08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .dress-gallery-btn {
+        color: var(--white);
+        border-color: rgba(248, 252, 255, 0.42);
+        background: rgba(40, 52, 60, 0.72);
+        box-shadow: 0 0 22px rgba(244, 250, 253, 0.16);
+    }
+
+    .dress-gallery-btn:hover:not(:disabled) {
+        color: var(--white);
+        border-color: rgba(255, 255, 255, 0.72);
+        background: rgba(52, 66, 76, 0.88);
+    }
+}
+
+@media (min-width: 720px) {
+    .hero-venn {
+        width: min(72vw, 540px);
+    }
+}
+
+.btn-map:focus-visible,
+.btn-rsvp:focus-visible,
+.dress-gallery-btn:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.96);
+    outline-offset: 4px;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .sheet {
+        background: rgba(36, 48, 58, 0.78);
+    }
+
+    .location-frame,
+    .date-strip,
+    .snake-node {
+        background: rgba(40, 52, 60, 0.55);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .location-photo {
+        filter: grayscale(0.76) saturate(0.38) contrast(0.86) brightness(1.08);
+    }
+}
+
+/* ============================================================
+   Moonlight editorial — final visual language
+   Paint-only overrides: interaction and motion remain unchanged
+   ============================================================ */
+:root {
+    --bg-deep: #6d7a85;
+    --bg-mid: #98a5ae;
+    --azurite: #4a5862;
+    --mountain: #6f7d87;
+    --contrail: #9aa7b0;
+    --silver: #d4dde3;
+    --dove: #e8eef1;
+    --warm-glow: #f2f4f3;
+    --white: #f5f7f6;
+    --text: #eef3f5;
+    --text-soft: rgba(238, 243, 245, 0.78);
+    --text-muted: rgba(232, 240, 244, 0.48);
+    --glow: rgba(232, 240, 244, 0.68);
+    --frost: rgba(210, 220, 226, 0.26);
+}
+
+body {
+    color: var(--text);
+    background: #7e8b94;
+    font-weight: 300;
+    letter-spacing: 0.025em;
+}
+
+.page-bg {
+    inset: 0;
+    background: url('images/bg-continuation.png') center / cover no-repeat;
+    filter: none;
+}
+
+.hero-bg {
+    filter: none;
+}
+
+.page-bg::before,
+.page-bg::after {
+    content: none;
+}
+
+.page-bloom {
+    display: none;
+}
+
+.paper-grain {
+    opacity: 0.18;
+    mix-blend-mode: soft-light;
+}
+
+.film-grain {
+    opacity: 0.2;
+    mix-blend-mode: overlay;
+}
+
+.hero::before {
+    content: none;
+}
+
+.hero-venn::before {
+    inset: -8% -14%;
+    background:
+        radial-gradient(circle at 50% 30%, rgba(42, 56, 68, 0.55) 0 10%, rgba(58, 74, 88, 0.38) 34%, transparent 58%),
+        radial-gradient(circle at 50% 70%, rgba(36, 50, 62, 0.58) 0 10%, rgba(52, 68, 82, 0.4) 34%, transparent 58%);
+    filter: blur(28px);
+}
+
+.hero-ring {
+    mix-blend-mode: screen;
+    opacity: 1;
+    filter: none;
+}
+
+.hero-ring-halo {
+    stroke: rgba(255, 255, 255, 0.95);
+    stroke-width: 26;
+    opacity: 1;
+}
+
+.hero-ring-edge,
+.hero-ring-edge--top,
+.hero-ring-edge--bottom {
+    stroke: #ffffff;
+    stroke-width: 1.1;
+    opacity: 1;
+}
+
+.hero-ring-core,
+.hero-ring-core--top,
+.hero-ring-core--bottom {
+    stroke: #ffffff;
+    stroke-width: 0.65;
+    opacity: 1;
+}
+
+.hero-intersection-glow {
+    fill: rgba(255, 255, 255, 0.52);
+}
+
+.hero-lens-mark path {
+    stroke: rgba(255, 255, 255, 0.92);
+    stroke-width: 1;
+}
+
+.hero-names,
+.hero-wedding-day,
+.hero-date {
+    color: #ffffff;
+    text-shadow:
+        0 0 12px rgba(255, 255, 255, 0.95),
+        0 0 36px rgba(255, 255, 255, 0.7),
+        0 0 72px rgba(210, 230, 245, 0.55),
+        0 2px 16px rgba(10, 18, 26, 0.65);
+}
+
+.hero-names {
+    font-weight: 400;
+    letter-spacing: 0.36em;
+}
+
+.hero-wedding-day {
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(0.6rem, 2.4vw, 0.74rem);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.5em;
+    text-indent: 0.5em;
+    text-transform: uppercase;
+    width: 80%;
+    max-width: none;
+    overflow: visible;
+    opacity: 1;
+}
+
+.hero-date {
+    letter-spacing: 0.34em;
+    font-size: clamp(1.25rem, 5vw, 1.6rem);
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.hero-cross {
+    color: #ffffff;
+    opacity: 0.95;
+}
+
+.hero-scroll {
+    border-color: rgba(232, 242, 246, 0.42);
+    background: transparent;
+    box-shadow: 0 0 30px rgba(220, 234, 240, 0.2);
+}
+
+.hero-scroll span {
+    background: rgba(232, 242, 246, 0.8);
+}
+
+.sheet {
+    margin-inline: 0;
+    width: 100%;
+    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    background: rgba(28, 38, 46, 0.2);
+    backdrop-filter: blur(16px) saturate(0.9);
+    -webkit-backdrop-filter: blur(16px) saturate(0.9);
+    border-top-color: rgba(232, 242, 246, 0.2);
+    box-shadow: 0 -10px 48px rgba(18, 26, 32, 0.14);
+}
+
+.sheet::before {
+    opacity: 0.05;
+    mix-blend-mode: soft-light;
+}
+
+.sheet::after {
+    content: none;
+}
+
+.section {
+    padding-top: 68px;
+    padding-bottom: 68px;
+}
+
+.section + .section,
+.footer {
+    border-color: rgba(232, 242, 246, 0.12);
+}
+
+.section-label {
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.52em;
+}
+
+.section-text,
+.intro p,
+.location-note {
+    color: var(--text-soft);
+}
+
+.intro-greeting,
+.intro strong,
+.calendar-month,
+.date-strip-day,
+.location-name,
+.snake-body .time,
+.rsvp-date,
+.coordinator-name,
+.section-text strong {
+    color: var(--white);
+    font-weight: 300;
+    text-shadow: 0 0 28px rgba(245, 251, 255, 0.35);
+}
+
+.intro-greeting {
+    letter-spacing: 0.12em;
+}
+
+.quote-mark {
+    color: rgba(246, 247, 243, 0.88);
+    opacity: 0.72;
+    text-shadow: 0 0 40px rgba(247, 248, 245, 0.78);
+}
+
+.quote blockquote {
+    color: var(--dove);
+    font-size: 1.48rem;
+    letter-spacing: 0.055em;
+}
+
+.calendar-grid span {
+    color: var(--text-soft);
+}
+
+.calendar-grid .is-active {
+    color: #2a3842;
+    background: rgba(245, 246, 243, 0.92);
+    box-shadow:
+        0 0 20px rgba(246, 248, 246, 0.55),
+        0 0 48px rgba(235, 241, 242, 0.35);
+}
+
+.date-strip {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: rgba(247, 248, 245, 0.28);
+    box-shadow:
+        inset 0 0 26px rgba(247, 248, 245, 0.08),
+        0 0 44px rgba(240, 244, 243, 0.12);
+}
+
+.date-strip-month,
+.date-strip-weekday {
+    color: var(--dove);
+    font-weight: 400;
+}
+
+.date-strip-month::after,
+.date-strip-weekday::before {
+    background: rgba(247, 248, 245, 0.22);
+}
+
+.location-frame {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.location.is-expanded .location-frame {
+    border-color: rgba(245, 247, 245, 0.42);
+    box-shadow:
+        0 0 42px rgba(245, 247, 245, 0.34),
+        0 0 92px rgba(221, 231, 234, 0.32);
+}
+
+.location.is-expanded .location-frame::after {
+    border-color: rgba(247, 248, 245, 0.2);
+    box-shadow: inset 0 0 36px rgba(247, 248, 245, 0.18);
+}
+
+.location-photo-wrap,
+.location.is-expanded .location-photo-wrap {
+    box-shadow:
+        0 0 0 1px rgba(247, 248, 245, 0.62),
+        0 0 26px 7px rgba(244, 247, 245, 0.48),
+        0 0 68px 20px rgba(219, 230, 234, 0.38);
+}
+
+.location-photo-wrap::before {
+    border-color: rgba(241, 245, 244, 0.46);
+    filter: blur(14px);
+}
+
+.location-photo {
+    background:
+        linear-gradient(180deg, rgba(214, 226, 232, 0.12), rgba(64, 80, 92, 0.34)),
+        url('images/location.jpg') center / cover no-repeat;
+    background-blend-mode: soft-light, normal;
+    filter:
+        blur(var(--photo-blur, 28px))
+        grayscale(0.85)
+        saturate(0.15)
+        contrast(0.84)
+        brightness(1.08);
+}
+
+.location-place {
+    color: var(--text-soft);
+}
+
+.btn-map,
+.btn-rsvp {
+    color: var(--white);
+    border-color: rgba(247, 248, 245, 0.42);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 0 28px rgba(247, 248, 245, 0.08),
+        0 0 30px rgba(239, 244, 243, 0.12);
+}
+
+.btn-map:hover,
+.btn-rsvp:hover {
+    color: var(--white);
+    border-color: rgba(249, 249, 246, 0.72);
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow:
+        inset 0 0 32px rgba(250, 250, 247, 0.12),
+        0 0 38px rgba(245, 247, 245, 0.28);
+}
+
+.snake-line {
+    stroke: rgba(241, 245, 244, 0.74);
+    stroke-width: 0.8;
+    filter: drop-shadow(0 0 7px rgba(245, 247, 245, 0.62));
+}
+
+.snake-node {
+    color: var(--silver);
+    border-color: rgba(246, 248, 245, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow:
+        inset 0 0 18px rgba(248, 248, 245, 0.1),
+        0 0 30px rgba(242, 246, 244, 0.16);
+}
+
+.snake-body .event,
+.palette-hint,
+.coordinator-role,
+.footer p {
+    color: var(--text-muted);
+}
+
+.icon-wrap,
+.ornament {
+    color: var(--contrail);
+}
+
+.swatch {
+    border-color: rgba(247, 248, 245, 0.58);
+    box-shadow:
+        inset 0 0 14px rgba(248, 248, 245, 0.2),
+        0 0 24px rgba(241, 245, 244, 0.24);
+}
+
+.swatch:hover {
+    box-shadow:
+        inset 0 0 18px rgba(250, 250, 247, 0.24),
+        0 0 34px rgba(246, 248, 246, 0.64);
+}
+
+.dress-gallery-item {
+    border: 0;
+    background: #aab5bb;
+    box-shadow:
+        0 0 28px rgba(239, 243, 242, 0.3),
+        0 0 64px rgba(205, 216, 221, 0.18);
+}
+
+.dress-gallery-item img {
+    filter: grayscale(1) saturate(0) contrast(0.82) brightness(1.1);
+}
+
+.dress-gallery-item:hover img {
+    filter: grayscale(1) saturate(0) contrast(0.86) brightness(1.14);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .dress-gallery-btn {
+        color: var(--white);
+        border-color: rgba(247, 248, 245, 0.42);
+        background: rgba(40, 52, 60, 0.72);
+        box-shadow: 0 0 28px rgba(243, 246, 244, 0.2);
+    }
+
+    .dress-gallery-btn:hover:not(:disabled) {
+        color: var(--white);
+        border-color: rgba(249, 249, 246, 0.72);
+        background: rgba(52, 66, 76, 0.88);
+    }
+}
+
+.btn-map:focus-visible,
+.btn-rsvp:focus-visible,
+.dress-gallery-btn:focus-visible {
+    outline-color: rgba(245, 251, 255, 0.72);
+}
+
+@media (min-width: 720px) {
+    .section {
+        padding-top: 72px;
+        padding-bottom: 72px;
+    }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .sheet {
+        background-color: rgba(28, 38, 46, 0.78);
+    }
+
+    .location-frame,
+    .date-strip,
+    .snake-node {
+        background-color: rgba(40, 52, 60, 0.55);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .location-photo {
+        filter: grayscale(0.85) saturate(0.15) contrast(0.84) brightness(1.08);
     }
 }

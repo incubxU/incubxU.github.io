@@ -7,6 +7,7 @@
         : [];
     const locationSection = document.querySelector('.location');
     const locationPhoto = document.querySelector('.location-photo');
+    const scheduleSection = document.querySelector('.schedule');
 
     function showSnakeInstant() {
         if (!snake) return;
@@ -31,12 +32,34 @@
         });
     }
 
+    let locationFocusMax = 0;
+    let locationExpandedAt = null;
+    let scheduleInView = false;
+    const SNAKE_SCROLL_AFTER_EXPAND = 160;
+
+    function tryPlaySnake() {
+        if (!scheduleSection || !scheduleSection.classList.contains('is-visible')) return;
+        if (locationExpandedAt === null) return;
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        if (scrollY < locationExpandedAt + SNAKE_SCROLL_AFTER_EXPAND) return;
+        playSnake();
+    }
+
+    function revealSchedule() {
+        if (!scheduleSection || scheduleSection.classList.contains('is-visible')) return;
+        if (!scheduleInView || locationExpandedAt === null) return;
+        scheduleSection.classList.add('is-visible');
+        tryPlaySnake();
+    }
+
     function expandLocation(el) {
         if (!el || el.classList.contains('is-expanded')) return;
         el.classList.add('is-expanded');
+        if (locationExpandedAt === null) {
+            locationExpandedAt = window.scrollY || window.pageYOffset || 0;
+        }
+        revealSchedule();
     }
-
-    let locationFocusMax = 0;
 
     function updateLocationFocus() {
         if (!locationSection || !locationPhoto || reduceMotion) return;
@@ -80,8 +103,8 @@
                     const el = entry.target;
 
                     if (el.classList.contains('schedule')) {
-                        el.classList.add('is-visible');
-                        playSnake();
+                        scheduleInView = true;
+                        revealSchedule();
                         obs.unobserve(el);
                         return;
                     }
@@ -110,6 +133,8 @@
             focusRaf = window.requestAnimationFrame(() => {
                 focusRaf = 0;
                 updateLocationFocus();
+                revealSchedule();
+                tryPlaySnake();
             });
         };
 
