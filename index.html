@@ -90,7 +90,7 @@
                     <span class="hero-cross" aria-hidden="true">×</span>
                     <span>ВЕРОНИКА</span>
                 </h1>
-                <p class="hero-wedding-day">мы&nbsp;женимся</p>
+                <p class="hero-wedding-day">Wedding day</p>
                 <p class="hero-date">16.11.2026</p>
             </div>
         </div>
@@ -271,92 +271,190 @@
 
             <!-- DRESS CODE -->
             <section class="section dresscode reveal">
-                <p class="section-label">Дресс-код</p>
-                <p class="section-text">
-                    Мы очень старались сделать праздник красивым и будем рады,
-                    если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы:
+                <p class="section-label dresscode-label">• Дресс-код •</p>
+                <h2 class="dresscode-title">Элегантная классика</h2>
+                <span class="dresscode-diamond" aria-hidden="true"></span>
+                <p class="section-text dresscode-intro">
+                    Мы будем благодарны, если вы поддержите атмосферу нашего дня
+                    и выберете образы в элегантной и сдержанной цветовой гамме.
                 </p>
-                <div class="palette" aria-label="Цветовая палитра">
-                    <span class="swatch swatch--azurite" title="Графитовая сталь"></span>
-                    <span class="swatch swatch--mountain" title="Дымчатый серый"></span>
-                    <span class="swatch swatch--contrail" title="Холодный туман"></span>
-                    <span class="swatch swatch--silver" title="Серебро"></span>
-                    <span class="swatch swatch--dove" title="Жемчуг"></span>
-                </div>
-                <p class="palette-hint">Сталь · Дымка · Серебро · Жемчуг</p>
-                <div class="dress-gallery" aria-label="Примеры образов в цветах дресс-кода">
-                    <button type="button" class="dress-gallery-btn dress-gallery-btn--prev" aria-label="Предыдущие фото">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M15 5L8 12l7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+
+                <div class="dresscode-stage">
+                    <div class="dresscode-mist" aria-hidden="true">
+                        <svg class="dresscode-mist-svg" viewBox="0 0 1000 700" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="dresscode-light" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#c8d0d8" stop-opacity="0.18" />
+                                    <stop offset="10%" stop-color="#d2d8de" stop-opacity="0.7" />
+                                    <stop offset="36%" stop-color="#e4e7eb" stop-opacity="0.96" />
+                                    <stop offset="78%" stop-color="#eceef1" stop-opacity="0.75" />
+                                    <stop offset="100%" stop-color="#eceef1" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="dresscode-crease-left" gradientUnits="userSpaceOnUse" x1="-40" y1="0" x2="210" y2="0">
+                                    <stop offset="0%" stop-color="#f4f6f8" stop-opacity="0.12" />
+                                    <stop offset="30%" stop-color="#f4f6f8" stop-opacity="0.5" />
+                                    <stop offset="100%" stop-color="#f4f6f8" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="dresscode-crease-right" gradientUnits="userSpaceOnUse" x1="800" y1="0" x2="1045" y2="0">
+                                    <stop offset="0%" stop-color="#f4f6f8" stop-opacity="0" />
+                                    <stop offset="70%" stop-color="#f4f6f8" stop-opacity="0.5" />
+                                    <stop offset="100%" stop-color="#f4f6f8" stop-opacity="0.12" />
+                                </linearGradient>
+                                <filter id="dresscode-wave-blur" x="-25%" y="-30%" width="150%" height="160%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="22" />
+                                </filter>
+                                <filter id="dresscode-crease-soft" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
+                                </filter>
+                            </defs>
+                            <!-- Gentle wave: mild left dip → soft crest mid-right -->
+                            <path
+                                d="M-60 120
+                                   C 120 165, 220 175, 340 130
+                                   C 470 80, 560 50, 690 60
+                                   C 810 70, 920 105, 1060 90
+                                   L 1060 760 L -60 760 Z"
+                                fill="url(#dresscode-light)"
+                                filter="url(#dresscode-wave-blur)"
+                            />
+                            <!-- Short crease accents only at left / right edges -->
+                            <path
+                                class="dresscode-crease"
+                                d="M-40 125 C 50 152, 120 170, 205 160"
+                                fill="none"
+                                stroke="url(#dresscode-crease-left)"
+                                stroke-width="1.15"
+                                stroke-linecap="round"
+                                vector-effect="non-scaling-stroke"
+                                filter="url(#dresscode-crease-soft)"
+                            />
+                            <path
+                                class="dresscode-crease"
+                                d="M 825 74 C 900 92, 970 108, 1038 96"
+                                fill="none"
+                                stroke="url(#dresscode-crease-right)"
+                                stroke-width="1.15"
+                                stroke-linecap="round"
+                                vector-effect="non-scaling-stroke"
+                                filter="url(#dresscode-crease-soft)"
+                            />
                         </svg>
-                    </button>
-                    <div class="dress-gallery-track">
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Мужской образ в глубоком синем"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Женский образ в лесном зелёном"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Мужской образ в благородном сером"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Вечерний образ в серебристо-серых тонах"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Элегантный образ в сине-зелёной гамме"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Классический костюм в спокойных тонах"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
                     </div>
-                    <button type="button" class="dress-gallery-btn dress-gallery-btn--next" aria-label="Следующие фото">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
+
+                    <div class="dresscode-circles">
+                        <article class="dresscode-circle dresscode-circle--her">
+                            <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                                <defs>
+                                    <filter id="dresscode-lens-blur" x="-120%" y="-120%" width="340%" height="340%">
+                                        <feGaussianBlur stdDeviation="22" />
+                                    </filter>
+                                    <filter id="dresscode-soft-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="mid" />
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide" />
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="42" result="bloom" />
+                                        <feMerge>
+                                            <feMergeNode in="bloom" />
+                                            <feMergeNode in="bloom" />
+                                            <feMergeNode in="wide" />
+                                            <feMergeNode in="wide" />
+                                            <feMergeNode in="mid" />
+                                        </feMerge>
+                                    </filter>
+                                    <filter id="dresscode-core-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="3.8" result="soft" />
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="near" />
+                                        <feMerge>
+                                            <feMergeNode in="soft" />
+                                            <feMergeNode in="near" />
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <circle class="dresscode-glow-halo" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-lens-blur)" />
+                                <circle class="dresscode-glow-edge" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-soft-glow)" />
+                                <circle class="dresscode-glow-core" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-core-glow)" />
+                            </svg>
+                            <p class="dresscode-circle-label">Для неё</p>
+                            <div class="dresscode-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 80" fill="none">
+                                    <circle cx="32" cy="11" r="5.2" stroke="currentColor" stroke-width="1.35" />
+                                    <path
+                                        d="M27.8 16.8c-.6 3.8-2.4 7-5.4 9.6L14.5 52c6.8 2.4 12.8 3.6 17.5 3.6s10.7-1.2 17.5-3.6L41.6 26.4c-3-2.6-4.8-5.8-5.4-9.6"
+                                        stroke="currentColor"
+                                        stroke-width="1.35"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M26 29.5c1.9 1.1 3.9 1.7 6 1.7s4.1-.6 6-1.7"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                    />
+                                    <path
+                                        d="M18.5 62c4.2 5.8 8.6 8.8 13.5 8.8S41.3 67.8 45.5 62"
+                                        stroke="currentColor"
+                                        stroke-width="1.35"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <p class="dresscode-circle-text">
+                                Платья в пол или миди, из струящихся тканей,
+                                благородные оттенки, минимум ярких акцентов.
+                            </p>
+                        </article>
+
+                        <article class="dresscode-circle dresscode-circle--him">
+                            <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                                <circle class="dresscode-glow-halo" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-lens-blur)" />
+                                <circle class="dresscode-glow-edge" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-soft-glow)" />
+                                <circle class="dresscode-glow-core" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-core-glow)" />
+                            </svg>
+                            <p class="dresscode-circle-label">Для него</p>
+                            <div class="dresscode-icon" aria-hidden="true">
+                                <svg viewBox="0 0 64 72" fill="none">
+                                    <path
+                                        d="M23 16h18l9 13v30H14V29l9-13z"
+                                        stroke="currentColor"
+                                        stroke-width="1.35"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M23 16l9 15M41 16l-9 15"
+                                        stroke="currentColor"
+                                        stroke-width="1.35"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M32 31v12"
+                                        stroke="currentColor"
+                                        stroke-width="1.35"
+                                        stroke-linecap="round"
+                                    />
+                                    <path
+                                        d="M29.6 22.5c.7 2 1.5 3.1 2.4 3.1s1.7-1.1 2.4-3.1"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                    />
+                                    <path
+                                        d="M17.5 27H12M46.5 27H52"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <p class="dresscode-circle-text">
+                                Классический костюм или смокинг, рубашка, элегантные туфли.
+                            </p>
+                        </article>
+                    </div>
+
+                    <p class="dresscode-note">
+                        Пожалуйста, воздержитесь от белого цвета,
+                        чтобы этот день был особенным для нас.
+                    </p>
+                    <span class="dresscode-diamond" aria-hidden="true"></span>
                 </div>
             </section>
 
