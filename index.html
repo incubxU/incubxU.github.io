@@ -149,30 +149,55 @@
 
             <!-- LOCATION -->
             <section class="section location reveal">
-                <p class="section-label">Место проведения</p>
                 <div class="location-stage">
-                    <div class="location-frame">
+                    <div class="location-orbit" aria-hidden="true"></div>
+
+                    <div class="location-circle location-circle--top">
                         <div class="location-photo-wrap">
                             <div class="location-photo" role="img" aria-label="Фото места проведения"></div>
                         </div>
-                        <div class="location-cylinder">
-                            <div class="location-details">
-                                <h2 class="location-name">Касание Горизонта</h2>
-                                <p class="location-place">Ленинградская область, Ладожское озеро</p>
-                                <p class="location-note">
-                                    Трогательная церемония и последующий уютный вечер
-                                    пройдут на берегу Ладожского озера —
-                                    в атмосфере свежего воздуха, тишины и гармонии с природой.
-                                </p>
-                                <a
-                                    class="btn-map"
-                                    href="https://yandex.ru/maps/-/CTbviPYs"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Место на карте
-                                </a>
-                            </div>
+                        <svg class="location-arc" viewBox="0 0 272 260" aria-hidden="true">
+                            <defs>
+                                <path id="location-arc-1" d="M 43,165 A 114 114 0 0 0 229,165" fill="none" />
+                                <path id="location-arc-2" d="M 28,176 A 132 132 0 0 0 244,176" fill="none" />
+                                <path id="location-arc-3" d="M 13,186 A 150 150 0 0 0 259,186" fill="none" />
+                            </defs>
+                            <text class="location-arc-text location-arc-text--1" text-anchor="middle">
+                                <textPath href="#location-arc-1" startOffset="50%">КАСАНИЕ ГОРИЗОНТА,</textPath>
+                            </text>
+                            <text class="location-arc-text location-arc-text--2" text-anchor="middle">
+                                <textPath href="#location-arc-2" startOffset="50%">ЛЕНИНГРАДСКАЯ ОБЛАСТЬ,</textPath>
+                            </text>
+                            <text class="location-arc-text location-arc-text--3" text-anchor="middle">
+                                <textPath href="#location-arc-3" startOffset="50%">ЛАДОЖСКОЕ ОЗЕРО</textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <div class="location-circle location-circle--bottom">
+                        <div class="location-bottom-glow" aria-hidden="true"></div>
+                        <div class="location-details">
+                            <h2 class="location-kicker">◇ МЕСТО ПРОВЕДЕНИЯ ◇</h2>
+                            <p class="location-note">
+                                Трогательная церемония и последующий уютный вечер
+                                пройдут на берегу Ладожского озера —
+                                в атмосфере свежего воздуха, тишины и гармонии с природой.
+                            </p>
+                            <span class="location-diamond" aria-hidden="true">◇</span>
+                            <a
+                                class="btn-map"
+                                href="https://yandex.ru/maps/-/CTbviPYs"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <svg class="btn-map-pin" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                    <path
+                                        fill="currentColor"
+                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"
+                                    />
+                                </svg>
+                                Место на карте
+                            </a>
                         </div>
                     </div>
                 </div>

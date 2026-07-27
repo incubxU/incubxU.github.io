@@ -6,7 +6,6 @@
         ? Array.from(snake.querySelectorAll('.snake-item'))
         : [];
     const locationSection = document.querySelector('.location');
-    const locationPhoto = document.querySelector('.location-photo');
     const scheduleSection = document.querySelector('.schedule');
 
     function showSnakeInstant() {
@@ -32,7 +31,6 @@
         });
     }
 
-    let locationFocusMax = 0;
     let locationExpandedAt = null;
     let scheduleInView = false;
     const SNAKE_SCROLL_AFTER_EXPAND = 160;
@@ -61,27 +59,17 @@
         revealSchedule();
     }
 
-    function updateLocationFocus() {
-        if (!locationSection || !locationPhoto || reduceMotion) return;
+    function updateLocationExpand() {
+        if (!locationSection || reduceMotion) return;
 
         const rect = locationSection.getBoundingClientRect();
         const vh = window.innerHeight || 1;
-        const start = vh * 0.42;
-        const end = vh * 0.08 + 3;
+        const start = vh * 0.48;
+        const end = vh * 0.18;
         let progress = (start - rect.top) / (start - end);
         progress = Math.max(0, Math.min(1, progress));
 
-        const eased = 1 - Math.pow(1 - progress, 2.6);
-        locationFocusMax = Math.max(locationFocusMax, eased);
-
-        const blur = (1 - locationFocusMax) * 28;
-        const scale = 1 + (1 - locationFocusMax) * 0.12;
-
-        locationPhoto.style.setProperty('--photo-blur', `${blur.toFixed(2)}px`);
-        locationPhoto.style.setProperty('--photo-scale', scale.toFixed(4));
-
-        // Expand cylinder only when photo is nearly sharp
-        if (locationFocusMax >= 0.88) {
+        if (progress >= 0.55) {
             expandLocation(locationSection);
         }
     }
@@ -127,12 +115,12 @@
 
         revealElements.forEach((el) => observer.observe(el));
 
-        let focusRaf = 0;
+        let expandRaf = 0;
         const onScrollOrResize = () => {
-            if (focusRaf) return;
-            focusRaf = window.requestAnimationFrame(() => {
-                focusRaf = 0;
-                updateLocationFocus();
+            if (expandRaf) return;
+            expandRaf = window.requestAnimationFrame(() => {
+                expandRaf = 0;
+                updateLocationExpand();
                 revealSchedule();
                 tryPlaySnake();
             });
@@ -140,7 +128,7 @@
 
         window.addEventListener('scroll', onScrollOrResize, { passive: true });
         window.addEventListener('resize', onScrollOrResize);
-        updateLocationFocus();
+        updateLocationExpand();
     }
 
     const target = new Date('2026-05-15T00:00:00').getTime();
