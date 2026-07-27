@@ -1197,21 +1197,21 @@ body {
 }
 
 .dresscode-glow-halo {
-    stroke: rgba(255, 255, 255, 0.42);
-    stroke-width: 22;
-    opacity: 0.7;
+    stroke: rgba(255, 255, 255, 0.28);
+    stroke-width: 18;
+    opacity: 0.45;
 }
 
 .dresscode-glow-edge {
-    stroke: rgba(255, 255, 255, 0.72);
-    stroke-width: 3.2;
-    opacity: 0.95;
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 2.4;
+    opacity: 0.55;
 }
 
 .dresscode-glow-core {
-    stroke: rgba(255, 255, 255, 0.55);
-    stroke-width: 1.6;
-    opacity: 0.85;
+    stroke: rgba(255, 255, 255, 0.38);
+    stroke-width: 1.2;
+    opacity: 0.5;
 }
 
 .dresscode-circle--her .dresscode-glow-edge {
@@ -1897,21 +1897,21 @@ body {
 }
 
 .dresscode-glow-halo {
-    stroke: rgba(247, 251, 255, 0.5);
-    stroke-width: 24;
-    opacity: 0.75;
+    stroke: rgba(247, 251, 255, 0.32);
+    stroke-width: 18;
+    opacity: 0.45;
 }
 
 .dresscode-glow-edge {
-    stroke: rgba(250, 253, 255, 0.88);
-    stroke-width: 3.4;
-    opacity: 1;
+    stroke: rgba(250, 253, 255, 0.55);
+    stroke-width: 2.4;
+    opacity: 0.55;
 }
 
 .dresscode-glow-core {
-    stroke: rgba(255, 255, 255, 0.7);
-    stroke-width: 1.8;
-    opacity: 0.9;
+    stroke: rgba(255, 255, 255, 0.42);
+    stroke-width: 1.2;
+    opacity: 0.5;
 }
 
 .dresscode-circle--her .dresscode-glow-edge {
@@ -2350,25 +2350,25 @@ body {
 }
 
 .dresscode-glow-halo {
-    stroke: rgba(255, 255, 255, 0.95);
-    stroke-width: 26;
-    opacity: 1;
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 20;
+    opacity: 0.45;
 }
 
 .dresscode-glow-edge,
 .dresscode-circle--her .dresscode-glow-edge,
 .dresscode-circle--him .dresscode-glow-edge {
-    stroke: #ffffff;
+    stroke: rgba(255, 255, 255, 0.72);
     stroke-width: 1.1;
-    opacity: 1;
+    opacity: 0.55;
 }
 
 .dresscode-glow-core,
 .dresscode-circle--her .dresscode-glow-core,
 .dresscode-circle--him .dresscode-glow-core {
-    stroke: #ffffff;
+    stroke: rgba(255, 255, 255, 0.55);
     stroke-width: 0.65;
-    opacity: 1;
+    opacity: 0.5;
 }
 
 .btn-map:focus-visible,
