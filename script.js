@@ -19,7 +19,7 @@
         snake.dataset.played = '1';
         snake.classList.add('is-drawn');
 
-        const durationMs = 2400;
+        const durationMs = 2800;
 
         snakeItems.forEach((item) => {
             const at = Number(item.dataset.at || 0);
