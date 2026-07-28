@@ -43,7 +43,7 @@ body {
     line-height: 1.75;
     letter-spacing: 0.01em;
     /* Matches atmosphere bottom / continuation seam tone */
-    background: #2c5070;
+    background: #3a6f92;
     overflow-x: hidden;
 }
 
@@ -59,9 +59,14 @@ body {
     height: 100dvh;
     /* Overscale + top-anchor crops the studio floor strip in the asset */
     background:
-        linear-gradient(180deg, rgba(14, 48, 88, 0.3), rgba(8, 40, 78, 0.4)),
+        radial-gradient(ellipse 42% 34% at 18% 22%, rgba(236, 242, 246, 0.2), transparent 70%),
+        radial-gradient(ellipse 36% 30% at 78% 38%, rgba(220, 230, 238, 0.16), transparent 68%),
+        radial-gradient(ellipse 48% 38% at 48% 68%, rgba(228, 236, 242, 0.14), transparent 72%),
+        radial-gradient(ellipse 28% 24% at 88% 78%, rgba(210, 222, 232, 0.12), transparent 65%),
+        radial-gradient(ellipse 32% 26% at 32% 86%, rgba(242, 246, 248, 0.1), transparent 62%),
+        linear-gradient(180deg, rgba(72, 132, 178, 0.34), rgba(48, 108, 158, 0.4)),
         url('images/bg-continuation.png') center top / 125% 125% no-repeat,
-        #2c5070;
+        #3a6f92;
     pointer-events: none;
 }
 
@@ -131,8 +136,9 @@ body {
     justify-content: center;
     padding: 56px 20px 88px;
     text-align: center;
-    overflow: hidden;
-    isolation: isolate;
+    /* visible: background-attachment:fixed on .hero-bg must not be
+       demoted by an overflow clipping ancestor */
+    overflow: visible;
 }
 
 /* Atmosphere plate — wide plate, full-bleed on all viewports */
@@ -141,25 +147,48 @@ body {
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    /* Opaque continuation locked to the viewport — same plate as .page-bg,
+       so the hero box edge never reveals a different texture. */
     background:
-        linear-gradient(180deg, rgba(14, 48, 88, 0.24), rgba(8, 40, 78, 0.34)),
+        radial-gradient(ellipse 42% 34% at 18% 22%, rgba(236, 242, 246, 0.2), transparent 70%),
+        radial-gradient(ellipse 36% 30% at 78% 38%, rgba(220, 230, 238, 0.16), transparent 68%),
+        radial-gradient(ellipse 48% 38% at 48% 68%, rgba(228, 236, 242, 0.14), transparent 72%),
+        radial-gradient(ellipse 28% 24% at 88% 78%, rgba(210, 222, 232, 0.12), transparent 65%),
+        radial-gradient(ellipse 32% 26% at 32% 86%, rgba(242, 246, 248, 0.1), transparent 62%),
+        linear-gradient(180deg, rgba(72, 132, 178, 0.34), rgba(48, 108, 158, 0.4)),
+        url('images/bg-continuation.png') center top / 125% 125% no-repeat,
+        #3a6f92;
+    background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, scroll;
+}
+
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 40% 32% at 22% 20%, rgba(240, 244, 248, 0.22), transparent 68%),
+        radial-gradient(ellipse 34% 28% at 72% 36%, rgba(224, 234, 242, 0.16), transparent 66%),
+        radial-gradient(ellipse 44% 36% at 50% 62%, rgba(232, 238, 244, 0.12), transparent 70%),
+        linear-gradient(180deg, rgba(72, 132, 178, 0.34), rgba(48, 108, 158, 0.4)),
         url('images/bg-atmosphere.png') center center / cover no-repeat;
-    /* Crossfade into fixed page-bg — kills the hard horizontal cut */
+    /* Long soft dissolve — gone well above the hero/sheet join */
     -webkit-mask-image: linear-gradient(
         180deg,
         #000 0%,
-        #000 58%,
-        rgba(0, 0, 0, 0.82) 72%,
-        rgba(0, 0, 0, 0.35) 88%,
-        transparent 100%
+        #000 32%,
+        rgba(0, 0, 0, 0.75) 48%,
+        rgba(0, 0, 0, 0.35) 60%,
+        rgba(0, 0, 0, 0.1) 70%,
+        transparent 82%
     );
     mask-image: linear-gradient(
         180deg,
         #000 0%,
-        #000 58%,
-        rgba(0, 0, 0, 0.82) 72%,
-        rgba(0, 0, 0, 0.35) 88%,
-        transparent 100%
+        #000 32%,
+        rgba(0, 0, 0, 0.75) 48%,
+        rgba(0, 0, 0, 0.35) 60%,
+        rgba(0, 0, 0, 0.1) 70%,
+        transparent 82%
     );
 }
 
@@ -173,7 +202,7 @@ body {
     width: min(92vw, 400px);
     aspect-ratio: 400 / 520;
     flex-shrink: 0;
-    z-index: 1;
+    isolation: isolate;
 }
 
 .hero-rings {
@@ -383,29 +412,30 @@ body {
 .sheet {
     position: relative;
     z-index: 2;
-    margin-top: -32px;
+    margin-top: -48px;
     width: 100%;
-    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    border-radius: 0;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: none;
     border-top: none;
     overflow: visible;
-    isolation: isolate;
 }
 
 .sheet::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: inherit;
     pointer-events: none;
     z-index: 0;
     opacity: 0.045;
     mix-blend-mode: soft-light;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
+    /* Fade grain in so its top edge doesn't read as a seam */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 64px);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 64px);
 }
 
 .sheet-inner {
@@ -693,45 +723,196 @@ body {
    ============================================================ */
 .location-stage {
     --circle-size: min(78vw, 280px);
-    --split: calc(var(--circle-size) * 0.82);
+    --split: calc(var(--circle-size) * 0.98);
     position: relative;
     width: 100%;
-    height: calc(var(--circle-size) * 3.05 + 5rem);
+    height: calc(var(--circle-size) * 3.35 + 5rem);
     margin: 0.2rem auto 0;
 }
 
-/* Soft aureoles — no hard edges between bright zones */
-.location-orbit {
+/* Atmospheric orbs — directional beams (Expo-style, not circular) */
+.location-orbs {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.location-orb {
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index: 0;
-    width: calc(var(--circle-size) * 1.85);
-    height: calc(var(--circle-size) * 3.2);
+    border-radius: 50%;
+    pointer-events: none;
     transform: translate(-50%, -50%);
-    border-radius: 0;
+    transition:
+        width 1.3s cubic-bezier(0.33, 0.05, 0.2, 1),
+        height 1.3s cubic-bezier(0.33, 0.05, 0.2, 1),
+        transform 1.3s cubic-bezier(0.33, 0.05, 0.2, 1),
+        opacity 1.2s cubic-bezier(0.33, 0.05, 0.2, 1),
+        filter 1.2s cubic-bezier(0.33, 0.05, 0.2, 1);
+}
+
+/* White beam: upper tip meets photo top, light streams downward */
+.location-orb--top {
+    width: calc(var(--circle-size) * 2.05);
+    height: calc(var(--circle-size) * 2.35);
     background:
         radial-gradient(
-            ellipse 58% 32% at 50% 14%,
-            rgba(245, 251, 255, 0.34) 0%,
-            rgba(210, 228, 240, 0.12) 42%,
-            transparent 72%
-        ),
-        radial-gradient(
-            ellipse 40% 42% at 50% 48%,
-            rgba(220, 234, 244, 0.12) 0%,
-            rgba(180, 205, 220, 0.05) 45%,
+            ellipse 72% 48% at 50% 18%,
+            #ffffff 0%,
+            #ffffff 10%,
+            rgba(255, 255, 255, 0.98) 22%,
+            rgba(248, 252, 255, 0.72) 40%,
+            rgba(220, 235, 255, 0.32) 58%,
             transparent 78%
-        ),
+        );
+    -webkit-mask-image: linear-gradient(
+        180deg,
+        #000 0%,
+        #000 22%,
+        #000 40%,
+        rgba(0, 0, 0, 0.45) 68%,
+        transparent 95%
+    );
+    mask-image: linear-gradient(
+        180deg,
+        #000 0%,
+        #000 22%,
+        #000 40%,
+        rgba(0, 0, 0, 0.45) 68%,
+        transparent 95%
+    );
+    filter: blur(26px);
+    opacity: 0;
+    /* Apex near photo top edge (between 0.58 too-high and 1.15 too-low) */
+    transform: translate(-50%, calc(-50% + var(--circle-size) * 0.52)) scale(0.72);
+}
+
+.location.is-expanded .location-orb--top {
+    width: calc(var(--circle-size) * 2.2);
+    height: calc(var(--circle-size) * 2.5);
+    opacity: 1;
+    filter: blur(28px);
+    transform: translate(
+        -50%,
+        calc(-50% - var(--split) + var(--circle-size) * 0.7)
+    ) scale(1);
+}
+
+/* Narrow vertical bridge where beams meet */
+.location-orb--bridge {
+    width: calc(var(--circle-size) * 0.5);
+    height: calc(var(--circle-size) * 1.4);
+    border-radius: 50%;
+    background:
         radial-gradient(
-            ellipse 72% 38% at 50% 92%,
-            rgba(245, 251, 255, 0.36) 0%,
-            rgba(200, 222, 236, 0.14) 38%,
+            ellipse 60% 80% at 50% 50%,
+            rgba(160, 190, 245, 0.2) 0%,
+            rgba(100, 140, 210, 0.08) 40%,
             transparent 70%
         );
-    filter: blur(34px);
-    opacity: 0.95;
-    pointer-events: none;
+    filter: blur(36px);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.75);
+}
+
+.location.is-expanded .location-orb--bridge {
+    width: calc(var(--circle-size) * 0.55);
+    height: calc(var(--circle-size) * 2);
+    opacity: 0.48;
+    filter: blur(38px);
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Blue beam: mirror of white — lower tip meets text bottom, light streams upward */
+.location-orb--bottom {
+    width: calc(var(--circle-size) * 2.05);
+    height: calc(var(--circle-size) * 2.35);
+    background:
+        radial-gradient(
+            ellipse 72% 48% at 50% 82%,
+            #6ea8ff 0%,
+            rgba(90, 155, 255, 0.98) 10%,
+            rgba(70, 130, 245, 0.85) 24%,
+            rgba(50, 105, 210, 0.5) 42%,
+            rgba(30, 75, 170, 0.22) 60%,
+            transparent 78%
+        );
+    -webkit-mask-image: linear-gradient(
+        0deg,
+        #000 0%,
+        #000 22%,
+        #000 40%,
+        rgba(0, 0, 0, 0.45) 68%,
+        transparent 95%
+    );
+    mask-image: linear-gradient(
+        0deg,
+        #000 0%,
+        #000 22%,
+        #000 40%,
+        rgba(0, 0, 0, 0.45) 68%,
+        transparent 95%
+    );
+    filter: blur(26px);
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - var(--circle-size) * 0.52)) scale(0.72);
+}
+
+.location.is-expanded .location-orb--bottom {
+    width: calc(var(--circle-size) * 2.2);
+    height: calc(var(--circle-size) * 2.5);
+    opacity: 1;
+    filter: blur(28px);
+    transform: translate(
+        -50%,
+        calc(-50% + var(--split) - var(--circle-size) * 0.7)
+    ) scale(1);
+}
+
+/* Soft outer aura — mirrors bottom, slightly larger */
+.location-orb--aura {
+    width: calc(var(--circle-size) * 2.35);
+    height: calc(var(--circle-size) * 2.65);
+    background:
+        radial-gradient(
+            ellipse 78% 52% at 50% 84%,
+            rgba(100, 160, 255, 0.5) 0%,
+            rgba(70, 130, 235, 0.22) 38%,
+            transparent 72%
+        );
+    -webkit-mask-image: linear-gradient(
+        0deg,
+        #000 0%,
+        #000 22%,
+        #000 40%,
+        rgba(0, 0, 0, 0.35) 68%,
+        transparent 95%
+    );
+    mask-image: linear-gradient(
+        0deg,
+        #000 0%,
+        #000 22%,
+        #000 40%,
+        rgba(0, 0, 0, 0.35) 68%,
+        transparent 95%
+    );
+    filter: blur(40px);
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - var(--circle-size) * 0.52)) scale(0.72);
+}
+
+.location.is-expanded .location-orb--aura {
+    width: calc(var(--circle-size) * 2.5);
+    height: calc(var(--circle-size) * 2.8);
+    opacity: 0.75;
+    filter: blur(44px);
+    transform: translate(
+        -50%,
+        calc(-50% + var(--split) - var(--circle-size) * 0.7)
+    ) scale(1);
 }
 
 .location-circle {
@@ -769,13 +950,11 @@ body {
     align-items: center;
     justify-content: center;
     overflow: visible;
-    border: 1px solid rgba(247, 248, 245, 0.32);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(247, 248, 245, 0.22);
+    background: rgba(255, 255, 255, 0.04);
     box-shadow:
-        0 0 0 1px rgba(247, 248, 245, 0.08),
-        0 0 28px 6px rgba(244, 247, 245, 0.2),
-        0 0 64px 16px rgba(219, 230, 234, 0.16),
-        inset 0 0 36px rgba(247, 248, 245, 0.08);
+        0 0 0 1px rgba(247, 248, 245, 0.05),
+        inset 0 0 24px rgba(247, 248, 245, 0.04);
 }
 
 /* After split: no circle — soft uplight from below */
@@ -785,33 +964,7 @@ body {
     box-shadow: none;
 }
 
-.location-bottom-glow {
-    position: absolute;
-    left: 50%;
-    bottom: -18%;
-    z-index: 0;
-    width: 165%;
-    height: 135%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    opacity: 0;
-    background:
-        radial-gradient(
-            ellipse 68% 58% at 50% 100%,
-            rgba(245, 251, 255, 0.42) 0%,
-            rgba(210, 228, 240, 0.2) 28%,
-            rgba(170, 200, 220, 0.08) 52%,
-            transparent 74%
-        );
-    filter: blur(28px);
-    transition: opacity 1.2s cubic-bezier(0.33, 0.05, 0.2, 1) 0.35s;
-}
-
-.location.is-expanded .location-bottom-glow {
-    opacity: 1;
-}
-
-/* Full circular glow around the photo */
+/* Photo rim glow — appears with split, not in folded state */
 .location-photo-wrap {
     position: relative;
     z-index: 2;
@@ -819,38 +972,32 @@ body {
     height: 100%;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
-    box-shadow:
-        0 0 0 1px rgba(247, 248, 245, 0.55),
-        0 0 24px 6px rgba(244, 247, 245, 0.4),
-        0 0 64px 18px rgba(219, 230, 234, 0.3),
-        0 0 100px 36px rgba(200, 220, 235, 0.12);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28);
     transition: box-shadow 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .location-photo-wrap::before {
     content: '';
     position: absolute;
-    inset: -28px;
+    inset: -18px;
     border-radius: 50%;
     background: radial-gradient(
         circle at 50% 50%,
-        rgba(241, 248, 252, 0.22) 0%,
-        rgba(220, 234, 244, 0.1) 38%,
-        transparent 68%
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 70%
     );
-    filter: blur(18px);
-    opacity: 0.9;
+    filter: blur(10px);
+    opacity: 0;
     pointer-events: none;
     z-index: -1;
-    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 1.3s cubic-bezier(0.33, 0.05, 0.2, 1);
 }
 
 .location.is-expanded .location-photo-wrap {
     box-shadow:
-        0 0 0 1px rgba(247, 248, 245, 0.7),
-        0 0 26px 7px rgba(244, 247, 245, 0.5),
-        0 0 72px 22px rgba(219, 230, 234, 0.36),
-        0 0 110px 40px rgba(200, 220, 235, 0.14);
+        0 0 0 1px rgba(255, 255, 255, 0.8),
+        0 0 32px 10px rgba(255, 255, 255, 0.55),
+        0 0 72px 24px rgba(240, 248, 255, 0.32);
 }
 
 .location.is-expanded .location-photo-wrap::before {
@@ -992,7 +1139,7 @@ body {
     cursor: pointer;
     box-shadow:
         inset 0 0 28px rgba(247, 248, 245, 0.08),
-        0 0 30px rgba(239, 244, 243, 0.12);
+        0 0 36px rgba(45, 100, 180, 0.3);
     transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
 }
 
@@ -1007,7 +1154,7 @@ body {
     color: var(--white);
     box-shadow:
         inset 0 0 32px rgba(250, 250, 247, 0.12),
-        0 0 38px rgba(245, 247, 245, 0.28);
+        0 0 40px rgba(50, 110, 190, 0.4);
     transform: none;
 }
 
@@ -1017,12 +1164,12 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
     .location-circle,
+    .location-orb,
     .location-photo-wrap,
     .location-photo-wrap::before,
     .location-photo,
     .location-arc,
-    .location-details,
-    .location-bottom-glow {
+    .location-details {
         transition: none;
     }
 
@@ -1039,12 +1186,60 @@ body {
         box-shadow: none;
     }
 
+    .location-orb--top,
+    .location.is-expanded .location-orb--top {
+        width: calc(var(--circle-size) * 2.2);
+        height: calc(var(--circle-size) * 2.5);
+        opacity: 1;
+        filter: blur(28px);
+        transform: translate(
+            -50%,
+            calc(-50% - var(--split) + var(--circle-size) * 0.7)
+        ) scale(1);
+    }
+
+    .location-orb--bridge,
+    .location.is-expanded .location-orb--bridge {
+        width: calc(var(--circle-size) * 0.55);
+        height: calc(var(--circle-size) * 2);
+        opacity: 0.48;
+        filter: blur(38px);
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .location-orb--bottom,
+    .location.is-expanded .location-orb--bottom {
+        width: calc(var(--circle-size) * 2.2);
+        height: calc(var(--circle-size) * 2.5);
+        opacity: 1;
+        filter: blur(28px);
+        transform: translate(
+            -50%,
+            calc(-50% + var(--split) - var(--circle-size) * 0.7)
+        ) scale(1);
+    }
+
+    .location-orb--aura,
+    .location.is-expanded .location-orb--aura {
+        width: calc(var(--circle-size) * 2.5);
+        height: calc(var(--circle-size) * 2.8);
+        opacity: 0.75;
+        filter: blur(44px);
+        transform: translate(
+            -50%,
+            calc(-50% + var(--split) - var(--circle-size) * 0.7)
+        ) scale(1);
+    }
+
     .location-photo,
     .location-arc,
-    .location-details,
-    .location-bottom-glow {
+    .location-details {
         opacity: 1;
         transform: none;
+    }
+
+    .location-photo-wrap::before {
+        opacity: 1;
     }
 }
 
@@ -1577,7 +1772,7 @@ body {
     .sheet {
         margin-inline: 0;
         width: 100%;
-        border-radius: 36px 36px 0 0;
+        border-radius: 0;
     }
 }
 
@@ -1585,6 +1780,38 @@ body {
     .sheet-inner {
         padding-left: 18px;
         padding-right: 18px;
+    }
+
+    .location-orb--top {
+        filter: blur(20px);
+    }
+
+    .location.is-expanded .location-orb--top {
+        filter: blur(22px);
+    }
+
+    .location-orb--bridge {
+        filter: blur(28px);
+    }
+
+    .location.is-expanded .location-orb--bridge {
+        filter: blur(30px);
+    }
+
+    .location-orb--bottom {
+        filter: blur(24px);
+    }
+
+    .location.is-expanded .location-orb--bottom {
+        filter: blur(26px);
+    }
+
+    .location-orb--aura {
+        filter: blur(34px);
+    }
+
+    .location.is-expanded .location-orb--aura {
+        filter: blur(36px);
     }
 
     .dresscode-circle {
@@ -1670,7 +1897,7 @@ body {
 
 body {
     color: var(--text);
-    background: #2c5070;
+    background: #3a6f92;
     text-rendering: geometricPrecision;
 }
 
@@ -1680,9 +1907,14 @@ body {
     height: 100vh;
     height: 100dvh;
     background:
-        linear-gradient(180deg, rgba(14, 48, 88, 0.3), rgba(8, 40, 78, 0.4)),
+        radial-gradient(ellipse 42% 34% at 18% 22%, rgba(236, 242, 246, 0.2), transparent 70%),
+        radial-gradient(ellipse 36% 30% at 78% 38%, rgba(220, 230, 238, 0.16), transparent 68%),
+        radial-gradient(ellipse 48% 38% at 48% 68%, rgba(228, 236, 242, 0.14), transparent 72%),
+        radial-gradient(ellipse 28% 24% at 88% 78%, rgba(210, 222, 232, 0.12), transparent 65%),
+        radial-gradient(ellipse 32% 26% at 32% 86%, rgba(242, 246, 248, 0.1), transparent 62%),
+        linear-gradient(180deg, rgba(72, 132, 178, 0.34), rgba(48, 108, 158, 0.4)),
         url('images/bg-continuation.png') center top / 125% 125% no-repeat,
-        #2c5070;
+        #3a6f92;
     filter: none;
 }
 
@@ -1900,13 +2132,11 @@ body {
 }
 
 .location-circle--bottom {
-    border-color: rgba(248, 252, 255, 0.42);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(248, 252, 255, 0.28);
+    background: rgba(255, 255, 255, 0.05);
     box-shadow:
-        0 0 0 1px rgba(248, 252, 255, 0.1),
-        0 0 32px 6px rgba(245, 251, 255, 0.28),
-        0 0 68px 16px rgba(221, 234, 243, 0.18),
-        inset 0 0 36px rgba(255, 255, 255, 0.12);
+        0 0 0 1px rgba(248, 252, 255, 0.06),
+        inset 0 0 24px rgba(255, 255, 255, 0.06);
 }
 
 .location.is-expanded .location-circle--bottom {
@@ -1915,21 +2145,22 @@ body {
     box-shadow: none;
 }
 
-.location-photo-wrap,
+.location-photo-wrap {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.32);
+}
+
 .location.is-expanded .location-photo-wrap {
     box-shadow:
         0 0 0 1px rgba(255, 255, 255, 0.84),
         0 0 0 2px rgba(133, 151, 164, 0.2),
-        0 0 24px 6px rgba(245, 251, 255, 0.44),
-        0 0 58px 15px rgba(221, 234, 243, 0.26),
-        0 0 100px 36px rgba(200, 220, 235, 0.14);
+        0 0 28px 8px rgba(255, 255, 255, 0.5),
+        0 0 64px 20px rgba(235, 245, 255, 0.3);
 }
 
 .location-photo-wrap::before {
     background: radial-gradient(
         circle at 50% 50%,
-        rgba(241, 248, 252, 0.28) 0%,
-        rgba(220, 234, 244, 0.12) 40%,
+        rgba(255, 255, 255, 0.22) 0%,
         transparent 70%
     );
 }
@@ -1956,6 +2187,12 @@ body {
         0 0 28px rgba(243, 250, 253, 0.1);
 }
 
+.btn-map {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 36px rgba(45, 100, 180, 0.3);
+}
+
 .btn-map:hover,
 .btn-rsvp:hover {
     color: var(--white);
@@ -1964,6 +2201,12 @@ body {
     box-shadow:
         inset 0 0 30px rgba(255, 255, 255, 0.12),
         0 0 34px rgba(246, 251, 254, 0.22);
+}
+
+.btn-map:hover {
+    box-shadow:
+        inset 0 0 30px rgba(255, 255, 255, 0.12),
+        0 0 40px rgba(50, 110, 190, 0.4);
 }
 
 .snake-line {
@@ -2107,7 +2350,7 @@ body {
 
 body {
     color: var(--text);
-    background: #2c5070;
+    background: #3a6f92;
     font-weight: 300;
     letter-spacing: 0.025em;
 }
@@ -2118,9 +2361,14 @@ body {
     height: 100vh;
     height: 100dvh;
     background:
-        linear-gradient(180deg, rgba(14, 48, 88, 0.3), rgba(8, 40, 78, 0.4)),
+        radial-gradient(ellipse 42% 34% at 18% 22%, rgba(236, 242, 246, 0.2), transparent 70%),
+        radial-gradient(ellipse 36% 30% at 78% 38%, rgba(220, 230, 238, 0.16), transparent 68%),
+        radial-gradient(ellipse 48% 38% at 48% 68%, rgba(228, 236, 242, 0.14), transparent 72%),
+        radial-gradient(ellipse 28% 24% at 88% 78%, rgba(210, 222, 232, 0.12), transparent 65%),
+        radial-gradient(ellipse 32% 26% at 32% 86%, rgba(242, 246, 248, 0.1), transparent 62%),
+        linear-gradient(180deg, rgba(72, 132, 178, 0.34), rgba(48, 108, 158, 0.4)),
         url('images/bg-continuation.png') center top / 125% 125% no-repeat,
-        #2c5070;
+        #3a6f92;
     filter: none;
 }
 
@@ -2138,13 +2386,21 @@ body {
 }
 
 .paper-grain {
-    opacity: 0.18;
+    opacity: 0.22;
     mix-blend-mode: soft-light;
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(236, 242, 246, 0.08) 0%,
+            rgba(210, 222, 232, 0) 42%,
+            rgba(220, 230, 238, 0.06) 100%
+        ),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
 }
 
 .film-grain {
-    opacity: 0.2;
-    mix-blend-mode: overlay;
+    opacity: 0.16;
+    mix-blend-mode: soft-light;
 }
 
 .hero::before {
@@ -2251,7 +2507,7 @@ body {
 .sheet {
     margin-inline: 0;
     width: 100%;
-    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    border-radius: 0;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -2354,13 +2610,11 @@ body {
 }
 
 .location-circle--bottom {
-    border-color: rgba(245, 247, 245, 0.35);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(245, 247, 245, 0.25);
+    background: rgba(255, 255, 255, 0.05);
     box-shadow:
-        0 0 0 1px rgba(247, 248, 245, 0.1),
-        0 0 32px 6px rgba(244, 247, 245, 0.22),
-        0 0 72px 18px rgba(221, 231, 234, 0.2),
-        inset 0 0 36px rgba(247, 248, 245, 0.12);
+        0 0 0 1px rgba(247, 248, 245, 0.06),
+        inset 0 0 24px rgba(247, 248, 245, 0.05);
 }
 
 .location.is-expanded .location-circle--bottom {
@@ -2369,17 +2623,19 @@ body {
     box-shadow: none;
 }
 
-.location-photo-wrap,
+.location-photo-wrap {
+    box-shadow: 0 0 0 1px rgba(247, 248, 245, 0.3);
+}
+
 .location.is-expanded .location-photo-wrap {
     box-shadow:
-        0 0 0 1px rgba(247, 248, 245, 0.62),
-        0 0 26px 7px rgba(244, 247, 245, 0.48),
-        0 0 68px 20px rgba(219, 230, 234, 0.38),
-        0 0 110px 40px rgba(200, 220, 235, 0.14);
+        0 0 0 1px rgba(247, 248, 245, 0.7),
+        0 0 28px 8px rgba(255, 255, 255, 0.5),
+        0 0 64px 20px rgba(235, 245, 255, 0.3);
 }
 
 .location-photo-wrap::before {
-    filter: blur(18px);
+    filter: blur(10px);
 }
 
 .location-photo {
@@ -2404,6 +2660,12 @@ body {
         0 0 30px rgba(239, 244, 243, 0.12);
 }
 
+.btn-map {
+    box-shadow:
+        inset 0 0 28px rgba(247, 248, 245, 0.08),
+        0 0 36px rgba(45, 100, 180, 0.3);
+}
+
 .btn-map:hover,
 .btn-rsvp:hover {
     color: var(--white);
@@ -2412,6 +2674,12 @@ body {
     box-shadow:
         inset 0 0 32px rgba(250, 250, 247, 0.12),
         0 0 38px rgba(245, 247, 245, 0.28);
+}
+
+.btn-map:hover {
+    box-shadow:
+        inset 0 0 32px rgba(250, 250, 247, 0.12),
+        0 0 40px rgba(50, 110, 190, 0.4);
 }
 
 .snake-line {
