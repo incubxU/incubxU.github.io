@@ -783,7 +783,7 @@ body {
     opacity: 0;
     /* Fixed offset vs photo center — moves only via parent circle transform */
     transform: translate(-50%, calc(-50% + var(--circle-size) * 0.7));
-    transition: opacity 1.05s cubic-bezier(0.33, 0.05, 0.2, 1) 0.15s;
+    transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
 .location.is-expanded .location-orb--top {
@@ -806,8 +806,8 @@ body {
     opacity: 0;
     transform: translate(-50%, -50%);
     transition:
-        height 1.3s cubic-bezier(0.33, 0.05, 0.2, 1),
-        opacity 1.2s cubic-bezier(0.33, 0.05, 0.2, 1);
+        height 1.7s cubic-bezier(0.33, 0.05, 0.2, 1),
+        opacity 1.55s cubic-bezier(0.33, 0.05, 0.2, 1);
 }
 
 .location.is-expanded .location-orb--bridge {
@@ -850,7 +850,7 @@ body {
     filter: blur(28px);
     opacity: 0;
     transform: translate(-50%, calc(-50% - var(--circle-size) * 0.7));
-    transition: opacity 1.05s cubic-bezier(0.33, 0.05, 0.2, 1) 0.15s;
+    transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
 .location.is-expanded .location-orb--bottom {
@@ -887,7 +887,7 @@ body {
     filter: blur(44px);
     opacity: 0;
     transform: translate(-50%, calc(-50% - var(--circle-size) * 0.7));
-    transition: opacity 1.05s cubic-bezier(0.33, 0.05, 0.2, 1) 0.15s;
+    transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
 .location.is-expanded .location-orb--aura {
@@ -904,10 +904,10 @@ body {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition:
-        transform 1.3s cubic-bezier(0.33, 0.05, 0.2, 1),
-        border-color 1.1s ease,
-        background 1.1s ease,
-        box-shadow 1.1s ease;
+        transform 1.7s cubic-bezier(0.33, 0.05, 0.2, 1),
+        border-color 1.45s ease,
+        background 1.45s ease,
+        box-shadow 1.45s ease;
 }
 
 .location.is-expanded .location-circle--top {
@@ -952,7 +952,7 @@ body {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28);
-    transition: box-shadow 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .location-photo-wrap::before {
@@ -969,7 +969,7 @@ body {
     opacity: 0;
     pointer-events: none;
     z-index: -1;
-    transition: opacity 1.3s cubic-bezier(0.33, 0.05, 0.2, 1);
+    transition: opacity 1.7s cubic-bezier(0.33, 0.05, 0.2, 1);
 }
 
 .location.is-expanded .location-photo-wrap {
@@ -995,7 +995,7 @@ body {
         url('images/location.jpg') center / cover no-repeat;
     background-blend-mode: soft-light, normal;
     filter: grayscale(0.85) saturate(0.15) contrast(0.84) brightness(1.08);
-    transition: opacity 1.05s cubic-bezier(0.33, 0.05, 0.2, 1) 0.45s;
+    transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.6s;
 }
 
 .location.is-expanded .location-photo {
@@ -1013,7 +1013,7 @@ body {
     pointer-events: none;
     transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 1s cubic-bezier(0.33, 0.05, 0.2, 1) 0.65s;
+    transition: opacity 1.3s cubic-bezier(0.33, 0.05, 0.2, 1) 0.85s;
 }
 
 .location.is-expanded .location-arc {
@@ -1057,8 +1057,8 @@ body {
     opacity: 0;
     transform: translateY(12px);
     transition:
-        opacity 1.05s cubic-bezier(0.33, 0.05, 0.2, 1) 0.55s,
-        transform 1.15s cubic-bezier(0.33, 0.05, 0.2, 1) 0.5s;
+        opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.7s,
+        transform 1.5s cubic-bezier(0.33, 0.05, 0.2, 1) 0.65s;
 }
 
 .location.is-expanded .location-details {
