@@ -137,6 +137,91 @@
     const minutesEl = document.getElementById('minutes');
     const secondsEl = document.getElementById('seconds');
 
+    document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+        const track = gallery.querySelector('.dresscode-gallery-track');
+        const slides = Array.from(gallery.querySelectorAll('.dresscode-gallery-slide'));
+        const prevBtn = gallery.querySelector('.dresscode-gallery-btn--prev');
+        const nextBtn = gallery.querySelector('.dresscode-gallery-btn--next');
+        if (!track || slides.length < 2) return;
+
+        let index = 0;
+        let startX = 0;
+        let deltaX = 0;
+        let dragging = false;
+        let width = gallery.clientWidth || 1;
+
+        function render(offsetPx) {
+            const base = -index * 100;
+            const dragPct = width ? (offsetPx / width) * 100 : 0;
+            track.style.transform = `translate3d(${base + dragPct}%, 0, 0)`;
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('is-active', i === index);
+            });
+        }
+
+        function goTo(next) {
+            const total = slides.length;
+            index = ((next % total) + total) % total;
+            deltaX = 0;
+            gallery.classList.remove('is-dragging');
+            render(0);
+        }
+
+        function onPointerDown(event) {
+            if (event.target.closest('.dresscode-gallery-btn')) return;
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            dragging = true;
+            startX = event.clientX;
+            deltaX = 0;
+            width = gallery.clientWidth || 1;
+            gallery.classList.add('is-dragging');
+            gallery.setPointerCapture(event.pointerId);
+        }
+
+        function onPointerMove(event) {
+            if (!dragging) return;
+            deltaX = event.clientX - startX;
+            render(deltaX);
+        }
+
+        function onPointerUp(event) {
+            if (!dragging) return;
+            dragging = false;
+            gallery.classList.remove('is-dragging');
+            try {
+                gallery.releasePointerCapture(event.pointerId);
+            } catch (_) {
+                /* already released */
+            }
+
+            const threshold = Math.min(72, width * 0.18);
+            if (deltaX <= -threshold) goTo(index + 1);
+            else if (deltaX >= threshold) goTo(index - 1);
+            else goTo(index);
+        }
+
+        gallery.addEventListener('pointerdown', onPointerDown);
+        gallery.addEventListener('pointermove', onPointerMove);
+        gallery.addEventListener('pointerup', onPointerUp);
+        gallery.addEventListener('pointercancel', onPointerUp);
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                goTo(index - 1);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                goTo(index + 1);
+            });
+        }
+
+        render(0);
+    });
+
     if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
     function updateCountdown() {
