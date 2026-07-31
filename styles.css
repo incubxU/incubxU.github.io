@@ -1563,23 +1563,27 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.85rem;
+    gap: 0.95rem;
     margin: 0;
     padding: 0;
     list-style: none;
     position: relative;
     z-index: 2;
-    width: min(88vw, 320px);
+    width: min(90vw, 360px);
 }
 
 .dresscode-swatch {
     flex: 1 1 0;
     width: auto;
-    max-width: 2.35rem;
+    max-width: 2.85rem;
     aspect-ratio: 1;
     height: auto;
     border-radius: 50%;
-    background: var(--swatch);
+    background-color: transparent;
+    background-image: var(--swatch-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 1px solid rgba(242, 241, 239, 0.38);
     box-shadow:
         0 0 0 1px rgba(20, 24, 28, 0.12),
@@ -2038,12 +2042,12 @@ body {
     }
 
     .dresscode-palette {
-        gap: 0.7rem;
-        width: min(92vw, 300px);
+        gap: 0.8rem;
+        width: min(92vw, 340px);
     }
 
     .dresscode-swatch {
-        max-width: 2.15rem;
+        max-width: 2.55rem;
     }
 
     .snake-node svg {

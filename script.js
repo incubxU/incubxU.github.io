@@ -12,7 +12,6 @@
     const SNAKE_ITEM_FADE_MS = 650;
     /** Longest location expand transition (arc/details ≈ 2.15s). */
     const LOCATION_EXPAND_MS = 2200;
-    const CENTER_BAND = 0.12;
     const SCROLL_LOCK_KEYS = new Set([
         'ArrowUp',
         'ArrowDown',
@@ -30,6 +29,11 @@
     let lockedScrollY = 0;
     let locationExpandedAt = null;
     let scheduleInView = false;
+    let touchLastY = null;
+
+    function getScrollY() {
+        return window.scrollY || window.pageYOffset || 0;
+    }
 
     function preventScrollEvent(event) {
         event.preventDefault();
@@ -45,36 +49,28 @@
         return section.querySelector(selector) || section;
     }
 
+    function setScrollY(targetY) {
+        const y = Math.max(0, Math.round(targetY));
+        const html = document.documentElement;
+        const prevBehavior = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, y);
+        html.style.scrollBehavior = prevBehavior;
+        return y;
+    }
+
     function getScrollYToAlign(el, align) {
         const rect = el.getBoundingClientRect();
-        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const scrollY = getScrollY();
         const vh = window.innerHeight || 1;
         return Math.max(0, Math.round(rect.top + scrollY + rect.height / 2 - vh * align));
     }
 
-    function hasReachedAlign(el, align) {
-        if (!el) return false;
-        const rect = el.getBoundingClientRect();
-        const vh = window.innerHeight || 1;
-        const center = rect.top + rect.height / 2;
-        return center <= vh * align + vh * CENTER_BAND;
-    }
-
-    function snapToAlign(el, align) {
-        const targetY = getScrollYToAlign(el, align);
-        const html = document.documentElement;
-        const prevBehavior = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto';
-        window.scrollTo(0, targetY);
-        html.style.scrollBehavior = prevBehavior;
-        return targetY;
-    }
-
     /** Scroll Y that frames el in the viewport: centered if it fits, else top-pinned. */
     function getScrollYToFrame(el) {
-        if (!el) return window.scrollY || window.pageYOffset || 0;
+        if (!el) return getScrollY();
         const rect = el.getBoundingClientRect();
-        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const scrollY = getScrollY();
         const vh = window.innerHeight || 1;
         const top = rect.top + scrollY;
         const height = rect.height;
@@ -84,13 +80,11 @@
         return Math.max(0, Math.round(top - (vh - height) / 2));
     }
 
-    function snapToScrollY(targetY) {
-        const html = document.documentElement;
-        const prevBehavior = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto';
-        window.scrollTo(0, targetY);
-        html.style.scrollBehavior = prevBehavior;
-        return targetY;
+    function normalizeWheelDeltaY(event) {
+        let delta = event.deltaY;
+        if (event.deltaMode === 1) delta *= 16;
+        if (event.deltaMode === 2) delta *= window.innerHeight || 800;
+        return delta;
     }
 
     function lockScroll(durationMs, scrollY) {
@@ -98,18 +92,17 @@
 
         if (scrollLockCount === 0) {
             lockedScrollY =
-                scrollY != null ? scrollY : window.scrollY || window.pageYOffset || 0;
-            if (scrollY != null) {
-                const html = document.documentElement;
-                const prevBehavior = html.style.scrollBehavior;
-                html.style.scrollBehavior = 'auto';
-                window.scrollTo(0, lockedScrollY);
-                html.style.scrollBehavior = prevBehavior;
+                scrollY != null ? Math.max(0, Math.round(scrollY)) : getScrollY();
+            if (Math.abs(getScrollY() - lockedScrollY) > 0.5) {
+                setScrollY(lockedScrollY);
             }
             document.documentElement.classList.add('is-scroll-locked');
             window.addEventListener('wheel', preventScrollEvent, { passive: false });
             window.addEventListener('touchmove', preventScrollEvent, { passive: false });
             window.addEventListener('keydown', preventScrollKey, { passive: false });
+        } else if (scrollY != null) {
+            lockedScrollY = Math.max(0, Math.round(scrollY));
+            setScrollY(lockedScrollY);
         }
 
         scrollLockCount += 1;
@@ -125,6 +118,12 @@
         }, durationMs);
     }
 
+    function holdAt(scrollY) {
+        if (scrollLockCount <= 0) return;
+        if (Math.abs(getScrollY() - lockedScrollY) < 0.5) return;
+        setScrollY(lockedScrollY);
+    }
+
     function showSnakeInstant() {
         if (!snake) return;
         snake.classList.add('is-drawn');
@@ -136,7 +135,7 @@
         snake.dataset.played = '1';
 
         const focus = getFocusEl(scheduleSection, '.snake') || snake;
-        const targetY = snapToAlign(focus, 0.5);
+        const targetY = setScrollY(getScrollYToAlign(focus, 0.5));
         snake.classList.add('is-drawn');
         lockScroll(SNAKE_DRAW_MS + SNAKE_ITEM_FADE_MS, targetY);
 
@@ -150,6 +149,150 @@
         });
     }
 
+    function expandLocation(el) {
+        if (!el || el.classList.contains('is-expanded')) return;
+
+        el.classList.add('is-expanded');
+
+        if (!reduceMotion) {
+            const focus = getFocusEl(el, '.location-stage');
+            // Frame the stage (not the padded section) so the top stays visible.
+            const targetY = setScrollY(getScrollYToFrame(focus));
+            lockScroll(LOCATION_EXPAND_MS, targetY);
+            if (locationExpandedAt === null) {
+                locationExpandedAt = targetY;
+            }
+        } else if (locationExpandedAt === null) {
+            locationExpandedAt = getScrollY();
+        }
+
+        revealSchedule();
+    }
+
+    function getActiveGate() {
+        if (
+            locationSection &&
+            !locationSection.classList.contains('is-expanded')
+        ) {
+            const focus = getFocusEl(locationSection, '.location-stage');
+            return {
+                y: getScrollYToFrame(focus),
+                activate: () => expandLocation(locationSection),
+            };
+        }
+
+        if (
+            scheduleSection &&
+            scheduleSection.classList.contains('is-visible') &&
+            locationExpandedAt !== null &&
+            snake &&
+            snake.dataset.played !== '1'
+        ) {
+            const focus = getFocusEl(scheduleSection, '.snake');
+            return {
+                y: getScrollYToAlign(focus, 0.5),
+                activate: () => playSnake(),
+            };
+        }
+
+        return null;
+    }
+
+    function settleGate(gate) {
+        const targetY = setScrollY(gate.y);
+        gate.activate();
+        if (scrollLockCount > 0) lockedScrollY = targetY;
+        return true;
+    }
+
+    /**
+     * Stop downward scroll at the next animation gate.
+     * Uses only the remaining distance to the gate — no snap-back from afar.
+     */
+    function consumeDownwardGate(deltaY, prevent) {
+        if (reduceMotion || scrollLockCount > 0 || !(deltaY > 0)) return false;
+
+        const gate = getActiveGate();
+        if (!gate) return false;
+
+        const scrollY = getScrollY();
+        // Only the tick that would cross the gate — remaining distance stays small.
+        if (scrollY + deltaY < gate.y - 0.5) return false;
+
+        prevent();
+        return settleGate(gate);
+    }
+
+    /** Sync clamp for scrollbar / leftover inertia (no rAF delay). */
+    function enforceGateOnScroll() {
+        if (reduceMotion) return;
+
+        if (scrollLockCount > 0) {
+            holdAt(lockedScrollY);
+            return;
+        }
+
+        const gate = getActiveGate();
+        if (!gate) return;
+        if (getScrollY() + 1 < gate.y) return;
+        settleGate(gate);
+    }
+
+    function onGateWheel(event) {
+        if (scrollLockCount > 0) {
+            event.preventDefault();
+            return;
+        }
+        consumeDownwardGate(normalizeWheelDeltaY(event), () => {
+            event.preventDefault();
+        });
+    }
+
+    function onGateTouchStart(event) {
+        if (!event.touches || !event.touches.length) return;
+        touchLastY = event.touches[0].clientY;
+    }
+
+    function onGateTouchMove(event) {
+        if (scrollLockCount > 0) {
+            event.preventDefault();
+            return;
+        }
+        if (!event.touches || !event.touches.length || touchLastY == null) return;
+
+        const y = event.touches[0].clientY;
+        const deltaY = touchLastY - y;
+        touchLastY = y;
+
+        consumeDownwardGate(deltaY, () => {
+            event.preventDefault();
+        });
+    }
+
+    function onGateTouchEnd() {
+        touchLastY = null;
+    }
+
+    function onGateKeyDown(event) {
+        if (scrollLockCount > 0) {
+            if (SCROLL_LOCK_KEYS.has(event.key)) event.preventDefault();
+            return;
+        }
+
+        const downKeys = new Set(['ArrowDown', 'PageDown', ' ', 'Spacebar']);
+        if (!downKeys.has(event.key)) return;
+
+        const vh = window.innerHeight || 800;
+        const delta =
+            event.key === 'PageDown' || event.key === ' ' || event.key === 'Spacebar'
+                ? vh * 0.9
+                : 48;
+
+        consumeDownwardGate(delta, () => {
+            event.preventDefault();
+        });
+    }
+
     function tryPlaySnake() {
         if (!scheduleSection || !scheduleSection.classList.contains('is-visible')) return;
         if (locationExpandedAt === null) return;
@@ -157,7 +300,8 @@
         if (snake && snake.dataset.played === '1') return;
 
         const focus = getFocusEl(scheduleSection, '.snake');
-        if (!hasReachedAlign(focus, 0.5)) return;
+        const gateY = getScrollYToAlign(focus, 0.5);
+        if (getScrollY() + 1 < gateY) return;
         playSnake();
     }
 
@@ -168,35 +312,14 @@
         tryPlaySnake();
     }
 
-    function expandLocation(el) {
-        if (!el || el.classList.contains('is-expanded')) return;
-
-        el.classList.add('is-expanded');
-
-        if (!reduceMotion) {
-            const focus = getFocusEl(el, '.location-stage');
-            // Frame the stage (not the padded section) so the top stays visible.
-            const targetY = snapToScrollY(getScrollYToFrame(focus));
-            lockScroll(LOCATION_EXPAND_MS, targetY);
-            if (locationExpandedAt === null) {
-                locationExpandedAt = targetY;
-            }
-        } else if (locationExpandedAt === null) {
-            locationExpandedAt = window.scrollY || window.pageYOffset || 0;
-        }
-
-        revealSchedule();
-    }
-
     function updateLocationExpand() {
         if (!locationSection || reduceMotion) return;
         if (locationSection.classList.contains('is-expanded')) return;
 
         const focus = getFocusEl(locationSection, '.location-stage');
         const targetY = getScrollYToFrame(focus);
-        const scrollY = window.scrollY || window.pageYOffset || 0;
-        // Start only once the stage is already at the frame position — no big jump.
-        if (scrollY + 1 < targetY) return;
+        // Safety net for scrollbar / residual momentum — gate handlers cover wheel/touch.
+        if (getScrollY() + 1 < targetY) return;
         expandLocation(locationSection);
     }
 
@@ -242,18 +365,47 @@
         revealElements.forEach((el) => observer.observe(el));
 
         let expandRaf = 0;
-        const onScrollOrResize = () => {
+        const onScroll = () => {
+            // Immediate clamp — critical for touch/trackpad inertia.
+            enforceGateOnScroll();
             if (expandRaf) return;
             expandRaf = window.requestAnimationFrame(() => {
                 expandRaf = 0;
+                if (scrollLockCount > 0) {
+                    holdAt(lockedScrollY);
+                    return;
+                }
                 updateLocationExpand();
                 revealSchedule();
                 tryPlaySnake();
             });
         };
 
-        window.addEventListener('scroll', onScrollOrResize, { passive: true });
-        window.addEventListener('resize', onScrollOrResize);
+        const onResize = () => {
+            if (expandRaf) return;
+            expandRaf = window.requestAnimationFrame(() => {
+                expandRaf = 0;
+                if (scrollLockCount > 0) {
+                    holdAt(lockedScrollY);
+                    return;
+                }
+                updateLocationExpand();
+                revealSchedule();
+                tryPlaySnake();
+            });
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+
+        // Non-passive gates: catch the tick that would cross the animation point.
+        window.addEventListener('wheel', onGateWheel, { passive: false });
+        window.addEventListener('touchstart', onGateTouchStart, { passive: true });
+        window.addEventListener('touchmove', onGateTouchMove, { passive: false });
+        window.addEventListener('touchend', onGateTouchEnd, { passive: true });
+        window.addEventListener('touchcancel', onGateTouchEnd, { passive: true });
+        window.addEventListener('keydown', onGateKeyDown, { passive: false });
+
         updateLocationExpand();
     }
 
