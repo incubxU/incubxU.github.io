@@ -69,19 +69,19 @@
                 <circle class="hero-ring-halo hero-ring-halo--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-lens-blur)" />
                 <circle class="hero-ring-halo hero-ring-halo--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-lens-blur)" />
 
-                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="104" ry="36" filter="url(#hero-lens-blur)" />
+                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="118" ry="48" filter="url(#hero-lens-blur)" />
 
                 <circle class="hero-ring-edge hero-ring-edge--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-soft-glow)" />
                 <circle class="hero-ring-edge hero-ring-edge--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-soft-glow)" />
                 <circle class="hero-ring-core hero-ring-core--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-core-glow)" />
                 <circle class="hero-ring-core hero-ring-core--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-core-glow)" />
 
-                <g class="hero-lens-mark hero-lens-mark--left" transform="translate(52 258)">
-                    <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
-                </g>
-                <g class="hero-lens-mark hero-lens-mark--right" transform="translate(348 258)">
-                    <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
-                </g>
+                <!-- Lens arcs: same edge/core glow as the rest of the rings -->
+                <path class="hero-ring-edge" d="M84.07 260 A148 148 0 0 0 315.93 260" fill="none" filter="url(#hero-soft-glow)" />
+                <path class="hero-ring-edge" d="M84.07 260 A148 148 0 0 1 315.93 260" fill="none" filter="url(#hero-soft-glow)" />
+                <path class="hero-ring-core" d="M84.07 260 A148 148 0 0 0 315.93 260" fill="none" filter="url(#hero-core-glow)" />
+                <path class="hero-ring-core" d="M84.07 260 A148 148 0 0 1 315.93 260" fill="none" filter="url(#hero-core-glow)" />
+
             </svg>
 
             <div class="hero-venn-content">
@@ -108,13 +108,16 @@
             <section class="section intro reveal">
                 <p class="intro-greeting">Дорогие и любимые!</p>
                 <p>
-                    Рады сообщить о важном событии — мы создаём семью!
-                    Будем счастливы провести этот день с близкими и родными нам людьми.
+                    Мы не будем говорить, что это самый важный день в нашей жизни.
+                    Важных дней было много, и впереди еще больше.
                 </p>
                 <p>
-                    Мы приглашаем Вас вместе открыть новую главу нашей истории
-                    и разделить с нами особенный день нашей жизни —
-                    <strong>нашу свадьбу!</strong>
+                    Но этот день станет для нас по-настоящему особенным.
+                    Именно поэтому мы хотим разделить его с самыми близкими людьми.
+                </p>
+                <p>
+                    С большим удовольствием приглашаем вас стать частью этого дня
+                    и разделить с нами радость нашей свадьбы.
                 </p>
             </section>
 
@@ -214,11 +217,39 @@
                 <div class="snake" aria-label="Программа дня">
                     <svg class="snake-svg" viewBox="0 0 1000 1240" fill="none" aria-hidden="true">
                         <defs>
-                            <filter id="snakeGlow" x="-80%" y="-80%" width="260%" height="260%">
-                                <feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur" />
+                            <!--
+                              Fixed userSpaceOnUse region keeps blur cost constant while the
+                              stroke draws — percent regions grow with the path bbox and hitch
+                              past the midpoint (around the 3rd circle).
+                            -->
+                            <filter
+                                id="snakeGlow"
+                                x="-60"
+                                y="-60"
+                                width="1120"
+                                height="1360"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur" />
                                 <feMerge>
                                     <feMergeNode in="blur" />
                                     <feMergeNode in="blur" />
+                                </feMerge>
+                            </filter>
+                            <filter
+                                id="snakeLineGlow"
+                                x="-40"
+                                y="-40"
+                                width="1080"
+                                height="1320"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
                                 </feMerge>
                             </filter>
                         </defs>

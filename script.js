@@ -139,14 +139,28 @@
         snake.classList.add('is-drawn');
         lockScroll(SNAKE_DRAW_MS + SNAKE_ITEM_FADE_MS, targetY);
 
-        snakeItems.forEach((item) => {
-            const at = Number(item.dataset.at || 0);
-            const delay = (at / 100) * SNAKE_DRAW_MS;
+        // Reveal nodes on the animation clock (rAF) so setTimeout bursts don't hitch the stroke.
+        const pending = snakeItems
+            .map((item) => ({
+                item,
+                atMs: (Number(item.dataset.at || 0) / 100) * SNAKE_DRAW_MS,
+            }))
+            .sort((a, b) => a.atMs - b.atMs);
+        let next = 0;
+        const startedAt = performance.now();
 
-            window.setTimeout(() => {
-                item.classList.add('is-visible');
-            }, delay);
-        });
+        const tick = (now) => {
+            const elapsed = now - startedAt;
+            while (next < pending.length && elapsed >= pending[next].atMs) {
+                pending[next].item.classList.add('is-visible');
+                next += 1;
+            }
+            if (next < pending.length) {
+                window.requestAnimationFrame(tick);
+            }
+        };
+
+        window.requestAnimationFrame(tick);
     }
 
     function expandLocation(el) {
