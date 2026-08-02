@@ -82,6 +82,44 @@
         return Math.max(0, Math.round(top - (vh - height) / 2));
     }
 
+    /** Layout top in document coords — ignores CSS transforms (e.g. .reveal). */
+    function getOffsetTop(el) {
+        let top = 0;
+        for (let node = el; node; node = node.offsetParent) {
+            top += node.offsetTop;
+        }
+        return top;
+    }
+
+    /**
+     * Frame kicker + stage together so the heading stays in view with the
+     * animation and the final expanded scene (not stage-only centering).
+     * Uses layout offsets so the gate Y stays stable during reveal motion.
+     */
+    function getLocationFrameY() {
+        if (!locationSection) return getScrollY();
+
+        const kicker = locationSection.querySelector('.location-kicker');
+        const stage = locationSection.querySelector('.location-stage');
+        if (!kicker || !stage) {
+            return getScrollYToFrame(stage || kicker || locationSection);
+        }
+
+        const vh = window.innerHeight || 1;
+        const top = getOffsetTop(kicker);
+        const bottom = getOffsetTop(stage) + stage.offsetHeight;
+        const height = Math.max(0, bottom - top);
+        // Keep a little air so the composition isn't flush to the viewport edge.
+        const pad = Math.min(28, Math.max(12, Math.round(vh * 0.03)));
+
+        if (height + pad * 2 >= vh) {
+            // Prefer the heading; show as much of the scene as fits below it.
+            return Math.max(0, Math.round(top - pad));
+        }
+
+        return Math.max(0, Math.round(top - (vh - height) / 2));
+    }
+
     function normalizeWheelDeltaY(event) {
         let delta = event.deltaY;
         if (event.deltaMode === 1) delta *= 16;
@@ -165,15 +203,20 @@
         window.requestAnimationFrame(tick);
     }
 
-    function expandLocation(el) {
+    function expandLocation(el, presetY) {
         if (!el || el.classList.contains('is-expanded')) return;
 
         el.classList.add('is-expanded');
 
         if (!reduceMotion) {
-            const focus = getFocusEl(el, '.location-stage');
-            // Frame the stage (not the padded section) so the top stays visible.
-            const targetY = setScrollY(getScrollYToFrame(focus));
+            const targetY =
+                presetY != null
+                    ? Math.max(0, Math.round(presetY))
+                    : getLocationFrameY();
+            // Avoid a second scrollTo when the gate already parked us here.
+            if (Math.abs(getScrollY() - targetY) > 0.5) {
+                setScrollY(targetY);
+            }
             lockScroll(LOCATION_EXPAND_MS, targetY);
             if (locationExpandedAt === null) {
                 locationExpandedAt = targetY;
@@ -190,10 +233,9 @@
             locationSection &&
             !locationSection.classList.contains('is-expanded')
         ) {
-            const focus = getFocusEl(locationSection, '.location-stage');
             return {
-                y: getScrollYToFrame(focus),
-                activate: () => expandLocation(locationSection),
+                y: getLocationFrameY(),
+                activate: (y) => expandLocation(locationSection, y),
             };
         }
 
@@ -332,8 +374,7 @@
         if (!locationSection || reduceMotion) return;
         if (locationSection.classList.contains('is-expanded')) return;
 
-        const focus = getFocusEl(locationSection, '.location-stage');
-        const targetY = getScrollYToFrame(focus);
+        const targetY = getLocationFrameY();
         // Safety net for scrollbar / residual momentum — gate handlers cover wheel/touch.
         if (getScrollY() + 1 < targetY) return;
         expandLocation(locationSection);

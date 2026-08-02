@@ -596,6 +596,15 @@ body {
     transform: translateY(0);
 }
 
+/* Location is scroll-gated — skip translate so reveal doesn't fight the lock. */
+.location.reveal {
+    transform: none;
+}
+
+.location.reveal.is-visible {
+    transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .reveal {
         opacity: 1;
@@ -784,12 +793,23 @@ body {
    Location — twin circles: merge → split → reveal
    ============================================================ */
 .location-stage {
-    --circle-size: min(70vw, 248px);
+    /*
+     * Single scale unit — desktop composition at 248px.
+     * Cap so orb width always fits the viewport; everything else
+     * is expressed as a fraction of --circle-size and scales with it.
+     */
+    --circle-size: min(74vw, 268px, calc((100vw - 2.75rem) / 1.88));
     --split: calc(var(--circle-size) * 0.88);
+    --orb-w: calc(var(--circle-size) * 1.88);
+    --orb-h: calc(var(--circle-size) * 2.5);
+    --orb-aura-w: calc(var(--circle-size) * 2.1);
+    --orb-aura-h: calc(var(--circle-size) * 2.8);
+    --orb-shift: calc(var(--circle-size) * 0.7);
+    --orb-aura-shift: calc(var(--circle-size) * 0.95);
     position: relative;
     width: 100%;
-    height: calc(var(--circle-size) * 3.05 + 4.5rem);
-    margin: -1.6rem auto 0;
+    height: calc(var(--circle-size) * 3.35);
+    margin: 0.35rem auto 0;
 }
 
 /* Atmospheric orbs — directional beams (Expo-style, not circular) */
@@ -813,9 +833,8 @@ body {
 
 /* White beam: rides with photo circle — no separate split animation */
 .location-orb--top {
-    /* Cap to viewport so soft beams don't spill past phone edges */
-    width: min(calc(var(--circle-size) * 2.2), calc(100vw - 3rem));
-    height: calc(var(--circle-size) * 2.5);
+    width: var(--orb-w);
+    height: var(--orb-h);
     background:
         radial-gradient(
             ellipse 72% 48% at 50% 18%,
@@ -845,7 +864,7 @@ body {
     filter: blur(28px);
     opacity: 0;
     /* Fixed offset vs photo center — moves only via parent circle transform */
-    transform: translate(-50%, calc(-50% + var(--circle-size) * 0.7));
+    transform: translate(-50%, calc(-50% + var(--orb-shift)));
     transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
@@ -855,8 +874,8 @@ body {
 
 /* Soft outer aura — same parent as top, mirrors bottom aura offset */
 .location-orb--aura-top {
-    width: min(calc(var(--circle-size) * 2.5), calc(100vw - 2rem));
-    height: calc(var(--circle-size) * 2.8);
+    width: var(--orb-aura-w);
+    height: var(--orb-aura-h);
     background:
         radial-gradient(
             ellipse 78% 52% at 50% 16%,
@@ -882,7 +901,7 @@ body {
     );
     filter: blur(44px);
     opacity: 0;
-    transform: translate(-50%, calc(-50% + var(--circle-size) * 0.95));
+    transform: translate(-50%, calc(-50% + var(--orb-aura-shift)));
     transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
@@ -919,8 +938,8 @@ body {
 
 /* Blue beam: rides with text circle — mirror of white */
 .location-orb--bottom {
-    width: min(calc(var(--circle-size) * 2.2), calc(100vw - 3rem));
-    height: calc(var(--circle-size) * 2.5);
+    width: var(--orb-w);
+    height: var(--orb-h);
     background:
         radial-gradient(
             ellipse 72% 48% at 50% 82%,
@@ -949,7 +968,7 @@ body {
     );
     filter: blur(28px);
     opacity: 0;
-    transform: translate(-50%, calc(-50% - var(--circle-size) * 0.7));
+    transform: translate(-50%, calc(-50% - var(--orb-shift)));
     transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
@@ -959,8 +978,8 @@ body {
 
 /* Soft outer aura — same parent as bottom */
 .location-orb--aura {
-    width: min(calc(var(--circle-size) * 2.5), calc(100vw - 2rem));
-    height: calc(var(--circle-size) * 2.8);
+    width: var(--orb-aura-w);
+    height: var(--orb-aura-h);
     background:
         radial-gradient(
             ellipse 78% 52% at 50% 84%,
@@ -986,7 +1005,7 @@ body {
     );
     filter: blur(44px);
     opacity: 0;
-    transform: translate(-50%, calc(-50% - var(--circle-size) * 0.95));
+    transform: translate(-50%, calc(-50% - var(--orb-aura-shift)));
     transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.2s;
 }
 
@@ -1001,6 +1020,7 @@ body {
     z-index: 1;
     width: var(--circle-size);
     height: var(--circle-size);
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition:
@@ -1049,6 +1069,7 @@ body {
     z-index: 2;
     width: 100%;
     height: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28);
@@ -1058,14 +1079,14 @@ body {
 .location-photo-wrap::before {
     content: '';
     position: absolute;
-    inset: -18px;
+    inset: calc(var(--circle-size) * -0.073);
     border-radius: 50%;
     background: radial-gradient(
         circle at 50% 50%,
         rgba(255, 255, 255, 0.2) 0%,
         transparent 70%
     );
-    filter: blur(10px);
+    filter: blur(calc(var(--circle-size) * 0.04));
     opacity: 0;
     pointer-events: none;
     z-index: -1;
@@ -1090,11 +1111,8 @@ body {
     border-radius: 50%;
     overflow: hidden;
     opacity: 0;
-    background:
-        linear-gradient(180deg, rgba(214, 226, 232, 0.12), rgba(64, 80, 92, 0.34)),
-        url('images/location.jpg') center / cover no-repeat;
-    background-blend-mode: soft-light, normal;
-    filter: grayscale(0.85) saturate(0.15) contrast(0.84) brightness(1.08);
+    background: url('images/location.jpg') center / cover no-repeat;
+    filter: none;
     transition: opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.6s;
 }
 
@@ -1105,7 +1123,7 @@ body {
 .location-arc {
     position: absolute;
     left: 50%;
-    top: 1.35rem;
+    top: calc(var(--circle-size) * 0.087);
     z-index: 3;
     width: 136%;
     height: auto;
@@ -1128,16 +1146,17 @@ body {
     text-transform: uppercase;
 }
 
+/* Arc type scales with the photo circle (11.5px @ 248px desktop) */
 .location-arc-text--1 {
-    font-size: 11.5px;
+    font-size: calc(var(--circle-size) * 0.0464);
 }
 
 .location-arc-text--2 {
-    font-size: 11px;
+    font-size: calc(var(--circle-size) * 0.0444);
 }
 
 .location-arc-text--3 {
-    font-size: 10.5px;
+    font-size: calc(var(--circle-size) * 0.0423);
 }
 
 .location-details {
@@ -1148,14 +1167,17 @@ body {
     align-items: center;
     justify-content: center;
     width: 118%;
-    max-width: 22rem;
+    max-width: none;
     height: auto;
     min-height: 100%;
-    padding: 0.85rem 0.6rem 1rem;
+    padding:
+        calc(var(--circle-size) * 0.055)
+        calc(var(--circle-size) * 0.038)
+        calc(var(--circle-size) * 0.065);
     box-sizing: border-box;
     text-align: center;
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(calc(var(--circle-size) * 0.048));
     transition:
         opacity 1.35s cubic-bezier(0.33, 0.05, 0.2, 1) 0.7s,
         transform 1.5s cubic-bezier(0.33, 0.05, 0.2, 1) 0.65s;
@@ -1166,12 +1188,16 @@ body {
     transform: translateY(0);
 }
 
+.section.location {
+    padding-top: 28px;
+}
+
 .location-kicker {
     position: relative;
     z-index: 2;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.82rem;
+    font-size: clamp(0.68rem, 0.55rem + 0.6vw, 0.82rem);
     font-weight: 300;
     letter-spacing: 0.42em;
     text-transform: uppercase;
@@ -1182,10 +1208,10 @@ body {
 }
 
 .location-note {
-    margin: 0 auto 0.55rem;
+    margin: 0 auto calc(var(--circle-size) * 0.035);
     max-width: 18em;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.02rem;
+    font-size: calc(var(--circle-size) * 0.066);
     font-weight: 300;
     line-height: 1.45;
     color: var(--text-soft);
@@ -1195,7 +1221,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    gap: calc(var(--circle-size) * 0.016);
     margin-top: 0;
     appearance: none;
     border: 1px solid rgba(247, 248, 245, 0.42);
@@ -1203,12 +1229,12 @@ body {
     background: rgba(255, 255, 255, 0.08);
     color: var(--white);
     font-family: 'Jost', sans-serif;
-    font-size: 0.62rem;
+    font-size: calc(var(--circle-size) * 0.04);
     font-weight: 300;
     letter-spacing: 0.28em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 9px 16px;
+    padding: calc(var(--circle-size) * 0.036) calc(var(--circle-size) * 0.065);
     cursor: pointer;
     box-shadow:
         inset 0 0 28px rgba(247, 248, 245, 0.08),
@@ -1218,6 +1244,8 @@ body {
 
 .btn-map-pin {
     flex-shrink: 0;
+    width: calc(var(--circle-size) * 0.048);
+    height: calc(var(--circle-size) * 0.048);
     opacity: 0.9;
 }
 
@@ -1262,13 +1290,13 @@ body {
     .location-orb--top,
     .location.is-expanded .location-orb--top {
         opacity: 1;
-        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.7));
+        transform: translate(-50%, calc(-50% + var(--orb-shift)));
     }
 
     .location-orb--aura-top,
     .location.is-expanded .location-orb--aura-top {
         opacity: 0.5;
-        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.95));
+        transform: translate(-50%, calc(-50% + var(--orb-aura-shift)));
     }
 
     .location-orb--bridge,
@@ -1283,13 +1311,13 @@ body {
     .location-orb--bottom,
     .location.is-expanded .location-orb--bottom {
         opacity: 1;
-        transform: translate(-50%, calc(-50% - var(--circle-size) * 0.7));
+        transform: translate(-50%, calc(-50% - var(--orb-shift)));
     }
 
     .location-orb--aura,
     .location.is-expanded .location-orb--aura {
         opacity: 0.75;
-        transform: translate(-50%, calc(-50% - var(--circle-size) * 0.95));
+        transform: translate(-50%, calc(-50% - var(--orb-aura-shift)));
     }
 
     .location-photo,
@@ -1988,43 +2016,23 @@ body {
 }
 
 @media (max-width: 480px) {
-    .location-stage {
-        --circle-size: min(76vw, 248px);
-    }
-
+    /* Softer blur only — layout proportions come from --circle-size */
     .location-orb--top,
     .location-orb--bottom {
-        width: min(calc(var(--circle-size) * 1.65), calc(100vw - 2.5rem));
+        filter: blur(22px);
     }
 
     .location-orb--aura-top,
     .location-orb--aura {
-        width: min(calc(var(--circle-size) * 1.85), calc(100vw - 2rem));
+        filter: blur(34px);
     }
 
-    /* Keep copy + map CTA inside the bottom hemisphere */
-    .location-details {
-        width: 84%;
-        max-width: none;
-        height: 100%;
-        min-height: 0;
-        padding: 0.5rem 0.35rem 0.55rem;
-        justify-content: center;
+    .location-orb--bridge {
+        filter: blur(30px);
     }
 
-    .location-note {
-        margin-bottom: 0.35rem;
-        max-width: 15em;
-        font-size: 0.9rem;
-        line-height: 1.32;
-    }
-
-    .btn-map {
-        max-width: 100%;
-        padding: 7px 11px;
-        font-size: 0.54rem;
-        letter-spacing: 0.14em;
-        gap: 0.28rem;
+    .location.is-expanded .location-orb--bridge {
+        filter: blur(32px);
     }
 }
 
@@ -2034,63 +2042,39 @@ body {
         padding-right: 18px;
     }
 
-    .location-stage {
-        --circle-size: min(80vw, 248px);
-    }
-
-    .location-details {
-        width: 82%;
-        padding: 0.4rem 0.3rem 0.45rem;
-    }
-
-    .location-note {
-        margin-bottom: 0.28rem;
-        max-width: 14em;
-        font-size: 0.84rem;
-        line-height: 1.28;
-    }
-
-    .btn-map {
-        padding: 6px 10px;
-        font-size: 0.5rem;
-        letter-spacing: 0.12em;
-    }
-
     .location-orb--top,
     .location-orb--bottom {
-        width: min(calc(var(--circle-size) * 1.5), calc(100vw - 2rem));
-        filter: blur(20px);
+        filter: blur(18px);
     }
 
     .location.is-expanded .location-orb--top {
-        filter: blur(22px);
+        filter: blur(20px);
     }
 
     .location-orb--bridge {
-        filter: blur(28px);
+        filter: blur(26px);
     }
 
     .location.is-expanded .location-orb--bridge {
-        filter: blur(30px);
+        filter: blur(28px);
     }
 
     .location-orb--bottom {
-        filter: blur(24px);
+        filter: blur(20px);
     }
 
     .location.is-expanded .location-orb--bottom {
-        filter: blur(26px);
+        filter: blur(22px);
     }
 
     .location-orb--aura-top,
     .location-orb--aura {
-        width: min(calc(var(--circle-size) * 1.7), calc(100vw - 1.5rem));
-        filter: blur(34px);
+        filter: blur(30px);
     }
 
     .location.is-expanded .location-orb--aura-top,
     .location.is-expanded .location-orb--aura {
-        filter: blur(36px);
+        filter: blur(32px);
     }
 
     .dresscode-circle {
@@ -2448,15 +2432,9 @@ body {
 }
 
 .location-photo {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(202, 216, 225, 0.18) 0%,
-            rgba(68, 84, 96, 0.42) 100%
-        ),
-        url('images/location.jpg') center / cover no-repeat;
-    background-blend-mode: soft-light, normal;
-    filter: grayscale(0.76) saturate(0.38) contrast(0.86) brightness(1.08);
+    background: url('images/location.jpg') center / cover no-repeat;
+    background-blend-mode: normal;
+    filter: none;
 }
 
 .btn-map,
@@ -2608,12 +2586,6 @@ body {
 
     .location.is-expanded .location-circle--bottom {
         background: transparent;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .location-photo {
-        filter: grayscale(0.76) saturate(0.38) contrast(0.86) brightness(1.08);
     }
 }
 
@@ -2936,11 +2908,9 @@ body {
 }
 
 .location-photo {
-    background:
-        linear-gradient(180deg, rgba(214, 226, 232, 0.12), rgba(64, 80, 92, 0.34)),
-        url('images/location.jpg') center / cover no-repeat;
-    background-blend-mode: soft-light, normal;
-    filter: grayscale(0.85) saturate(0.15) contrast(0.84) brightness(1.08);
+    background: url('images/location.jpg') center / cover no-repeat;
+    background-blend-mode: normal;
+    filter: none;
 }
 
 .location-arc-text {
@@ -3088,8 +3058,3 @@ body {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .location-photo {
-        filter: grayscale(0.85) saturate(0.15) contrast(0.84) brightness(1.08);
-    }
-}
