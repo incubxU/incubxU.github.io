@@ -10,8 +10,10 @@
 
     const SNAKE_DRAW_MS = 2800;
     const SNAKE_ITEM_FADE_MS = 650;
+    /** Scroll lock ≈ draw + last-item fade; slightly under so unlock matches perceived end. */
+    const SNAKE_LOCK_MS = 3300;
     /** Longest location expand transition (arc/details ≈ 2.15s). */
-    const LOCATION_EXPAND_MS = 2200;
+    const LOCATION_EXPAND_MS = 2050;
     const SCROLL_LOCK_KEYS = new Set([
         'ArrowUp',
         'ArrowDown',
@@ -137,7 +139,7 @@
         const focus = getFocusEl(scheduleSection, '.snake') || snake;
         const targetY = setScrollY(getScrollYToAlign(focus, 0.5));
         snake.classList.add('is-drawn');
-        lockScroll(SNAKE_DRAW_MS + SNAKE_ITEM_FADE_MS, targetY);
+        lockScroll(SNAKE_LOCK_MS, targetY);
 
         // Reveal nodes on the animation clock (rAF) so setTimeout bursts don't hitch the stroke.
         const pending = snakeItems
