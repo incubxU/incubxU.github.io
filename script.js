@@ -101,7 +101,7 @@
     function getLocationFrameY() {
         if (!locationSection) return getScrollY();
 
-        const kicker = locationSection.querySelector('.location-kicker');
+        const kicker = locationSection.querySelector('.location-heading');
         const stage = locationSection.querySelector('.location-stage');
         if (!kicker || !stage) {
             return getScrollYToFrame(stage || kicker || locationSection);

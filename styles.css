@@ -796,6 +796,17 @@ body {
         max-width: clamp(0px, 56cqi - 9.25rem, 3.6em);
         font-size: 0.74em;
     }
+
+    .gifts-arc__title {
+        font-size: calc(clamp(28px, 8.2cqi + 0.9rem, 43.91px) * 0.728);
+    }
+
+    .dresscode-intro,
+    .dresscode-palette-lead,
+    .dresscode-palette-aside,
+    .dresscode-note {
+        font-size: calc(clamp(28px, 8.2cqi + 0.9rem, 43.91px) * 20 / 52.27);
+    }
 }
 
 .intro-step {
@@ -1334,19 +1345,9 @@ body {
     padding-top: 28px;
 }
 
-.location-kicker {
+.location-heading {
     position: relative;
     z-index: 2;
-    margin: 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(0.68rem, 0.55rem + 0.6vw, 0.82rem);
-    font-weight: 300;
-    letter-spacing: 0.42em;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1.4;
-    white-space: nowrap;
-    text-shadow: 0 0 28px rgba(245, 251, 255, 0.35);
 }
 
 .location-note {
@@ -1477,6 +1478,27 @@ body {
 /* ============================================================
    Snake schedule
    ============================================================ */
+.schedule-heading,
+.location-heading,
+.dresscode-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: min(100%, 460px);
+    margin: 0 auto 1.6rem;
+    container-type: inline-size;
+    overflow: visible;
+}
+
+.schedule-heading .gifts-arc__subtitle,
+.location-heading .gifts-arc__subtitle {
+    color: var(--white);
+    -webkit-text-stroke: 0;
+    paint-order: normal;
+}
+
 .snake {
     --snake-w: 1000;
     --snake-h: 1240;
@@ -1643,12 +1665,15 @@ body {
    Dress code
    ============================================================ */
 .dresscode {
+    --intro-heading-size: clamp(37.64px, 9.78cqi + 1.41rem, 52.27px);
+    --intro-body-size: calc(var(--intro-heading-size) * 20 / 52.27);
     position: relative;
     z-index: 0;
     isolation: isolate;
     overflow: visible;
     border-top-color: transparent;
     background: transparent;
+    container-type: inline-size;
 }
 
 .dresscode-stage {
@@ -1659,7 +1684,7 @@ body {
 
 .dresscode-mist {
     position: absolute;
-    top: 31%;
+    top: 8%;
     bottom: -140px;
     left: 50%;
     z-index: 0;
@@ -1694,25 +1719,79 @@ body {
     z-index: 1;
 }
 
-.dresscode-label {
-    margin-bottom: 1.1rem;
+.dresscode-heading .gifts-arc__title {
+    text-indent: 0.28em;
+    transform: none;
 }
 
-.dresscode-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(1.85rem, 6.5vw, 2.45rem);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1.15;
-    margin-bottom: 1.15rem;
-    text-shadow: 0 0 42px rgba(242, 241, 239, 0.16);
+.dresscode-intro,
+.dresscode-palette-lead,
+.dresscode-palette-aside,
+.dresscode-note {
+    font-family: 'Manrope', sans-serif;
+    font-size: var(--intro-body-size);
 }
 
 .dresscode-intro {
-    margin-bottom: 2.4rem;
-    max-width: 28em;
+    margin-bottom: 2.1rem;
+    max-width: 30em;
+    line-height: 1.35;
+}
+
+.dresscode-palette-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+    column-gap: clamp(0.4rem, 2.4vw, 1.35rem);
+    width: min(100%, 560px);
+    margin: 0 auto 2.6rem;
+    padding: 0 0.15rem;
+}
+
+.dresscode-palette-lead,
+.dresscode-palette-aside {
+    margin: 0;
+    line-height: 1.35;
+    color: var(--text-soft);
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+.dresscode-palette-lead {
+    text-align: right;
+    align-self: start;
+    padding-right: 0.05rem;
+    padding-top: 0.15rem;
+}
+
+.dresscode-palette-aside-wrap {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+}
+
+.dresscode-palette-aside {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: left;
+    padding-left: 0.05rem;
+    color: rgba(232, 231, 229, 0.62);
+}
+
+.dresscode-star-glue {
+    white-space: nowrap;
+}
+
+.dresscode-star {
+    font-family: 'Forum', 'Philosopher', serif;
+    font-size: 0.85em;
+    font-weight: 400;
+    line-height: 0;
+    vertical-align: super;
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
 }
 
 .dresscode-circles {
@@ -1725,30 +1804,23 @@ body {
     overflow: visible;
 }
 
-.dresscode-her-col {
+.dresscode-palette {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.05rem;
-}
-
-.dresscode-palette {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 0.95rem;
+    gap: clamp(1.35rem, 4.8vw, 2.4rem);
     margin: 0;
-    padding: 0;
+    padding: 0.15rem 0;
     list-style: none;
     position: relative;
     z-index: 2;
-    width: min(90vw, 360px);
+    width: auto;
 }
 
 .dresscode-swatch {
-    flex: 1 1 0;
-    width: auto;
-    max-width: 2.85rem;
+    flex: none;
+    width: clamp(2.35rem, 9.4vw, 3.75rem);
     aspect-ratio: 1;
     height: auto;
     border-radius: 50%;
@@ -2017,8 +2089,7 @@ body {
 .dresscode-note {
     position: relative;
     z-index: 1;
-    font-size: 0.82rem;
-    line-height: 1.65;
+    line-height: 1.35;
     color: rgba(32, 38, 44, 0.72);
     max-width: 26em;
     margin: 0 auto 1.35rem;
@@ -2186,31 +2257,47 @@ body {
 .gifts-arc__content--hero {
     top: 0;
     height: 100%;
-    padding: 1.5rem 1.5rem 2rem;
+    /* Full circle width — narrow --content-w was clipping translated title/subtitle */
+    width: 100%;
+    max-width: none;
+    padding: 1.5rem clamp(0.75rem, 4cqw, 1.5rem) 2rem;
     justify-content: center;
-    overflow: hidden;
+    align-items: center;
+    text-align: center;
+    overflow: visible;
 }
 
 .gifts-arc__title {
     font-family: 'Philosopher', 'Cormorant Garamond', serif;
     font-weight: 400;
-    font-size: clamp(1.45rem, 6vw, 1.95rem);
+    font-size: calc(clamp(37.64px, 9.78cqi + 1.41rem, 52.27px) * 0.728);
     letter-spacing: 0.28em;
+    line-height: 1;
     text-transform: uppercase;
     color: var(--white);
     margin: 0;
     text-indent: 0.28em;
+    transform: translateX(-0.55em);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .gifts-arc__subtitle {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 0.68rem;
-    letter-spacing: 0.42em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin: 0.7rem 0 0;
-    text-indent: 0.42em;
+    font-family: 'Ouvality', cursive;
+    font-weight: 400;
+    font-synthesis: none;
+    font-size: calc(clamp(1.755rem, 7.15vw, 2.405rem) * 1.32);
+    letter-spacing: 0.06em;
+    line-height: 0.9;
+    text-transform: none;
+    color: rgba(242, 241, 239, 0.76);
+    -webkit-text-stroke: 0.045em #1e2f42;
+    paint-order: stroke fill;
+    margin: 0.08em 0 0;
+    text-indent: 0;
+    transform: translateX(0.7em);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .gifts-arc__label {
@@ -2224,6 +2311,7 @@ body {
 }
 
 .gifts-arc__text {
+    font-family: 'Manrope', sans-serif;
     font-size: clamp(16px, 4.2vw, 20px);
     line-height: 1.35;
     margin: 0;
@@ -2513,17 +2601,10 @@ body {
         width: min(84vw, 260px);
     }
 
-    .dresscode-her-col {
-        gap: 0.95rem;
-    }
-
-    .dresscode-palette {
-        gap: 0.8rem;
-        width: min(92vw, 340px);
-    }
-
-    .dresscode-swatch {
-        max-width: 2.55rem;
+    .dresscode-palette-block {
+        width: min(100%, 100%);
+        margin-bottom: 2.2rem;
+        column-gap: clamp(0.32rem, 2vw, 0.7rem);
     }
 
     .snake-node svg {
@@ -2784,7 +2865,6 @@ body {
 .intro strong,
 .calendar-month,
 .date-strip-day,
-.location-kicker,
 .snake-body .time,
 .rsvp-date,
 .section-text strong {
@@ -3269,7 +3349,6 @@ body {
 .intro strong,
 .calendar-month,
 .date-strip-day,
-.location-kicker,
 .snake-body .time,
 .rsvp-date,
 .section-text strong {
