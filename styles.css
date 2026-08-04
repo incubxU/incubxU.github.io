@@ -51,6 +51,83 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Gogol';
+    src: url('fonts/Gogol/gogol_regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src:
+        url('fonts/Montserrat light/montserrat_light.woff2') format('woff2'),
+        url('fonts/Montserrat light/montserrat_light.woff') format('woff'),
+        url('fonts/Montserrat light/montserrat_light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'The Youngest';
+    src: url('fonts/Youngest/The Youngest Script-Rg.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ouvality';
+    src:
+        url('fonts/Ouvality/Ouvality.otf') format('opentype'),
+        url('fonts/Ouvality/Ouvality.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Arimo';
+    src: url('fonts/Arimo/Arimo.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Arimo';
+    src: url('fonts/Arimo/Arimo-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('fonts/Mulish/Mulish.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('fonts/Mulish/Mulish-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Manrope';
+    src: url('fonts/Manrope/Manrope.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --bg-deep: #141516;
     --bg-mid: #1e2022;
@@ -288,6 +365,7 @@ body {
     aspect-ratio: 400 / 520;
     flex-shrink: 0;
     isolation: isolate;
+    container-type: inline-size;
 }
 
 .hero-rings {
@@ -365,26 +443,28 @@ body {
     pointer-events: none;
 }
 
-/* Zones match SVG: top cy=168, lens@260, bottom cy=352 (viewBox 520) */
+/* Zones match SVG: top cy=168, lens@260, bottom cy=352 (viewBox 520).
+   Size tracks the venn (cqi); width stays inside the top-circle chord. */
 .hero-names {
     position: absolute;
     left: 50%;
     top: 25%;
     transform: translate(-50%, -50%);
-    width: 58%;
-    max-width: 11.5em;
+    width: 54%;
+    max-width: none;
     margin: 0;
     font-family: 'Philosopher', 'Cormorant Garamond', serif;
     font-weight: 400;
-    font-size: clamp(1.25rem, 5vw, 1.65rem);
-    line-height: 1.2;
-    letter-spacing: 0.28em;
+    /* Scales with circle; capped so «ВЕРОНИКА» clears the ring on narrow + wide */
+    font-size: clamp(1.38rem, 7.2cqi, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: 0.26em;
     color: var(--white);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.18em;
+    gap: 0.12em;
     text-shadow:
         0 0 28px rgba(255, 255, 255, 0.45),
         0 0 64px rgba(220, 236, 246, 0.35),
@@ -407,20 +487,21 @@ body {
     line-height: 1;
 }
 
+/* Lens center (y=260): width ≤ ~58% of venn; keep clear of the arcs */
 .hero-wedding-day {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 72%;
+    width: 48%;
     max-width: none;
     margin: 0;
     font-family: 'Forum', 'Cormorant Garamond', serif;
     font-weight: 400;
-    font-size: clamp(0.78rem, 3.2vw, 0.98rem);
+    font-size: clamp(0.92rem, 4.5cqi, 1.4rem);
     line-height: 1.15;
-    letter-spacing: 0.48em;
-    text-indent: 0.48em;
+    letter-spacing: 0.36em;
+    text-indent: 0.36em;
     text-transform: uppercase;
     color: var(--white);
     text-shadow:
@@ -433,18 +514,19 @@ body {
     opacity: 0.92;
 }
 
+/* Bottom circle (cy=352): same cqi scaling as names, stays inside the ring */
 .hero-date {
     position: absolute;
     left: 50%;
     top: 72%;
     transform: translate(-50%, -50%);
-    width: 58%;
-    max-width: 10em;
+    width: 54%;
+    max-width: none;
     margin: 0;
     font-family: 'Philosopher', 'Cormorant Garamond', serif;
     font-weight: 400;
-    font-size: clamp(1.15rem, 4.8vw, 1.5rem);
-    letter-spacing: 0.28em;
+    font-size: clamp(1.38rem, 7.2cqi, 2.25rem);
+    letter-spacing: 0.26em;
     color: var(--dove);
     text-shadow:
         0 0 28px rgba(255, 255, 255, 0.4),
@@ -453,6 +535,20 @@ body {
     white-space: nowrap;
     overflow: visible;
     text-align: center;
+}
+
+@container (max-width: 320px) {
+    .hero-names,
+    .hero-date {
+        font-size: clamp(1.22rem, 6.5cqi, 1.85rem);
+        letter-spacing: 0.22em;
+    }
+
+    .hero-wedding-day {
+        font-size: clamp(0.82rem, 4cqi, 1.15rem);
+        letter-spacing: 0.3em;
+        text-indent: 0.3em;
+    }
 }
 
 .hero-scroll {
@@ -597,11 +693,13 @@ body {
 }
 
 /* Location is scroll-gated — skip translate so reveal doesn't fight the lock. */
-.location.reveal {
+.location.reveal,
+.gifts.reveal {
     transform: none;
 }
 
-.location.reveal.is-visible {
+.location.reveal.is-visible,
+.gifts.reveal.is-visible {
     transform: none;
 }
 
@@ -635,33 +733,77 @@ body {
    Intro
    ============================================================ */
 .intro {
+    --intro-heading-size: clamp(37.64px, 9.78cqi + 1.41rem, 52.27px);
+    /* Body tracks heading: 20px when heading is at its 52.27px cap */
+    --intro-body-size: calc(var(--intro-heading-size) * 20 / 52.27);
     padding-top: 36px;
     container-type: inline-size;
 }
 
 .intro p.intro-greeting {
-    font-family: 'Marianna', cursive;
+    font-family: 'Ouvality', cursive;
     font-weight: 400;
-    font-size: clamp(2.0rem, 8.0vw, 2.15rem);    
+    font-size: var(--intro-heading-size);
     letter-spacing: 0.06em;
     line-height: 1.15;
-    white-space: nowrap;
+    text-align: left;
     color: var(--white);
     margin-bottom: 3.2rem !important;
     text-shadow: 0 0 48px rgba(242, 241, 239, 0.1);
 }
 
+.intro-greeting__line {
+    display: block;
+    white-space: nowrap;
+}
+
+/*
+ * Invisible twin of «Дорогие н» (~1 letter past «наши» start, at 80%).
+ * max-width collapses the indent on narrow containers so line 2 fits.
+ */
+.intro-greeting__pad {
+    visibility: hidden;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.8em;
+    max-width: clamp(0px, 60cqi - 9rem, 4.2em);
+    vertical-align: baseline;
+}
+
 .intro p:not(.intro-greeting) {
-    font-size: min(0.98rem, 3.2cqi);
+    font-family: 'Manrope', sans-serif;
+    font-size: var(--intro-body-size);
     color: var(--text-soft);
     margin-bottom: 1.2rem;
 }
 
+/*
+ * Narrow phones: shrink heading + body together.
+ * After base font-size rules so these overrides win in the cascade.
+ * Must target descendants — @container cannot style the container (.intro) itself.
+ */
+@container (max-width: 380px) {
+    .intro p.intro-greeting {
+        font-size: clamp(28px, 8.2cqi + 0.9rem, 43.91px);
+    }
+
+    .intro p:not(.intro-greeting) {
+        font-size: calc(clamp(28px, 8.2cqi + 0.9rem, 43.91px) * 20 / 52.27);
+    }
+
+    .intro-greeting__pad {
+        max-width: clamp(0px, 56cqi - 9.25rem, 3.6em);
+        font-size: 0.74em;
+    }
+}
+
 .intro-step {
     text-align: left;
-    line-height: 1.55;
+    line-height: 1.35;
     margin-left: 0;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
 
 .intro p:last-child {
@@ -1883,10 +2025,246 @@ body {
 }
 
 /* ============================================================
-   Gifts
+   Gifts — full circle + U-shaped layers (constant width)
    ============================================================ */
-.gifts .section-text {
-    margin-top: 0.2rem;
+.gifts {
+    overflow: visible;
+    padding-bottom: 0;
+}
+
+.gifts-arcs {
+    /*
+      Layer 1: full circle.
+      Layers 2+: U-shapes — semicircle bottom, straight sides up.
+      --peek-N sized for ~22px body text; taller on narrow screens.
+      Width is capped to the sheet so nothing clips horizontally.
+    */
+    --peek-2: clamp(19rem, 52vw, 22.5rem);
+    --peek-3: clamp(30rem, 82vw, 36rem);
+    --peek-4: clamp(23.5rem, 62vw, 28.5rem);
+    --content-w: min(19em, 68%);
+    --band-pad: 0.55rem;
+    position: relative;
+    width: min(100%, 460px);
+    container-type: inline-size;
+    height: calc(100cqw + var(--peek-2) + var(--peek-3) + var(--peek-4));
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: transparent;
+}
+
+.gifts-arc {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Full circle — title */
+.gifts-arc--1 {
+    height: 100cqw;
+    border-radius: 50%;
+    z-index: 4;
+    background: #1e2f42;
+    box-shadow: none;
+}
+
+/* U-layers: round only at the bottom, straight sides upward */
+.gifts-arc--2,
+.gifts-arc--3,
+.gifts-arc--4 {
+    border-radius: 0 0 50cqw 50cqw;
+    /* Let arc titles paint in the peek under the previous circle */
+    overflow: visible;
+}
+
+.gifts-arc--2 {
+    --peek: var(--peek-2);
+    height: calc(100cqw + var(--peek-2));
+    z-index: 3;
+    background: var(--warm-glow);
+    box-shadow: 0 -18px 36px rgba(18, 32, 48, 0.22);
+}
+
+.gifts-arc--3 {
+    --peek: var(--peek-3);
+    height: calc(100cqw + var(--peek-2) + var(--peek-3));
+    z-index: 2;
+    background: var(--dove);
+    box-shadow: 0 -16px 32px rgba(18, 32, 48, 0.16);
+}
+
+.gifts-arc--4 {
+    --peek: var(--peek-4);
+    height: calc(100cqw + var(--peek-2) + var(--peek-3) + var(--peek-4));
+    z-index: 1;
+    background: var(--silver);
+    box-shadow: 0 -14px 28px rgba(18, 32, 48, 0.12);
+}
+
+/*
+  Arc titles: letters fanned from the previous circle's center
+  along its bottom edge (just outside the radius).
+*/
+.gifts-arc__curve {
+    /* Slightly outside the circle edge so larger titles clear the rim */
+    --radius: 56.75cqw;
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    z-index: 8;
+    pointer-events: none;
+}
+
+.gifts-arc--2 .gifts-arc__curve {
+    top: 50cqw;
+}
+
+.gifts-arc--3 .gifts-arc__curve {
+    top: calc(50cqw + var(--peek-2));
+}
+
+.gifts-arc--4 .gifts-arc__curve {
+    top: calc(50cqw + var(--peek-2) + var(--peek-3));
+}
+
+.gifts-arc__curve span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    /* Slightly larger than .gifts-arc__text (≈20–22px) */
+    font-size: clamp(18px, 5.1cqw, 24px);
+    line-height: 1;
+    color: rgba(18, 26, 34, 0.78);
+    text-transform: uppercase;
+    transform-origin: 0 0;
+    transform:
+        rotate(calc((var(--mid) - var(--i)) * var(--step)))
+        translateY(var(--radius))
+        translateX(-50%);
+}
+
+.gifts-arc__curve--long span {
+    font-size: clamp(16px, 4.5cqw, 21px);
+}
+
+.gifts-arc__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: var(--content-w);
+    max-width: calc(100% - 3.5rem);
+    margin-inline: auto;
+    /* Visible band under the layer above */
+    top: calc(100% - var(--peek));
+    height: var(--peek);
+    box-sizing: border-box;
+    /* Top pad clears arc titles; bottom pad clears the semicircle tip */
+    padding: calc(var(--band-pad) + 2.55rem + 0.5cm) 0.85rem calc(var(--band-pad) + 3.75rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    overflow: visible;
+}
+
+.gifts-arc--3 .gifts-arc__content {
+    padding-top: calc(var(--band-pad) + 2.7rem + 0.5cm);
+}
+
+.gifts-arc--4 .gifts-arc__content {
+    padding-bottom: calc(var(--band-pad) + 4.75rem);
+}
+
+.gifts-arc__content--hero {
+    top: 0;
+    height: 100%;
+    padding: 1.5rem 1.5rem 2rem;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.gifts-arc__title {
+    font-family: 'Philosopher', 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.45rem, 6vw, 1.95rem);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin: 0;
+    text-indent: 0.28em;
+}
+
+.gifts-arc__subtitle {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.68rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0.7rem 0 0;
+    text-indent: 0.42em;
+}
+
+.gifts-arc__label {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.62rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    margin: 0 0 0.35rem;
+    flex-shrink: 0;
+}
+
+.gifts-arc__text {
+    font-size: clamp(16px, 4.2vw, 20px);
+    line-height: 1.35;
+    margin: 0;
+    max-width: 100%;
+}
+
+.gifts-arc__text strong {
+    font-weight: 500;
+}
+
+.gifts-arc__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.05rem, 3.6vw, 1.25rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    flex-shrink: 0;
+}
+
+/* Light bands — ink matches dresscode-note */
+.gifts-arc--2 .gifts-arc__label,
+.gifts-arc--3 .gifts-arc__label,
+.gifts-arc--4 .gifts-arc__label,
+.gifts-arc--2 .gifts-arc__curve span,
+.gifts-arc--3 .gifts-arc__curve span,
+.gifts-arc--4 .gifts-arc__curve span {
+    color: rgba(18, 26, 34, 0.78);
+}
+
+.gifts-arc--2 .gifts-arc__text,
+.gifts-arc--3 .gifts-arc__text,
+.gifts-arc--4 .gifts-arc__text {
+    color: rgba(14, 20, 28, 0.92);
+}
+
+.gifts-arc--2 .gifts-arc__text strong,
+.gifts-arc--3 .gifts-arc__text strong,
+.gifts-arc--4 .gifts-arc__text strong,
+.gifts-arc--4 .gifts-arc__name {
+    color: #0e141c;
 }
 
 /* ============================================================
@@ -1939,26 +2317,8 @@ body {
 }
 
 /* ============================================================
-   Coordinator + footer
+   Footer
    ============================================================ */
-.coordinator-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 1.65rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-top: 1.2rem;
-}
-
-.coordinator-role {
-    font-size: 0.7rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 0.4rem;
-}
-
 .footer {
     text-align: center;
     padding-top: 48px;
@@ -1988,24 +2348,42 @@ body {
         padding: 56px 0;
     }
 
+    .gifts {
+        padding-bottom: 0;
+    }
+
+    .gifts-arcs {
+        width: min(100%, 480px);
+        --peek-2: clamp(20rem, 24vw, 23rem);
+        --peek-3: clamp(32rem, 38vw, 37rem);
+        --peek-4: clamp(24.5rem, 28vw, 29.5rem);
+        --content-w: min(20em, 66%);
+        --band-pad: 0.65rem;
+    }
+
+    .gifts-arc__label {
+        letter-spacing: 0.5em;
+    }
+
+    .gifts-arc__curve {
+        --radius: 56.75cqw;
+    }
+
+    .gifts-arc__curve span {
+        font-size: 24px;
+    }
+
+    .gifts-arc__curve--long span {
+        font-size: 21px;
+    }
+
+    .gifts-arc__text {
+        font-size: 20px;
+        line-height: 1.35;
+    }
+
     .hero-venn {
         width: min(88vw, 440px);
-    }
-
-    .hero-names {
-        font-size: 1.7rem;
-        letter-spacing: 0.3em;
-    }
-
-    .hero-wedding-day {
-        font-size: 1rem;
-        letter-spacing: 0.5em;
-        text-indent: 0.5em;
-    }
-
-    .hero-date {
-        font-size: 1.55rem;
-        letter-spacing: 0.3em;
     }
 
     .sheet {
@@ -2016,6 +2394,33 @@ body {
 }
 
 @media (max-width: 480px) {
+    .gifts-arcs {
+        width: 100%;
+        --peek-2: clamp(18.5rem, 56vw, 22rem);
+        --peek-3: clamp(30rem, 92vw, 36rem);
+        --peek-4: clamp(23.5rem, 70vw, 28.5rem);
+        --content-w: min(17.5em, 72%);
+        --band-pad: 0.55rem;
+    }
+
+    .gifts-arc__curve span {
+        font-size: 19px;
+    }
+
+    .gifts-arc__curve--long span {
+        font-size: 17px;
+    }
+
+    .gifts-arc__text {
+        font-size: 17px;
+        line-height: 1.34;
+    }
+
+    .gifts-arc__name {
+        font-size: 1.1rem;
+        letter-spacing: 0.2em;
+    }
+
     /* Softer blur only — layout proportions come from --circle-size */
     .location-orb--top,
     .location-orb--bottom {
@@ -2040,6 +2445,33 @@ body {
     .sheet-inner {
         padding-left: 18px;
         padding-right: 18px;
+    }
+
+    .gifts-arcs {
+        width: 100%;
+        --peek-2: clamp(19rem, 60vw, 23rem);
+        --peek-3: clamp(32rem, 100vw, 39rem);
+        --peek-4: clamp(25rem, 76vw, 30.5rem);
+        --content-w: min(16.5em, 74%);
+        --band-pad: 0.5rem;
+    }
+
+    .gifts-arc__label {
+        letter-spacing: 0.32em;
+        font-size: 0.56rem;
+    }
+
+    .gifts-arc__curve span {
+        font-size: 18px;
+    }
+
+    .gifts-arc__curve--long span {
+        font-size: 16px;
+    }
+
+    .gifts-arc__text {
+        font-size: 16px;
+        line-height: 1.32;
     }
 
     .location-orb--top,
@@ -2292,22 +2724,21 @@ body {
 }
 
 .hero-names {
-    letter-spacing: 0.32em;
+    letter-spacing: 0.26em;
 }
 
 .hero-wedding-day {
     font-family: 'Forum', serif;
     font-weight: 400;
-    font-size: clamp(0.76rem, 3.1vw, 0.95rem);
-    width: 78%;
+    width: 48%;
     max-width: none;
-    letter-spacing: 0.5em;
-    text-indent: 0.5em;
+    letter-spacing: 0.36em;
+    text-indent: 0.36em;
     overflow: visible;
 }
 
 .hero-date {
-    letter-spacing: 0.3em;
+    letter-spacing: 0.26em;
 }
 
 .hero-cross {
@@ -2345,6 +2776,10 @@ body {
     letter-spacing: 0.5em;
 }
 
+.gifts-arc__label {
+    letter-spacing: 0.5em;
+}
+
 .intro p.intro-greeting,
 .intro strong,
 .calendar-month,
@@ -2352,7 +2787,6 @@ body {
 .location-kicker,
 .snake-body .time,
 .rsvp-date,
-.coordinator-name,
 .section-text strong {
     color: var(--white);
     text-shadow: 0 0 34px rgba(248, 252, 255, 0.34);
@@ -2488,7 +2922,6 @@ body {
 }
 
 .snake-body .event,
-.coordinator-role,
 .footer p {
     color: var(--text-muted);
 }
@@ -2745,26 +3178,24 @@ body {
 
 .hero-names {
     font-weight: 400;
-    letter-spacing: 0.36em;
+    letter-spacing: 0.26em;
 }
 
 .hero-wedding-day {
     font-family: 'Forum', serif;
-    font-size: clamp(0.8rem, 3.2vw, 1rem);
     font-style: normal;
     font-weight: 550;
-    letter-spacing: 0.5em;
-    text-indent: 0.5em;
+    letter-spacing: 0.36em;
+    text-indent: 0.36em;
     text-transform: uppercase;
-    width: 80%;
+    width: 48%;
     max-width: none;
     overflow: visible;
     opacity: 1;
 }
 
 .hero-date {
-    letter-spacing: 0.34em;
-    font-size: clamp(1.25rem, 5vw, 1.6rem);
+    letter-spacing: 0.26em;
     font-weight: 400;
     color: #ffffff;
 }
@@ -2809,6 +3240,10 @@ body {
     padding-bottom: 68px;
 }
 
+.section.gifts {
+    padding-bottom: 0;
+}
+
 .section + .section,
 .footer {
     border-color: rgba(232, 242, 246, 0.12);
@@ -2817,6 +3252,10 @@ body {
 .section-label {
     color: var(--text-muted);
     font-weight: 300;
+    letter-spacing: 0.52em;
+}
+
+.gifts-arc__label {
     letter-spacing: 0.52em;
 }
 
@@ -2833,7 +3272,6 @@ body {
 .location-kicker,
 .snake-body .time,
 .rsvp-date,
-.coordinator-name,
 .section-text strong {
     color: var(--white);
     font-weight: 300;
@@ -2968,7 +3406,6 @@ body {
 }
 
 .snake-body .event,
-.coordinator-role,
 .footer p {
     color: var(--text-muted);
 }
@@ -3042,6 +3479,10 @@ body {
     .section {
         padding-top: 72px;
         padding-bottom: 72px;
+    }
+
+    .section.gifts {
+        padding-bottom: 0;
     }
 }
 

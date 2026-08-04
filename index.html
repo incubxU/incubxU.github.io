@@ -106,7 +106,12 @@
 
             <!-- INTRO -->
             <section class="section intro reveal">
-                <p class="intro-greeting">Дорогие наши родные и близкие!</p>
+                <p class="intro-greeting">
+                    <span class="intro-greeting__line">Дорогие наши</span>
+                    <span class="intro-greeting__line">
+                        <span class="intro-greeting__pad" aria-hidden="true">Дорогие н</span>родные и близкие!
+                    </span>
+                </p>
                 <p class="intro-step">
                     Мы не будем говорить,<br>
                     что это самый важный день в нашей жизни.<br>
@@ -537,22 +542,58 @@
                 </div>
             </section>
 
-            <!-- GIFTS -->
+            <!-- DETAILS (stacked nested circles) -->
             <section class="section gifts reveal">
-                <div class="icon-wrap" aria-hidden="true">
-                    <svg viewBox="0 0 64 64" fill="none">
-                        <rect x="14" y="26" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2" />
-                        <path d="M14 34h36M32 26v28" stroke="currentColor" stroke-width="2" />
-                        <path d="M32 26c-4-8-12-8-12-2 0 4 6 6 12 8 6-2 12-4 12-8 0-6-8-6-12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                    </svg>
+                <div class="gifts-arcs">
+                    <div class="gifts-arc gifts-arc--1">
+                        <div class="gifts-arc__content gifts-arc__content--hero">
+                            <p class="gifts-arc__title">Детали</p>
+                            <p class="gifts-arc__subtitle">мероприятия</p>
+                        </div>
+                    </div>
+                    <div class="gifts-arc gifts-arc--2">
+                        <div class="gifts-arc__curve" style="--mid: 3; --step: 6.5deg" aria-hidden="true">
+                            <span style="--i: 0">П</span><span style="--i: 1">О</span><span style="--i: 2">Д</span><span style="--i: 3">А</span><span style="--i: 4">Р</span><span style="--i: 5">К</span><span style="--i: 6">И</span>
+                        </div>
+                        <div class="gifts-arc__content">
+                            <p class="visually-hidden">Подарки</p>
+                            <p class="gifts-arc__text">
+                                Ваше присутствие — самый ценный подарок для нас.
+                                Если же вы захотите нас поздравить, мы будем благодарны
+                                за вклад в наш семейный бюджет.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gifts-arc gifts-arc--3">
+                        <div class="gifts-arc__curve" style="--mid: 2; --step: 7.5deg" aria-hidden="true">
+                            <span style="--i: 0">Ц</span><span style="--i: 1">В</span><span style="--i: 2">Е</span><span style="--i: 3">Т</span><span style="--i: 4">Ы</span>
+                        </div>
+                        <div class="gifts-arc__content">
+                            <p class="visually-hidden">Цветы</p>
+                            <p class="gifts-arc__text">
+                                Для того чтобы праздничное настроение длилось дольше,
+                                предлагаем не дарить нам цветы в день торжества,
+                                а средства, которые вы планировали потратить на них,
+                                перевести в копилку нашей цветочной подписки.
+                                После свадьбы ваши цветы будут радовать нас ещё долгое время!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gifts-arc gifts-arc--4">
+                        <div class="gifts-arc__curve gifts-arc__curve--long" style="--mid: 5; --step: 5deg" aria-hidden="true">
+                            <span style="--i: 0">О</span><span style="--i: 1">Р</span><span style="--i: 2">Г</span><span style="--i: 3">А</span><span style="--i: 4">Н</span><span style="--i: 5">И</span><span style="--i: 6">З</span><span style="--i: 7">А</span><span style="--i: 8">Т</span><span style="--i: 9">О</span><span style="--i: 10">Р</span>
+                        </div>
+                        <div class="gifts-arc__content">
+                            <p class="visually-hidden">Организатор</p>
+                            <p class="gifts-arc__text">
+                                Если вы подготовили для нас сюрприз или у вас возникли вопросы,
+                                пожалуйста, свяжитесь с нашим свадебным организатором.
+                                Он поможет с согласованием всех деталей.
+                            </p>
+                            <p class="gifts-arc__name">Юлия</p>
+                        </div>
+                    </div>
                 </div>
-                <p class="section-label">Подарки</p>
-                <p class="section-text">
-                    Сразу после свадьбы мы улетаем в свадебное путешествие,
-                    поэтому не успеем насладиться красотой подаренных цветов.
-                    Будем рады, если вместо цветов Вы решите подарить нам
-                    <strong>бутылочку хорошего вина</strong>.
-                </p>
             </section>
 
             <!-- RSVP -->
@@ -565,16 +606,6 @@
                 </p>
                 <p class="rsvp-date">16 / 11 / 2026</p>
                 <button type="button" class="btn-rsvp">Подтвердить</button>
-            </section>
-
-            <!-- COORDINATOR -->
-            <section class="section coordinator reveal">
-                <p class="section-text">
-                    По всем организационным вопросам Вы можете связаться
-                    с нашим организатором:
-                </p>
-                <p class="coordinator-name">Юлия</p>
-                <p class="coordinator-role">Организатор</p>
             </section>
 
             <footer class="footer reveal">
