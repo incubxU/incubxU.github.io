@@ -800,13 +800,6 @@ body {
     .gifts-arc__title {
         font-size: calc(clamp(28px, 8.2cqi + 0.9rem, 43.91px) * 0.728);
     }
-
-    .dresscode-intro,
-    .dresscode-palette-lead,
-    .dresscode-palette-aside,
-    .dresscode-note {
-        font-size: calc(clamp(28px, 8.2cqi + 0.9rem, 43.91px) * 20 / 52.27);
-    }
 }
 
 .intro-step {
@@ -1665,8 +1658,6 @@ body {
    Dress code
    ============================================================ */
 .dresscode {
-    --intro-heading-size: clamp(37.64px, 9.78cqi + 1.41rem, 52.27px);
-    --intro-body-size: calc(var(--intro-heading-size) * 20 / 52.27);
     position: relative;
     z-index: 0;
     isolation: isolate;
@@ -1684,7 +1675,7 @@ body {
 
 .dresscode-mist {
     position: absolute;
-    top: 8%;
+    top: 31%;
     bottom: -140px;
     left: 50%;
     z-index: 0;
@@ -1719,79 +1710,78 @@ body {
     z-index: 1;
 }
 
+.dresscode-heading {
+    margin-bottom: 3.6rem;
+}
+
 .dresscode-heading .gifts-arc__title {
     text-indent: 0.28em;
     transform: none;
 }
 
-.dresscode-intro,
-.dresscode-palette-lead,
-.dresscode-palette-aside,
-.dresscode-note {
+.dresscode-copy {
+    --intro-heading-size: clamp(37.64px, 9.78cqi + 1.41rem, 52.27px);
+    --intro-body-size: calc(var(--intro-heading-size) * 20 / 52.27);
+    width: min(100%, 34em);
+    margin: 0 auto 2.6rem;
     font-family: 'Manrope', sans-serif;
     font-size: var(--intro-body-size);
+    line-height: 1.35;
+    color: var(--white);
 }
 
 .dresscode-intro {
-    margin-bottom: 2.1rem;
-    max-width: 30em;
-    line-height: 1.35;
-}
-
-.dresscode-palette-block {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: stretch;
-    column-gap: clamp(0.4rem, 2.4vw, 1.35rem);
-    width: min(100%, 560px);
-    margin: 0 auto 2.6rem;
-    padding: 0 0.15rem;
-}
-
-.dresscode-palette-lead,
-.dresscode-palette-aside {
-    margin: 0;
-    line-height: 1.35;
-    color: var(--text-soft);
-    hyphens: auto;
-    -webkit-hyphens: auto;
-}
-
-.dresscode-palette-lead {
-    text-align: right;
-    align-self: start;
-    padding-right: 0.05rem;
-    padding-top: 0.15rem;
-}
-
-.dresscode-palette-aside-wrap {
-    position: relative;
-    min-width: 0;
-    min-height: 0;
-}
-
-.dresscode-palette-aside {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
     text-align: left;
-    padding-left: 0.05rem;
-    color: rgba(232, 231, 229, 0.62);
 }
 
-.dresscode-star-glue {
+.dresscode-intro .section-text {
+    margin: 0;
+    max-width: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.dresscode-asterisk-wrap {
     white-space: nowrap;
 }
 
-.dresscode-star {
-    font-family: 'Forum', 'Philosopher', serif;
-    font-size: 0.85em;
-    font-weight: 400;
+.dresscode-asterisk {
+    font-size: 1.2em;
+    font-weight: 600;
     line-height: 0;
     vertical-align: super;
-    color: rgba(255, 255, 255, 0.98);
-    text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+    margin-inline: 0.02em;
+    color: inherit;
+}
+
+.dresscode-intro .dresscode-asterisk {
+    vertical-align: 0.11em;
+}
+
+.dresscode-footnote {
+    margin: 3.2rem 0 0 auto;
+    max-width: 16.5em;
+    text-align: right;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.dresscode-footnote .dresscode-asterisk {
+    margin-right: 0.08em;
+    margin-left: 0;
+}
+
+@container (max-width: 380px) {
+    .dresscode-copy {
+        --intro-heading-size: clamp(28px, 8.2cqi + 0.9rem, 43.91px);
+    }
 }
 
 .dresscode-circles {
@@ -1804,23 +1794,30 @@ body {
     overflow: visible;
 }
 
-.dresscode-palette {
+.dresscode-her-col {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1.05rem;
+}
+
+.dresscode-palette {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: clamp(1.35rem, 4.8vw, 2.4rem);
+    gap: 0.95rem;
     margin: 0;
-    padding: 0.15rem 0;
+    padding: 0;
     list-style: none;
     position: relative;
     z-index: 2;
-    width: auto;
+    width: min(90vw, 360px);
 }
 
 .dresscode-swatch {
-    flex: none;
-    width: clamp(2.35rem, 9.4vw, 3.75rem);
+    flex: 1 1 0;
+    width: auto;
+    max-width: 2.85rem;
     aspect-ratio: 1;
     height: auto;
     border-radius: 50%;
@@ -2086,13 +2083,16 @@ body {
     }
 }
 
-.dresscode-note {
-    position: relative;
-    z-index: 1;
-    line-height: 1.35;
-    color: rgba(32, 38, 44, 0.72);
-    max-width: 26em;
-    margin: 0 auto 1.35rem;
+@media (max-width: 480px) {
+    .dresscode-copy {
+        width: 100%;
+        margin-bottom: 2.2rem;
+    }
+
+    .dresscode-footnote {
+        margin-top: 2.4rem;
+        max-width: min(15.5em, 78%);
+    }
 }
 
 /* ============================================================
@@ -2601,10 +2601,17 @@ body {
         width: min(84vw, 260px);
     }
 
-    .dresscode-palette-block {
-        width: min(100%, 100%);
-        margin-bottom: 2.2rem;
-        column-gap: clamp(0.32rem, 2vw, 0.7rem);
+    .dresscode-her-col {
+        gap: 0.95rem;
+    }
+
+    .dresscode-palette {
+        gap: 0.8rem;
+        width: min(92vw, 340px);
+    }
+
+    .dresscode-swatch {
+        max-width: 2.55rem;
     }
 
     .snake-node svg {
@@ -3017,10 +3024,6 @@ body {
 
 .dresscode {
     background: transparent;
-}
-
-.dresscode-note {
-    color: rgba(28, 40, 50, 0.72);
 }
 
 .dresscode-circle--her {
@@ -3500,10 +3503,6 @@ body {
 
 .dresscode {
     background: transparent;
-}
-
-.dresscode-note {
-    color: rgba(28, 36, 42, 0.72);
 }
 
 .dresscode-circle--her {
