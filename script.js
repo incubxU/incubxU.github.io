@@ -559,6 +559,22 @@
         render(0);
     });
 
+    const rsvpForm = document.getElementById('rsvp-form');
+    const rsvpGuests = document.getElementById('rsvp-guests');
+    if (rsvpForm && rsvpGuests) {
+        const syncGuestRequirement = () => {
+            const attending = rsvpForm.querySelector('input[name="attendance"]:checked');
+            const needsGuests = attending && attending.value === 'Да';
+            rsvpGuests.required = Boolean(needsGuests);
+            if (!needsGuests) rsvpGuests.setCustomValidity('');
+        };
+
+        rsvpForm.querySelectorAll('input[name="attendance"]').forEach((input) => {
+            input.addEventListener('change', syncGuestRequirement);
+        });
+        syncGuestRequirement();
+    }
+
     if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
     function updateCountdown() {

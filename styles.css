@@ -79,16 +79,6 @@
 }
 
 @font-face {
-    font-family: 'Ouvality';
-    src:
-        url('fonts/Ouvality/Ouvality.otf') format('opentype'),
-        url('fonts/Ouvality/Ouvality.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
     font-family: 'Arimo';
     src: url('fonts/Arimo/Arimo.ttf') format('truetype');
     font-weight: 400;
@@ -123,6 +113,14 @@
 @font-face {
     font-family: 'Manrope';
     src: url('fonts/Manrope/Manrope.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Kindentosca';
+    src: url('fonts/Kindentosca/Kindentosca.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -741,7 +739,7 @@ body {
 }
 
 .intro p.intro-greeting {
-    font-family: 'Ouvality', cursive;
+    font-family: 'Kindentosca', cursive;
     font-weight: 400;
     font-size: var(--intro-heading-size);
     letter-spacing: 0.06em;
@@ -1399,6 +1397,37 @@ body {
     background: rgba(255, 255, 255, 0.12);
 }
 
+/* Light bands (gifts): ink variant of the map pill */
+.btn-map.btn-map--ink {
+    --circle-size: min(74vw, 268px);
+    margin-top: 1.1rem;
+    border-color: rgba(18, 26, 34, 0.28);
+    background: rgba(255, 255, 255, 0.35);
+    color: #0e141c;
+    letter-spacing: 0.12em;
+    box-shadow:
+        inset 0 0 28px rgba(255, 255, 255, 0.35),
+        0 0 28px rgba(45, 100, 180, 0.14);
+}
+
+.btn-map.btn-map--ink:hover {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(18, 26, 34, 0.48);
+    color: #0e141c;
+    box-shadow:
+        inset 0 0 32px rgba(255, 255, 255, 0.45),
+        0 0 34px rgba(50, 110, 190, 0.22);
+}
+
+.btn-map.btn-map--ink:active {
+    background: rgba(255, 255, 255, 0.42);
+}
+
+.btn-map.btn-map--ink:focus-visible {
+    outline: 1px solid rgba(18, 26, 34, 0.72);
+    outline-offset: 4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .location-circle,
     .location-orb,
@@ -1490,6 +1519,10 @@ body {
     color: var(--white);
     -webkit-text-stroke: 0;
     paint-order: normal;
+}
+
+.location-heading .gifts-arc__subtitle {
+    font-family: 'Kindentosca', cursive;
 }
 
 .snake {
@@ -2109,7 +2142,7 @@ body {
     */
     --peek-2: clamp(19rem, 52vw, 22.5rem);
     --peek-3: clamp(30rem, 82vw, 36rem);
-    --peek-4: clamp(23.5rem, 62vw, 28.5rem);
+    --peek-4: clamp(26.5rem, 68vw, 31.5rem);
     --content-w: min(19em, 68%);
     --band-pad: 0.55rem;
     position: relative;
@@ -2177,8 +2210,10 @@ body {
   along its bottom edge (just outside the radius).
 */
 .gifts-arc__curve {
-    /* Slightly outside the circle edge so larger titles clear the rim */
-    --radius: 56.75cqw;
+    /* Just under the circle rim (50cqw), nudged down for breathing room */
+    --radius: 52.4cqw;
+    /* Lowercase script vs former caps: 1.4×, then ×2, then −30% */
+    --arc-title-scale: 1.96;
     position: absolute;
     left: 50%;
     width: 0;
@@ -2204,22 +2239,22 @@ body {
     left: 0;
     top: 0;
     display: block;
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    /* Slightly larger than .gifts-arc__text (≈20–22px) */
-    font-size: clamp(18px, 5.1cqw, 24px);
+    font-family: 'Kindentosca', cursive;
+    font-weight: 400;
+    font-size: calc(clamp(18px, 5.1cqw, 24px) * var(--arc-title-scale));
     line-height: 1;
     color: rgba(18, 26, 34, 0.78);
-    text-transform: uppercase;
+    text-transform: none;
     transform-origin: 0 0;
     transform:
         rotate(calc((var(--mid) - var(--i)) * var(--step)))
-        translateY(var(--radius))
+        /* Slight pull-up so glyph body still reads against the semicircle */
+        translateY(calc(var(--radius) - 0.2em))
         translateX(-50%);
 }
 
 .gifts-arc__curve--long span {
-    font-size: clamp(16px, 4.5cqw, 21px);
+    font-size: calc(clamp(16px, 4.5cqw, 21px) * var(--arc-title-scale));
 }
 
 .gifts-arc__content {
@@ -2233,8 +2268,8 @@ body {
     top: calc(100% - var(--peek));
     height: var(--peek);
     box-sizing: border-box;
-    /* Top pad clears arc titles; bottom pad clears the semicircle tip */
-    padding: calc(var(--band-pad) + 2.55rem + 0.5cm) 0.85rem calc(var(--band-pad) + 3.75rem);
+    /* Top pad clears larger script arc titles; bottom pad clears the semicircle tip */
+    padding: calc(var(--band-pad) + 3.6rem + 0.5cm) 0.85rem calc(var(--band-pad) + 3.75rem);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2244,7 +2279,7 @@ body {
 }
 
 .gifts-arc--3 .gifts-arc__content {
-    padding-top: calc(var(--band-pad) + 2.7rem + 0.5cm);
+    padding-top: calc(var(--band-pad) + 3.8rem + 0.5cm);
 }
 
 .gifts-arc--4 .gifts-arc__content {
@@ -2280,7 +2315,7 @@ body {
 }
 
 .gifts-arc__subtitle {
-    font-family: 'Ouvality', cursive;
+    font-family: 'Kindentosca', cursive;
     font-weight: 400;
     font-synthesis: none;
     font-size: calc(clamp(1.755rem, 7.15vw, 2.405rem) * 1.32);
@@ -2441,7 +2476,7 @@ body {
         width: min(100%, 480px);
         --peek-2: clamp(20rem, 24vw, 23rem);
         --peek-3: clamp(32rem, 38vw, 37rem);
-        --peek-4: clamp(24.5rem, 28vw, 29.5rem);
+        --peek-4: clamp(27.5rem, 30vw, 32.5rem);
         --content-w: min(20em, 66%);
         --band-pad: 0.65rem;
     }
@@ -2451,15 +2486,15 @@ body {
     }
 
     .gifts-arc__curve {
-        --radius: 56.75cqw;
+        --radius: 52.4cqw;
     }
 
     .gifts-arc__curve span {
-        font-size: 24px;
+        font-size: calc(24px * var(--arc-title-scale));
     }
 
     .gifts-arc__curve--long span {
-        font-size: 21px;
+        font-size: calc(21px * var(--arc-title-scale));
     }
 
     .gifts-arc__text {
@@ -2483,17 +2518,17 @@ body {
         width: 100%;
         --peek-2: clamp(18.5rem, 56vw, 22rem);
         --peek-3: clamp(30rem, 92vw, 36rem);
-        --peek-4: clamp(23.5rem, 70vw, 28.5rem);
+        --peek-4: clamp(26.5rem, 76vw, 31.5rem);
         --content-w: min(17.5em, 72%);
         --band-pad: 0.55rem;
     }
 
     .gifts-arc__curve span {
-        font-size: 19px;
+        font-size: calc(19px * var(--arc-title-scale));
     }
 
     .gifts-arc__curve--long span {
-        font-size: 17px;
+        font-size: calc(17px * var(--arc-title-scale));
     }
 
     .gifts-arc__text {
@@ -2536,7 +2571,7 @@ body {
         width: 100%;
         --peek-2: clamp(19rem, 60vw, 23rem);
         --peek-3: clamp(32rem, 100vw, 39rem);
-        --peek-4: clamp(25rem, 76vw, 30.5rem);
+        --peek-4: clamp(28rem, 82vw, 33.5rem);
         --content-w: min(16.5em, 74%);
         --band-pad: 0.5rem;
     }
@@ -2547,11 +2582,11 @@ body {
     }
 
     .gifts-arc__curve span {
-        font-size: 18px;
+        font-size: calc(18px * var(--arc-title-scale));
     }
 
     .gifts-arc__curve--long span {
-        font-size: 16px;
+        font-size: calc(16px * var(--arc-title-scale));
     }
 
     .gifts-arc__text {
