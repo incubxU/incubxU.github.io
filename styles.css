@@ -2145,6 +2145,9 @@ body {
     --peek-4: clamp(26.5rem, 68vw, 31.5rem);
     --content-w: min(19em, 68%);
     --band-pad: 0.55rem;
+    --circle-fill: #1e2f42;
+    /* Nudge the title circle up to clear rim seams with the U-layers */
+    --circle-lift: 10px;
     position: relative;
     width: min(100%, 460px);
     container-type: inline-size;
@@ -2152,7 +2155,8 @@ body {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 9999px;
-    background: transparent;
+    /* Navy underpaint: clip AA blends with circle color, not light layers */
+    background: var(--circle-fill);
 }
 
 .gifts-arc {
@@ -2165,11 +2169,13 @@ body {
 
 /* Full circle — title */
 .gifts-arc--1 {
+    top: calc(-1 * var(--circle-lift));
     height: 100cqw;
     border-radius: 50%;
     z-index: 4;
-    background: #1e2f42;
-    box-shadow: none;
+    background: var(--circle-fill);
+    /* Soft contact shadow (replaces layer-2 up-shadow under the circle) */
+    box-shadow: 0 14px 32px rgba(18, 32, 48, 0.22);
 }
 
 /* U-layers: round only at the bottom, straight sides upward */
@@ -2179,6 +2185,20 @@ body {
     border-radius: 0 0 50cqw 50cqw;
     /* Let arc titles paint in the peek under the previous circle */
     overflow: visible;
+    /*
+      Punch out the navy circle area so light fills never sit under its rim
+      (that stacking is what caused the white AA hairlines).
+    */
+    -webkit-mask-image: radial-gradient(
+        circle 51cqw at 50% calc(50cqw - var(--circle-lift)),
+        transparent 99.6%,
+        #000 100%
+    );
+    mask-image: radial-gradient(
+        circle 51cqw at 50% calc(50cqw - var(--circle-lift)),
+        transparent 99.6%,
+        #000 100%
+    );
 }
 
 .gifts-arc--2 {
@@ -2223,7 +2243,7 @@ body {
 }
 
 .gifts-arc--2 .gifts-arc__curve {
-    top: 50cqw;
+    top: calc(50cqw - var(--circle-lift));
 }
 
 .gifts-arc--3 .gifts-arc__curve {
