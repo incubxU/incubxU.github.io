@@ -2142,12 +2142,12 @@ body {
     */
     --peek-2: clamp(19rem, 52vw, 22.5rem);
     --peek-3: clamp(30rem, 82vw, 36rem);
-    --peek-4: clamp(26.5rem, 68vw, 31.5rem);
+    --peek-4: clamp(21rem, 56vw, 24.5rem);
     --content-w: min(19em, 68%);
     --band-pad: 0.55rem;
     --circle-fill: #1e2f42;
-    /* Nudge the title circle up to clear rim seams with the U-layers */
-    --circle-lift: 10px;
+    /* Slight lift clears rim seams without opening a bottom navy crescent */
+    --circle-lift: 2px;
     position: relative;
     width: min(100%, 460px);
     container-type: inline-size;
@@ -2155,8 +2155,23 @@ body {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 9999px;
-    /* Navy underpaint: clip AA blends with circle color, not light layers */
+    /* Last-layer color: bottom tip stays silver, no empty navy capsule */
+    background: var(--silver);
+}
+
+/* Navy underpaint only under the title circle — seals AA without a bottom rim */
+.gifts-arcs::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(50cqw - var(--circle-lift));
+    width: calc(100cqw + 4px);
+    height: calc(100cqw + 4px);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
     background: var(--circle-fill);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .gifts-arc {
@@ -2174,8 +2189,10 @@ body {
     border-radius: 50%;
     z-index: 4;
     background: var(--circle-fill);
-    /* Soft contact shadow (replaces layer-2 up-shadow under the circle) */
-    box-shadow: 0 14px 32px rgba(18, 32, 48, 0.22);
+    /* Soft contact shadow + same-color rim seal against subpixel fringing */
+    box-shadow:
+        0 14px 32px rgba(18, 32, 48, 0.22),
+        0 0 0 1.5px var(--circle-fill);
 }
 
 /* U-layers: round only at the bottom, straight sides upward */
@@ -2190,13 +2207,13 @@ body {
       (that stacking is what caused the white AA hairlines).
     */
     -webkit-mask-image: radial-gradient(
-        circle 51cqw at 50% calc(50cqw - var(--circle-lift)),
-        transparent 99.6%,
+        circle 51.5cqw at 50% calc(50cqw - var(--circle-lift)),
+        transparent 99.5%,
         #000 100%
     );
     mask-image: radial-gradient(
-        circle 51cqw at 50% calc(50cqw - var(--circle-lift)),
-        transparent 99.6%,
+        circle 51.5cqw at 50% calc(50cqw - var(--circle-lift)),
+        transparent 99.5%,
         #000 100%
     );
 }
@@ -2303,7 +2320,7 @@ body {
 }
 
 .gifts-arc--4 .gifts-arc__content {
-    padding-bottom: calc(var(--band-pad) + 4.75rem);
+    padding-bottom: calc(var(--band-pad) + 3.5rem);
 }
 
 .gifts-arc__content--hero {
@@ -2496,7 +2513,7 @@ body {
         width: min(100%, 480px);
         --peek-2: clamp(20rem, 24vw, 23rem);
         --peek-3: clamp(32rem, 38vw, 37rem);
-        --peek-4: clamp(27.5rem, 30vw, 32.5rem);
+        --peek-4: clamp(21.5rem, 24vw, 25rem);
         --content-w: min(20em, 66%);
         --band-pad: 0.65rem;
     }
@@ -2538,7 +2555,7 @@ body {
         width: 100%;
         --peek-2: clamp(18.5rem, 56vw, 22rem);
         --peek-3: clamp(30rem, 92vw, 36rem);
-        --peek-4: clamp(26.5rem, 76vw, 31.5rem);
+        --peek-4: clamp(21rem, 62vw, 25rem);
         --content-w: min(17.5em, 72%);
         --band-pad: 0.55rem;
     }
@@ -2591,7 +2608,7 @@ body {
         width: 100%;
         --peek-2: clamp(19rem, 60vw, 23rem);
         --peek-3: clamp(32rem, 100vw, 39rem);
-        --peek-4: clamp(28rem, 82vw, 33.5rem);
+        --peek-4: clamp(22rem, 68vw, 26rem);
         --content-w: min(16.5em, 74%);
         --band-pad: 0.5rem;
     }
