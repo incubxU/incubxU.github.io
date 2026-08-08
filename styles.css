@@ -1063,8 +1063,8 @@ body {
     background:
         radial-gradient(
             ellipse 60% 80% at 50% 50%,
-            rgba(160, 190, 245, 0.2) 0%,
-            rgba(100, 140, 210, 0.08) 40%,
+            rgba(110, 150, 190, 0.24) 0%,
+            rgba(40, 75, 115, 0.14) 40%,
             transparent 70%
         );
     filter: blur(36px);
@@ -1089,11 +1089,11 @@ body {
     background:
         radial-gradient(
             ellipse 72% 48% at 50% 82%,
-            #6ea8ff 0%,
-            rgba(90, 155, 255, 0.98) 10%,
-            rgba(70, 130, 245, 0.85) 24%,
-            rgba(50, 105, 210, 0.5) 42%,
-            rgba(30, 75, 170, 0.22) 60%,
+            #7a9ec0 0%,
+            rgba(90, 130, 175, 0.96) 10%,
+            rgba(50, 90, 135, 0.88) 24%,
+            rgba(30, 55, 90, 0.62) 42%,
+            rgba(20, 40, 70, 0.28) 60%,
             transparent 78%
         );
     -webkit-mask-image: linear-gradient(
@@ -1129,8 +1129,8 @@ body {
     background:
         radial-gradient(
             ellipse 78% 52% at 50% 84%,
-            rgba(100, 160, 255, 0.5) 0%,
-            rgba(70, 130, 235, 0.22) 38%,
+            rgba(100, 145, 190, 0.5) 0%,
+            rgba(40, 80, 125, 0.3) 38%,
             transparent 72%
         );
     -webkit-mask-image: linear-gradient(
