@@ -949,8 +949,8 @@ body {
     --orb-h: calc(var(--circle-size) * 2.56);
     --orb-aura-w: calc(var(--circle-size) * 2.1);
     --orb-aura-h: calc(var(--circle-size) * 2.87);
-    --orb-shift: calc(var(--circle-size) * 0.67);
-    --orb-aura-shift: calc(var(--circle-size) * 0.88);
+    --orb-shift: calc(var(--circle-size) * 0.77);
+    --orb-aura-shift: calc(var(--circle-size) * 1.01);
     position: relative;
     width: 100%;
     height: calc(var(--circle-size) * 3.35);
@@ -971,7 +971,8 @@ body {
     left: 50%;
     top: 50%;
     z-index: 0;
-    border-radius: 50%;
+    /* Capsule / stadium — not a pure ellipse */
+    border-radius: 999px;
     pointer-events: none;
     transform: translate(-50%, -50%);
 }
@@ -1285,23 +1286,23 @@ body {
 
 .location-arc-text {
     fill: var(--white);
-    font-family: 'Cormorant Garamond', 'Jost', serif;
-    font-weight: 300;
+    font-family: 'Philosopher', 'Cormorant Garamond', serif;
+    font-weight: 400;
     letter-spacing: 0.18em;
     text-transform: uppercase;
 }
 
-/* Arc type scales with the photo circle (11.5px @ 248px desktop) */
+/* Arc type scales with the photo circle (+25% vs prior sizes) */
 .location-arc-text--1 {
-    font-size: calc(var(--circle-size) * 0.0464);
+    font-size: calc(var(--circle-size) * 0.058);
 }
 
 .location-arc-text--2 {
-    font-size: calc(var(--circle-size) * 0.0444);
+    font-size: calc(var(--circle-size) * 0.0555);
 }
 
 .location-arc-text--3 {
-    font-size: calc(var(--circle-size) * 0.0423);
+    font-size: calc(var(--circle-size) * 0.0529);
 }
 
 .location-details {
@@ -1331,6 +1332,12 @@ body {
 .location.is-expanded .location-details {
     opacity: 1;
     transform: translateY(0);
+}
+
+@media (min-width: 481px) {
+    .location.is-expanded .location-details {
+        transform: translateY(calc(var(--circle-size) * -0.045));
+    }
 }
 
 .section.location {
@@ -1524,6 +1531,10 @@ body {
 
 .location-heading .gifts-arc__subtitle {
     font-family: 'Kindentosca', cursive;
+}
+
+.location-heading {
+    margin-bottom: 2.35rem;
 }
 
 .snake {
@@ -2837,12 +2848,16 @@ body {
     .location-stage {
         --circle-size: min(72vw, 230px);
         --split: calc(var(--circle-size) * 0.78);
-        --orb-w: calc(var(--circle-size) * 1.62);
-        --orb-aura-w: calc(var(--circle-size) * 1.8);
-        --orb-h: calc(var(--circle-size) * 2.45);
-        --orb-aura-h: calc(var(--circle-size) * 2.73);
-        --orb-shift: calc(var(--circle-size) * 0.52);
-        --orb-aura-shift: calc(var(--circle-size) * 0.7);
+        /*
+         * Match desktop capsule proportions (taller than wide).
+         * Cap width to the viewport so sides don’t clip.
+         */
+        --orb-w: min(calc(var(--circle-size) * 1.78), 92vw);
+        --orb-aura-w: min(calc(var(--circle-size) * 1.95), 96vw);
+        --orb-h: calc(var(--circle-size) * 2.65);
+        --orb-aura-h: calc(var(--circle-size) * 2.95);
+        --orb-shift: calc(var(--circle-size) * 0.6);
+        --orb-aura-shift: calc(var(--circle-size) * 0.8);
         height: calc(var(--circle-size) * 3.15);
     }
 
@@ -2857,12 +2872,12 @@ body {
 
     .location-orb--top,
     .location.is-expanded .location-orb--top {
-        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.62));
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.71));
     }
 
     .location-orb--aura-top,
     .location.is-expanded .location-orb--aura-top {
-        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.82));
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.94));
     }
 
     .location-arc-text {
@@ -2956,12 +2971,12 @@ body {
     .location-stage {
         --circle-size: min(76vw, 240px);
         --split: calc(var(--circle-size) * 0.74);
-        --orb-w: calc(var(--circle-size) * 1.56);
-        --orb-aura-w: calc(var(--circle-size) * 1.72);
-        --orb-h: calc(var(--circle-size) * 2.4);
-        --orb-aura-h: calc(var(--circle-size) * 2.67);
-        --orb-shift: calc(var(--circle-size) * 0.49);
-        --orb-aura-shift: calc(var(--circle-size) * 0.67);
+        --orb-w: min(calc(var(--circle-size) * 1.7), 90vw);
+        --orb-aura-w: min(calc(var(--circle-size) * 1.88), 94vw);
+        --orb-h: calc(var(--circle-size) * 2.6);
+        --orb-aura-h: calc(var(--circle-size) * 2.9);
+        --orb-shift: calc(var(--circle-size) * 0.56);
+        --orb-aura-shift: calc(var(--circle-size) * 0.77);
         height: calc(var(--circle-size) * 3.05);
     }
 
@@ -2975,12 +2990,12 @@ body {
 
     .location-orb--top,
     .location.is-expanded .location-orb--top {
-        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.6));
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.69));
     }
 
     .location-orb--aura-top,
     .location.is-expanded .location-orb--aura-top {
-        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.8));
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.92));
     }
 
     .location-arc-text {
