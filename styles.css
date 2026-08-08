@@ -945,11 +945,12 @@ body {
     --circle-size: min(74vw, 268px, calc((100vw - 2.75rem) / 1.88));
     --split: calc(var(--circle-size) * 0.88);
     --orb-w: calc(var(--circle-size) * 1.88);
-    --orb-h: calc(var(--circle-size) * 2.5);
+    /* Slightly tighter than original beams, without crowding the type */
+    --orb-h: calc(var(--circle-size) * 2.56);
     --orb-aura-w: calc(var(--circle-size) * 2.1);
-    --orb-aura-h: calc(var(--circle-size) * 2.8);
-    --orb-shift: calc(var(--circle-size) * 0.7);
-    --orb-aura-shift: calc(var(--circle-size) * 0.95);
+    --orb-aura-h: calc(var(--circle-size) * 2.87);
+    --orb-shift: calc(var(--circle-size) * 0.67);
+    --orb-aura-shift: calc(var(--circle-size) * 0.88);
     position: relative;
     width: 100%;
     height: calc(var(--circle-size) * 3.35);
@@ -2837,9 +2838,11 @@ body {
         --circle-size: min(72vw, 230px);
         --split: calc(var(--circle-size) * 0.78);
         --orb-w: calc(var(--circle-size) * 1.62);
-        --orb-aura-w: calc(var(--circle-size) * 1.82);
+        --orb-aura-w: calc(var(--circle-size) * 1.8);
+        --orb-h: calc(var(--circle-size) * 2.45);
+        --orb-aura-h: calc(var(--circle-size) * 2.73);
         --orb-shift: calc(var(--circle-size) * 0.52);
-        --orb-aura-shift: calc(var(--circle-size) * 0.72);
+        --orb-aura-shift: calc(var(--circle-size) * 0.7);
         height: calc(var(--circle-size) * 3.15);
     }
 
@@ -2847,14 +2850,19 @@ body {
         height: calc(var(--circle-size) * 1.75);
     }
 
-    .location-orb--bottom,
-    .location.is-expanded .location-orb--bottom {
-        transform: translate(-50%, calc(-50% - var(--circle-size) * 0.4));
+    /* Raise photo + arc into the top orb’s curve; bottom circle stays put */
+    .location.is-expanded .location-circle--top {
+        transform: translate(-50%, calc(-50% - var(--split) - var(--circle-size) * 0.1));
     }
 
-    .location-orb--aura,
-    .location.is-expanded .location-orb--aura {
-        transform: translate(-50%, calc(-50% - var(--circle-size) * 0.58));
+    .location-orb--top,
+    .location.is-expanded .location-orb--top {
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.62));
+    }
+
+    .location-orb--aura-top,
+    .location.is-expanded .location-orb--aura-top {
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.82));
     }
 
     .location-arc-text {
@@ -2948,10 +2956,12 @@ body {
     .location-stage {
         --circle-size: min(76vw, 240px);
         --split: calc(var(--circle-size) * 0.74);
-        --orb-w: calc(var(--circle-size) * 1.55);
+        --orb-w: calc(var(--circle-size) * 1.56);
         --orb-aura-w: calc(var(--circle-size) * 1.72);
-        --orb-shift: calc(var(--circle-size) * 0.5);
-        --orb-aura-shift: calc(var(--circle-size) * 0.7);
+        --orb-h: calc(var(--circle-size) * 2.4);
+        --orb-aura-h: calc(var(--circle-size) * 2.67);
+        --orb-shift: calc(var(--circle-size) * 0.49);
+        --orb-aura-shift: calc(var(--circle-size) * 0.67);
         height: calc(var(--circle-size) * 3.05);
     }
 
@@ -2959,14 +2969,18 @@ body {
         height: calc(var(--circle-size) * 1.65);
     }
 
-    .location-orb--bottom,
-    .location.is-expanded .location-orb--bottom {
-        transform: translate(-50%, calc(-50% - var(--circle-size) * 0.38));
+    .location.is-expanded .location-circle--top {
+        transform: translate(-50%, calc(-50% - var(--split) - var(--circle-size) * 0.12));
     }
 
-    .location-orb--aura,
-    .location.is-expanded .location-orb--aura {
-        transform: translate(-50%, calc(-50% - var(--circle-size) * 0.55));
+    .location-orb--top,
+    .location.is-expanded .location-orb--top {
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.6));
+    }
+
+    .location-orb--aura-top,
+    .location.is-expanded .location-orb--aura-top {
+        transform: translate(-50%, calc(-50% + var(--circle-size) * 0.8));
     }
 
     .location-arc-text {
