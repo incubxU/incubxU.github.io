@@ -2283,6 +2283,7 @@ body {
     );
 }
 
+.gifts-arc--3 .btn-map,
 .gifts-arc--4 .btn-map {
     position: relative;
     z-index: 7;
