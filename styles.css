@@ -1344,7 +1344,7 @@ body {
 .location-note {
     margin: 0 auto calc(var(--circle-size) * 0.035);
     max-width: 18em;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Manrope', sans-serif;
     font-size: calc(var(--circle-size) * 0.066);
     font-weight: 300;
     line-height: 1.45;
