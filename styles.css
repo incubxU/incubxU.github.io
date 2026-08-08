@@ -943,7 +943,7 @@ body {
      * is expressed as a fraction of --circle-size and scales with it.
      */
     --circle-size: min(74vw, 268px, calc((100vw - 2.75rem) / 1.88));
-    --split: calc(var(--circle-size) * 0.88);
+    --split: calc(var(--circle-size) * 0.824);
     --orb-w: calc(var(--circle-size) * 1.88);
     /* Slightly tighter than original beams, without crowding the type */
     --orb-h: calc(var(--circle-size) * 2.56);
@@ -2847,7 +2847,7 @@ body {
      */
     .location-stage {
         --circle-size: min(72vw, 230px);
-        --split: calc(var(--circle-size) * 0.78);
+        --split: calc(var(--circle-size) * 0.731);
         /*
          * Match desktop capsule proportions (taller than wide).
          * Cap width to the viewport so sides don’t clip.
@@ -2970,7 +2970,7 @@ body {
 
     .location-stage {
         --circle-size: min(76vw, 240px);
-        --split: calc(var(--circle-size) * 0.74);
+        --split: calc(var(--circle-size) * 0.693);
         --orb-w: min(calc(var(--circle-size) * 1.7), 90vw);
         --orb-aura-w: min(calc(var(--circle-size) * 1.88), 94vw);
         --orb-h: calc(var(--circle-size) * 2.6);
