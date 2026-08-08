@@ -623,19 +623,18 @@
                     поэтому будем рады, если Вы подтвердите своё присутствие
                     до <strong>16.11.2026</strong>
                 </p>
-                <p class="rsvp-date">16 / 11 / 2026</p>
-
                 <div class="rsvp-status rsvp-status--success" data-fs-success>Спасибо! Мы получили ваш ответ.</div>
                 <div class="rsvp-status rsvp-status--error" data-fs-error></div>
 
                 <form id="rsvp-form" class="rsvp-form">
                     <div class="rsvp-field">
-                        <label for="rsvp-name">Ваше имя</label>
+                        <label for="rsvp-name">Укажите ФИО всех, кто планирует прийти по этому приглашению</label>
                         <input
                             type="text"
                             id="rsvp-name"
                             name="name"
                             autocomplete="name"
+                            placeholder="Иванов Иван Иванович, Иванова Мария Петрова..."
                             required
                             data-fs-field
                         />
@@ -643,56 +642,73 @@
                     </div>
 
                     <fieldset class="rsvp-field rsvp-field--choice">
-                        <legend>Я / Мы придем</legend>
+                        <legend>Планируете ли вы присутствовать на свадьбе?</legend>
                         <div class="rsvp-choice" role="radiogroup" aria-label="Присутствие">
                             <label class="rsvp-choice__option">
-                                <input type="radio" name="attendance" value="Да" required data-fs-field />
-                                <span>Да</span>
+                                <input type="radio" name="attendance" value="Да, с радостью придём!" required data-fs-field />
+                                <span>Да, с радостью придём!</span>
                             </label>
                             <label class="rsvp-choice__option">
-                                <input type="radio" name="attendance" value="Нет" data-fs-field />
-                                <span>Нет</span>
+                                <input type="radio" name="attendance" value="К сожалению, не сможем" data-fs-field />
+                                <span>К сожалению, не сможем</span>
                             </label>
                         </div>
                         <span class="rsvp-field-error" data-fs-error="attendance"></span>
                     </fieldset>
 
-                    <div class="rsvp-field">
-                        <label for="rsvp-guests">Количество человек</label>
-                        <input
-                            type="number"
-                            id="rsvp-guests"
-                            name="guests"
-                            min="1"
-                            max="20"
-                            inputmode="numeric"
-                            data-fs-field
-                        />
-                        <span class="rsvp-field-error" data-fs-error="guests"></span>
-                    </div>
+                    <fieldset class="rsvp-field rsvp-field--choice">
+                        <legend>Ваши предпочтения в напитках:</legend>
+                        <div class="rsvp-choice rsvp-choice--checks" role="group" aria-label="Предпочтения в напитках">
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Безалкогольные напитки" data-fs-field />
+                                <span>Безалкогольные напитки</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино красное сухое" data-fs-field />
+                                <span>Вино красное сухое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино красное полусладкое" data-fs-field />
+                                <span>Вино красное полусладкое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино белое сухое" data-fs-field />
+                                <span>Вино белое сухое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино белое полусладкое" data-fs-field />
+                                <span>Вино белое полусладкое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Шампанское" data-fs-field />
+                                <span>Шампанское</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Водка" data-fs-field />
+                                <span>Водка</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Виски" data-fs-field />
+                                <span>Виски</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Коньяк" data-fs-field />
+                                <span>Коньяк</span>
+                            </label>
+                        </div>
+                        <span class="rsvp-field-error" data-fs-error="drinks"></span>
+                    </fieldset>
 
                     <div class="rsvp-field">
-                        <label for="rsvp-song">Ссылка на песню, которую хотели бы услышать на свадьбе</label>
+                        <label for="rsvp-song">Оставьте любимый музыкальный трек — по одному на каждого гостя:</label>
                         <input
                             type="text"
                             id="rsvp-song"
                             name="song"
-                            placeholder="Ссылка на YouTube, Spotify…"
+                            placeholder="Bruno Mars - Just The Way You Are"
                             data-fs-field
                         />
                         <span class="rsvp-field-error" data-fs-error="song"></span>
-                    </div>
-
-                    <div class="rsvp-field">
-                        <label for="rsvp-other">Другое</label>
-                        <textarea
-                            id="rsvp-other"
-                            name="other"
-                            rows="3"
-                            placeholder="Пожелания, вопросы, особенности…"
-                            data-fs-field
-                        ></textarea>
-                        <span class="rsvp-field-error" data-fs-error="other"></span>
                     </div>
 
                     <!-- Formspree honeypot -->

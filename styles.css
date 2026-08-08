@@ -2130,7 +2130,7 @@ body {
    ============================================================ */
 .gifts {
     overflow: visible;
-    padding-bottom: 0;
+    padding-bottom: 1.5rem;
 }
 
 .gifts-arcs {
@@ -2427,12 +2427,18 @@ body {
 /* ============================================================
    RSVP
    ============================================================ */
+.rsvp,
+.rsvp .section-label,
+.rsvp .section-text {
+    font-family: 'Manrope', sans-serif;
+}
+
 .rsvp .section-text {
     margin-bottom: 1.4rem;
 }
 
 .rsvp-date {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 300;
     font-size: 1.75rem;
     letter-spacing: 0.28em;
@@ -2441,12 +2447,206 @@ body {
     text-shadow: 0 0 40px rgba(242, 241, 239, 0.14);
 }
 
+.rsvp-status {
+    display: none;
+    max-width: 28rem;
+    margin: 0 auto 1.4rem;
+    padding: 0.85rem 1rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(242, 241, 239, 0.18);
+    background: rgba(242, 241, 239, 0.05);
+}
+
+.rsvp-status--success {
+    color: var(--white);
+    border-color: rgba(242, 241, 239, 0.28);
+}
+
+.rsvp-status--error {
+    color: #f0c9c4;
+    border-color: rgba(220, 140, 130, 0.35);
+}
+
+.rsvp-form {
+    width: min(100%, 26rem);
+    margin: 0 auto;
+    text-align: left;
+}
+
+.rsvp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin: 0 0 1.55rem;
+    border: 0;
+    min-inline-size: 0;
+}
+
+.rsvp-field > label,
+.rsvp-field > legend {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    color: var(--text-soft);
+}
+
+.rsvp-field > legend {
+    float: left;
+    width: 100%;
+    margin-bottom: 0.55rem;
+    padding: 0;
+}
+
+.rsvp-field > legend + * {
+    clear: both;
+}
+
+.rsvp-form input[type="text"],
+.rsvp-form input[type="number"],
+.rsvp-form textarea {
+    width: 100%;
+    appearance: none;
+    border: 1px solid rgba(242, 241, 239, 0.28);
+    border-radius: 0;
+    background: rgba(242, 241, 239, 0.04);
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    padding: 0.85rem 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rsvp-form input[type="text"]::placeholder,
+.rsvp-form textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+.rsvp-form input[type="text"]:hover,
+.rsvp-form input[type="number"]:hover,
+.rsvp-form textarea:hover {
+    border-color: rgba(242, 241, 239, 0.42);
+    background: rgba(242, 241, 239, 0.06);
+}
+
+.rsvp-form input[type="text"]:focus,
+.rsvp-form input[type="number"]:focus,
+.rsvp-form textarea:focus {
+    border-color: rgba(242, 241, 239, 0.62);
+    background: rgba(242, 241, 239, 0.07);
+    box-shadow: 0 0 0 3px rgba(242, 241, 239, 0.08);
+}
+
+.rsvp-choice {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.rsvp-choice__option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: var(--text);
+}
+
+.rsvp-choice__option span {
+    padding-top: 0.05rem;
+}
+
+.rsvp-choice__option input {
+    appearance: none;
+    flex-shrink: 0;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-top: 0.12rem;
+    border: 1px solid rgba(242, 241, 239, 0.45);
+    background: transparent;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rsvp-choice__option input[type="radio"] {
+    border-radius: 50%;
+}
+
+.rsvp-choice__option input[type="checkbox"] {
+    border-radius: 2px;
+}
+
+.rsvp-choice__option input:hover {
+    border-color: rgba(242, 241, 239, 0.7);
+}
+
+.rsvp-choice__option input[type="radio"]:checked {
+    border-color: rgba(242, 241, 239, 0.9);
+    background:
+        radial-gradient(circle at center, var(--white) 0 35%, transparent 37%);
+    box-shadow: 0 0 18px rgba(242, 241, 239, 0.12);
+}
+
+.rsvp-choice__option input[type="checkbox"]:checked {
+    border-color: rgba(242, 241, 239, 0.9);
+    background-color: rgba(242, 241, 239, 0.16);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23f2f1ef' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.2l2.8 2.8 6.2-6.4'/%3E%3C/svg%3E");
+    background-size: 0.72rem 0.72rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 18px rgba(242, 241, 239, 0.12);
+}
+
+.rsvp-choice__option input:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 3px;
+}
+
+.rsvp-field-error {
+    min-height: 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: #f0c9c4;
+}
+
+.rsvp-field-error:empty {
+    display: none;
+}
+
+.rsvp-honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 .btn-rsvp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     appearance: none;
     border: 1px solid rgba(242, 241, 239, 0.24);
     background: rgba(242, 241, 239, 0.07);
     color: var(--white);
-    font-family: 'Jost', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.74rem;
     font-weight: 300;
     letter-spacing: 0.3em;
@@ -2505,17 +2705,17 @@ body {
         padding: 56px 0;
     }
 
-    .gifts {
-        padding-bottom: 0;
-    }
-
     .gifts-arcs {
         width: min(100%, 480px);
         --peek-2: clamp(20rem, 24vw, 23rem);
         --peek-3: clamp(32rem, 38vw, 37rem);
-        --peek-4: clamp(21.5rem, 24vw, 25rem);
+        --peek-4: clamp(16.5rem, 18vw, 18.5rem);
         --content-w: min(20em, 66%);
         --band-pad: 0.65rem;
+    }
+
+    .gifts-arc--4 .gifts-arc__content {
+        padding-bottom: calc(var(--band-pad) + 2.25rem);
     }
 
     .gifts-arc__label {
