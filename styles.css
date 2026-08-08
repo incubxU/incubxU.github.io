@@ -2137,12 +2137,17 @@ body {
     /*
       Layer 1: full circle.
       Layers 2+: U-shapes — semicircle bottom, straight sides up.
-      --peek-N sized for ~22px body text; taller on narrow screens.
+      --peek-N are fixed lengths (rem) so U bands never track viewport width.
       Width is capped to the sheet so nothing clips horizontally.
+
+      IMPORTANT: do not set height with cqw on this same element.
+      An element cannot be its own query container — 100cqw on .gifts-arcs
+      falls back to vw and the stack grows with the viewport forever.
+      Height comes from ::after (a descendant), where 100cqw is real.
     */
-    --peek-2: clamp(19rem, 52vw, 22.5rem);
-    --peek-3: clamp(30rem, 82vw, 36rem);
-    --peek-4: clamp(21rem, 56vw, 24.5rem);
+    --peek-2: 22.5rem;
+    --peek-3: 36rem;
+    --peek-4: 24.5rem;
     --content-w: min(19em, 68%);
     --band-pad: 0.55rem;
     --circle-fill: #1e2f42;
@@ -2151,12 +2156,19 @@ body {
     position: relative;
     width: min(100%, 460px);
     container-type: inline-size;
-    height: calc(100cqw + var(--peek-2) + var(--peek-3) + var(--peek-4));
     margin: 0 auto;
     overflow: hidden;
     border-radius: 9999px;
     /* Last-layer color: bottom tip stays silver, no empty navy capsule */
     background: var(--silver);
+}
+
+/* In-flow strut: 100cqw here resolves against .gifts-arcs (not the viewport) */
+.gifts-arcs::after {
+    content: '';
+    display: block;
+    height: calc(100cqw + var(--peek-2) + var(--peek-3) + var(--peek-4));
+    pointer-events: none;
 }
 
 /* Navy underpaint only under the title circle — seals AA without a bottom rim */
@@ -2202,9 +2214,14 @@ body {
     border-radius: 0 0 50cqw 50cqw;
     /* Let arc titles paint in the peek under the previous circle */
     overflow: visible;
+}
+
+.gifts-arc--2,
+.gifts-arc--3 {
     /*
       Punch out the navy circle area so light fills never sit under its rim
       (that stacking is what caused the white AA hairlines).
+      Layer 4 keeps mask on ::before so phone/content aren’t trapped under U fills.
     */
     -webkit-mask-image: radial-gradient(
         circle 51.5cqw at 50% calc(50cqw - var(--circle-lift)),
@@ -2237,9 +2254,38 @@ body {
 .gifts-arc--4 {
     --peek: var(--peek-4);
     height: calc(100cqw + var(--peek-2) + var(--peek-3) + var(--peek-4));
+    /*
+      No z-index / mask on the layer itself — those create a stacking context
+      that traps the phone under neighboring U fills. Paint the silver U on
+      ::before; keep copy + tel above all gifts backdrops.
+    */
+    z-index: auto;
+}
+
+.gifts-arc--4::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     z-index: 1;
+    border-radius: 0 0 50cqw 50cqw;
     background: var(--silver);
     box-shadow: 0 -14px 28px rgba(18, 32, 48, 0.12);
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(
+        circle 51.5cqw at 50% calc(50cqw - var(--circle-lift)),
+        transparent 99.5%,
+        #000 100%
+    );
+    mask-image: radial-gradient(
+        circle 51.5cqw at 50% calc(50cqw - var(--circle-lift)),
+        transparent 99.5%,
+        #000 100%
+    );
+}
+
+.gifts-arc--4 .btn-map {
+    position: relative;
+    z-index: 7;
 }
 
 /*
@@ -2320,6 +2366,8 @@ body {
 }
 
 .gifts-arc--4 .gifts-arc__content {
+    /* Above U fills (z 1–4) so the phone is never covered at the seam */
+    z-index: 5;
     padding-bottom: calc(var(--band-pad) + 3.5rem);
 }
 
@@ -2707,9 +2755,11 @@ body {
 
     .gifts-arcs {
         width: min(100%, 480px);
-        --peek-2: clamp(20rem, 24vw, 23rem);
-        --peek-3: clamp(32rem, 38vw, 37rem);
-        --peek-4: clamp(16.5rem, 18vw, 18.5rem);
+        /* Fixed peeks: width is capped, so U lengths must not track vw */
+        --peek-2: 23rem;
+        --peek-3: 37rem;
+        /* Room for organizer copy + phone under the U above */
+        --peek-4: 24rem;
         --content-w: min(20em, 66%);
         --band-pad: 0.65rem;
     }
@@ -2753,9 +2803,9 @@ body {
 @media (max-width: 480px) {
     .gifts-arcs {
         width: 100%;
-        --peek-2: clamp(18.5rem, 56vw, 22rem);
-        --peek-3: clamp(30rem, 92vw, 36rem);
-        --peek-4: clamp(21rem, 62vw, 25rem);
+        --peek-2: 22rem;
+        --peek-3: 36rem;
+        --peek-4: 25rem;
         --content-w: min(17.5em, 72%);
         --band-pad: 0.55rem;
     }
@@ -2806,9 +2856,9 @@ body {
 
     .gifts-arcs {
         width: 100%;
-        --peek-2: clamp(19rem, 60vw, 23rem);
-        --peek-3: clamp(32rem, 100vw, 39rem);
-        --peek-4: clamp(22rem, 68vw, 26rem);
+        --peek-2: 23rem;
+        --peek-3: 39rem;
+        --peek-4: 26rem;
         --content-w: min(16.5em, 74%);
         --band-pad: 0.5rem;
     }
