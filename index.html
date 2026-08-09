@@ -637,22 +637,21 @@
             <section class="section rsvp reveal" id="rsvp">
                 <p class="section-label">Обратная связь</p>
                 <p class="section-text">
-                    Мы очень старались сделать праздник незабываемым,
-                    поэтому будем рады, если Вы подтвердите своё присутствие
-                    до <strong>16.11.2026</strong>
+                    Пожалуйста, заполните форму отдельно для каждого приглашённого.
+                    Будем рады, если вы подтвердите присутствие до <strong>16.11.2026</strong>
                 </p>
                 <div class="rsvp-status rsvp-status--success" data-fs-success>Спасибо! Мы получили ваш ответ.</div>
                 <div class="rsvp-status rsvp-status--error" data-fs-error></div>
 
                 <form id="rsvp-form" class="rsvp-form">
                     <div class="rsvp-field">
-                        <label for="rsvp-name">Укажите ФИО всех, кто планирует прийти по этому приглашению</label>
+                        <label for="rsvp-name">Ваше ФИО</label>
                         <input
                             type="text"
                             id="rsvp-name"
                             name="name"
                             autocomplete="name"
-                            placeholder="Иванов Иван Иванович, Иванова Мария Петрова..."
+                            placeholder="Иванов Иван Иванович"
                             required
                             data-fs-field
                         />
@@ -663,12 +662,12 @@
                         <legend>Планируете ли вы присутствовать на свадьбе?</legend>
                         <div class="rsvp-choice" role="radiogroup" aria-label="Присутствие">
                             <label class="rsvp-choice__option">
-                                <input type="radio" name="attendance" value="Да, с радостью придём!" required data-fs-field />
-                                <span>Да, с радостью придём!</span>
+                                <input type="radio" name="attendance" value="Да, с радостью приду!" required data-fs-field />
+                                <span>Да, с радостью приду!</span>
                             </label>
                             <label class="rsvp-choice__option">
-                                <input type="radio" name="attendance" value="К сожалению, не сможем" data-fs-field />
-                                <span>К сожалению, не сможем</span>
+                                <input type="radio" name="attendance" value="К сожалению, не смогу" data-fs-field />
+                                <span>К сожалению, не смогу</span>
                             </label>
                         </div>
                         <span class="rsvp-field-error" data-fs-error="attendance"></span>
@@ -718,12 +717,12 @@
                     </fieldset>
 
                     <div class="rsvp-field">
-                        <label for="rsvp-song">Оставьте любимый музыкальный трек — по одному на каждого гостя:</label>
+                        <label for="rsvp-song">Укажите до трёх любимых треков:</label>
                         <input
                             type="text"
                             id="rsvp-song"
                             name="song"
-                            placeholder="Bruno Mars - Just The Way You Are"
+                            placeholder="Исполнитель — название, …"
                             data-fs-field
                         />
                         <span class="rsvp-field-error" data-fs-error="song"></span>
