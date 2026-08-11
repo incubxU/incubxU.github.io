@@ -668,17 +668,19 @@
 
             <!-- RSVP / Feedback -->
             <section class="section rsvp reveal" id="rsvp">
-                <p class="section-label">АНКЕТА</p>
+                <div class="rsvp-heading">
+                    <p class="gifts-arc__title">Анкета</p>
+                    <p class="gifts-arc__subtitle">гостя</p>
+                </div>
                 <p class="section-text">
-                    Пожалуйста, заполните форму отдельно для каждого приглашённого.
-                    Будем рады, если вы подтвердите присутствие до <strong>15.10.2026</strong>
+                    Пожалуйста, заполните форму отдельно для каждого приглашённого до&nbsp;<strong>15.10.2026</strong>
                 </p>
                 <div class="rsvp-status rsvp-status--success" data-fs-success>Спасибо! Мы получили ваш ответ.</div>
                 <div class="rsvp-status rsvp-status--error" data-fs-error></div>
 
                 <form id="rsvp-form" class="rsvp-form">
                     <div class="rsvp-field">
-                        <label for="rsvp-name">Ваше ФИО</label>
+                        <label for="rsvp-name">Ваше ФИО:</label>
                         <input
                             type="text"
                             id="rsvp-name"
@@ -706,6 +708,7 @@
                         <span class="rsvp-field-error" data-fs-error="attendance"></span>
                     </fieldset>
 
+                    <!-- TEMP: drinks preferences — restore later
                     <fieldset class="rsvp-field rsvp-field--choice">
                         <legend>Ваши предпочтения в напитках:</legend>
                         <div class="rsvp-choice rsvp-choice--checks" role="group" aria-label="Предпочтения в напитках">
@@ -748,6 +751,7 @@
                         </div>
                         <span class="rsvp-field-error" data-fs-error="drinks"></span>
                     </fieldset>
+                    -->
 
                     <div class="rsvp-field">
                         <label for="rsvp-song">Укажите до трёх любимых треков:</label>
