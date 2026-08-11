@@ -52,6 +52,14 @@
 }
 
 @font-face {
+    font-family: 'Czizh';
+    src: url('fonts/Czizh/Czizh.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
     font-family: 'Gogol';
     src: url('fonts/Gogol/gogol_regular.otf') format('opentype');
     font-weight: 400;
@@ -586,7 +594,7 @@ html.is-ready .page-loader {
     top: 50%;
     transform: translate(-50%, -36%);
     z-index: 0;
-    font-family: 'Kindentosca', cursive;
+    font-family: 'Czizh', cursive;
     font-size: 1.85em;
     letter-spacing: 0;
     color: rgba(255, 255, 255, 0.12);
