@@ -991,9 +991,9 @@ html.is-ready .page-loader {
     align-items: center;
     gap: 0;
     width: 100%;
-    max-width: 320px;
-    margin: 1.8rem auto 0;
-    padding: 0.95rem 1.15rem;
+    max-width: min(100%, 540px);
+    margin: 3.2rem auto 0;
+    padding: 1.7rem 1.6rem;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(16px) saturate(0.9);
@@ -1006,45 +1006,92 @@ html.is-ready .page-loader {
 
 .date-strip-month,
 .date-strip-weekday {
-    position: relative;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.68rem;
+    font-family: 'Philosopher', 'Cormorant Garamond', serif;
+    font-size: clamp(0.92rem, 2.9cqi + 0.4rem, 1.18rem);
     font-weight: 500;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--dove);
     text-align: center;
     line-height: 1.2;
 }
 
-.date-strip-month::after,
-.date-strip-weekday::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 1px;
-    height: 1.35em;
-    background: rgba(255, 255, 255, 0.18);
-    transform: translateY(-50%);
+.date-strip-month {
+    padding-right: 0.9rem;
 }
 
-.date-strip-month::after {
-    right: 0;
-}
-
-.date-strip-weekday::before {
-    left: 0;
+.date-strip-weekday {
+    padding-left: 0.9rem;
 }
 
 .date-strip-day {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.85rem;
+    position: relative;
+    font-family: 'Philosopher', 'Cormorant Garamond', serif;
+    font-size: clamp(2.95rem, 8.2cqi + 0.8rem, 4.25rem);
     font-weight: 300;
-    line-height: 1;
+    line-height: 0.9;
     color: var(--white);
     text-align: center;
-    padding: 0 1.1rem;
+    padding: 0 0.95rem;
     text-shadow: 0 0 28px rgba(242, 241, 239, 0.22);
+}
+
+.date-strip-day::before,
+.date-strip-day::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 1.5px;
+    height: 2.25rem;
+    background: rgba(255, 255, 255, 0.88);
+    transform: translateY(-50%);
+}
+
+.date-strip-day::before {
+    left: 0;
+}
+
+.date-strip-day::after {
+    right: 0;
+}
+
+@media (max-width: 480px) {
+    .date-strip {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        width: max-content;
+        max-width: min(100%, 18rem);
+        padding: 3rem 1.35rem;
+        gap: 1.35rem;
+    }
+
+    .date-strip-month,
+    .date-strip-weekday {
+        padding: 0;
+        white-space: nowrap;
+    }
+
+    .date-strip-day {
+        padding: 0.45rem 0;
+    }
+
+    .date-strip-day::before,
+    .date-strip-day::after {
+        left: 50%;
+        right: auto;
+        width: 2.6rem;
+        height: 1.5px;
+        transform: translateX(-50%);
+    }
+
+    .date-strip-day::before {
+        top: 0;
+    }
+
+    .date-strip-day::after {
+        top: auto;
+        bottom: 0;
+    }
 }
 
 /* ============================================================
@@ -3487,9 +3534,9 @@ body {
     color: var(--dove);
 }
 
-.date-strip-month::after,
-.date-strip-weekday::before {
-    background: rgba(248, 252, 255, 0.22);
+.date-strip-day::before,
+.date-strip-day::after {
+    background: rgba(248, 252, 255, 0.88);
 }
 
 .location-circle--bottom {
@@ -3969,9 +4016,9 @@ body {
     font-weight: 400;
 }
 
-.date-strip-month::after,
-.date-strip-weekday::before {
-    background: rgba(247, 248, 245, 0.22);
+.date-strip-day::before,
+.date-strip-day::after {
+    background: rgba(247, 248, 245, 0.9);
 }
 
 .location-circle--bottom {
