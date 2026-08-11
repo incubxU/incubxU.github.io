@@ -76,17 +76,15 @@ const midGap = 2 * R + slope;
 const c2mid = y1 + r + slope + R;
 const c3mid = c2mid + midGap;
 const c4mid = c3mid + midGap;
-const c5mid = c4mid + midGap;
 
 const t2 = rightTurn(c2mid);
 const t3 = leftTurn(c3mid);
-const t4 = rightTurn(c4mid);
-const t5 = leftTurn(c5mid);
+const t4 = rightTurn(c4mid); // last turn — ends at right apex
 
 const c1 = [L, y1];
 const c1Bottom = [L, y1 + r];
 
-const viewBoxH = Math.ceil(t5.circle[1] + r + 40);
+const viewBoxH = Math.ceil(t4.circle[1] + r + 40);
 
 let d = `M ${c1Bottom.map(rnd).join(' ')}`;
 
@@ -98,21 +96,16 @@ seg = cubic(t2.bot, t3.top, -1);
 d += `\nC ${seg.p1.join(' ')}, ${seg.p2.join(' ')}, ${seg.p3.join(' ')}`;
 d += `\nA ${R} ${R} 0 0 0 ${t3.bot.map(rnd).join(' ')}`;
 
+// Last turn ends at apex — no bottom tail
 seg = cubic(t3.bot, t4.top, +1);
 d += `\nC ${seg.p1.join(' ')}, ${seg.p2.join(' ')}, ${seg.p3.join(' ')}`;
-d += `\nA ${R} ${R} 0 0 1 ${t4.bot.map(rnd).join(' ')}`;
-
-// Last turn ends at apex — no bottom tail
-seg = cubic(t4.bot, t5.top, -1);
-d += `\nC ${seg.p1.join(' ')}, ${seg.p2.join(' ')}, ${seg.p3.join(' ')}`;
-d += `\nA ${R} ${R} 0 0 0 ${t5.apex.map(rnd).join(' ')}`;
+d += `\nA ${R} ${R} 0 0 1 ${t4.apex.map(rnd).join(' ')}`;
 
 const centers = [
     { id: 'c1', side: 'left', xy: c1 },
     { id: 'c2', side: 'right', xy: t2.circle },
     { id: 'c3', side: 'left', xy: t3.circle },
     { id: 'c4', side: 'right', xy: t4.circle },
-    { id: 'c5', side: 'left', xy: t5.circle },
 ];
 
 console.log('=== params ===');

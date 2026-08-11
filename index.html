@@ -227,7 +227,7 @@
                     <p class="gifts-arc__subtitle">мероприятия</p>
                 </div>
                 <div class="snake" aria-label="План мероприятия">
-                    <svg class="snake-svg" viewBox="0 0 1000 1240" fill="none" aria-hidden="true">
+                    <svg class="snake-svg" viewBox="0 0 1000 977" fill="none" aria-hidden="true">
                         <defs>
                             <!--
                               Fixed userSpaceOnUse region keeps blur cost constant while the
@@ -239,7 +239,7 @@
                                 x="-60"
                                 y="-60"
                                 width="1120"
-                                height="1360"
+                                height="1100"
                                 filterUnits="userSpaceOnUse"
                                 color-interpolation-filters="sRGB"
                             >
@@ -254,7 +254,7 @@
                                 x="-40"
                                 y="-40"
                                 width="1080"
-                                height="1320"
+                                height="1060"
                                 filterUnits="userSpaceOnUse"
                                 color-interpolation-filters="sRGB"
                             >
@@ -267,7 +267,7 @@
                         </defs>
                         <!--
                           Turns R=115; circles r=82 touch at apex. Last turn ends at apex (no tail).
-                          c1 (250,120) · c2 (750,343) · c3 (250,599) · c4 (750,855) · c5 (250,1111)
+                          c1 (250,120) · c2 (750,343) · c3 (250,599) · c4 (750,855)
                         -->
                         <path
                             class="snake-line-bloom"
@@ -278,9 +278,7 @@
                                C 572.3 466.7, 427.7 475.3, 283 484
                                A 115 115 0 0 0 283 714
                                C 427.7 722.7, 572.3 731.3, 717 740
-                               A 115 115 0 0 1 717 970
-                               C 572.3 978.7, 427.7 987.3, 283 996
-                               A 115 115 0 0 0 168 1111"
+                               A 115 115 0 0 1 832 855"
                         />
                         <path
                             class="snake-line"
@@ -291,13 +289,11 @@
                                C 572.3 466.7, 427.7 475.3, 283 484
                                A 115 115 0 0 0 283 714
                                C 427.7 722.7, 572.3 731.3, 717 740
-                               A 115 115 0 0 1 717 970
-                               C 572.3 978.7, 427.7 987.3, 283 996
-                               A 115 115 0 0 0 168 1111"
+                               A 115 115 0 0 1 832 855"
                         />
                     </svg>
                     <ol class="snake-list">
-                        <li class="snake-item snake-item--left" style="--x: 250; --y: 120" data-at="4">
+                        <li class="snake-item snake-item--left" style="--x: 250; --y: 120" data-at="5">
                             <div class="snake-node" aria-hidden="true">
                                 <!-- pin+heart: images/icons/guests.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
@@ -306,11 +302,11 @@
                                 </svg>
                             </div>
                             <div class="snake-body">
-                                <span class="time">14:00</span>
+                                <span class="time">15:30</span>
                                 <span class="event">Сбор гостей</span>
                             </div>
                         </li>
-                        <li class="snake-item snake-item--right" style="--x: 750; --y: 343" data-at="26">
+                        <li class="snake-item snake-item--right" style="--x: 750; --y: 343" data-at="30">
                             <div class="snake-node" aria-hidden="true">
                                 <!-- rings+diamond: images/icons/ceremony.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
@@ -321,11 +317,11 @@
                                 </svg>
                             </div>
                             <div class="snake-body">
-                                <span class="time">15:00</span>
+                                <span class="time">16:00</span>
                                 <span class="event">Церемония</span>
                             </div>
                         </li>
-                        <li class="snake-item snake-item--left" style="--x: 250; --y: 599" data-at="50">
+                        <li class="snake-item snake-item--left" style="--x: 250; --y: 599" data-at="60">
                             <div class="snake-node" aria-hidden="true">
                                 <!-- fork+knife+ribbon: images/icons/banquet.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
@@ -342,27 +338,11 @@
                                 </svg>
                             </div>
                             <div class="snake-body">
-                                <span class="time">16:00</span>
+                                <span class="time">16:30</span>
                                 <span class="event">Банкет</span>
                             </div>
                         </li>
-                        <li class="snake-item snake-item--right" style="--x: 750; --y: 855" data-at="74">
-                            <div class="snake-node" aria-hidden="true">
-                                <!-- cake: images/icons/cake.svg -->
-                                <svg viewBox="0 0 48 48" fill="none">
-                                    <path d="M24 8v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
-                                    <path d="M21.5 10.5c1 .8 2.5.8 3.5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                                    <rect x="18" y="13" width="12" height="8" rx="1.2" stroke="currentColor" stroke-width="1.5" />
-                                    <rect x="14" y="21" width="20" height="9" rx="1.2" stroke="currentColor" stroke-width="1.5" />
-                                    <rect x="11" y="30" width="26" height="9" rx="1.2" stroke="currentColor" stroke-width="1.5" />
-                                </svg>
-                            </div>
-                            <div class="snake-body">
-                                <span class="time">20:00</span>
-                                <span class="event">Торт</span>
-                            </div>
-                        </li>
-                        <li class="snake-item snake-item--left" style="--x: 250; --y: 1111" data-at="96">
+                        <li class="snake-item snake-item--right" style="--x: 750; --y: 855" data-at="96">
                             <div class="snake-node" aria-hidden="true">
                                 <!-- heart notes: images/icons/ending.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
@@ -379,7 +359,7 @@
                                 </svg>
                             </div>
                             <div class="snake-body">
-                                <span class="time">22:00</span>
+                                <span class="time">21:00</span>
                                 <span class="event">Окончание<br>официальной части</span>
                             </div>
                         </li>
@@ -469,13 +449,14 @@
                     </div>
 
                     <div class="dresscode-circles">
-                        <div class="dresscode-her-col">
+                        <div class="dresscode-block dresscode-block--her">
+                            <h3 class="dresscode-block-title">Для неё</h3>
                             <ul class="dresscode-palette" aria-label="Рекомендуемая палитра для неё">
                                 <li class="dresscode-swatch" style="--swatch-image: url('images/1.png')" title="Eclipse"><span class="visually-hidden">Eclipse</span></li>
                                 <li class="dresscode-swatch" style="--swatch-image: url('images/2.png')" title="Patriot Blue"><span class="visually-hidden">Patriot Blue</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/5.png')" title="Steel Gray"><span class="visually-hidden">Steel Gray</span></li>
                                 <li class="dresscode-swatch" style="--swatch-image: url('images/3.png')" title="PANTONE 15-4307"><span class="visually-hidden">PANTONE 15-4307</span></li>
                                 <li class="dresscode-swatch" style="--swatch-image: url('images/4.png')" title="Glacier Gray"><span class="visually-hidden">Glacier Gray</span></li>
-                                <li class="dresscode-swatch" style="--swatch-image: url('images/5.png')" title="Steel Gray"><span class="visually-hidden">Steel Gray</span></li>
                             </ul>
                             <article class="dresscode-circle dresscode-circle--her">
                                 <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
@@ -536,46 +517,71 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <p class="dresscode-circle-label">Для неё</p>
                             </article>
                         </div>
 
-                        <article class="dresscode-circle dresscode-circle--him">
-                            <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
-                                <circle class="dresscode-glow-halo" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-lens-blur)" />
-                                <circle class="dresscode-glow-edge" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-soft-glow)" />
-                                <circle class="dresscode-glow-core" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-core-glow)" />
-                            </svg>
-                            <div class="dresscode-gallery" data-gallery aria-roledescription="carousel" aria-label="Примеры образов для него">
-                                <div class="dresscode-gallery-viewport">
-                                    <ul class="dresscode-gallery-track">
-                                        <li class="dresscode-gallery-slide is-active">
-                                            <img src="images/bg-continuation.png" alt="Пример образа для него" draggable="false" />
-                                        </li>
-                                        <li class="dresscode-gallery-slide">
-                                            <img src="images/bg-atmosphere-clean.png" alt="Пример образа для него" draggable="false" />
-                                        </li>
-                                        <li class="dresscode-gallery-slide">
-                                            <img src="images/bg-atmosphere.png" alt="Пример образа для него" draggable="false" />
-                                        </li>
-                                        <li class="dresscode-gallery-slide">
-                                            <img src="images/hero2.png" alt="Пример образа для него" draggable="false" />
-                                        </li>
-                                    </ul>
+                        <div class="dresscode-block dresscode-block--him">
+                            <h3 class="dresscode-block-title">Для него</h3>
+                            <ul class="dresscode-palette" aria-label="Рекомендуемая палитра для него">
+                                <li class="dresscode-swatch dresscode-swatch--black" title="Black"><span class="visually-hidden">Black</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/5.png')" title="Steel Gray"><span class="visually-hidden">Steel Gray</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/3.png')" title="PANTONE 15-4307"><span class="visually-hidden">PANTONE 15-4307</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/4.png')" title="Glacier Gray"><span class="visually-hidden">Glacier Gray</span></li>
+                            </ul>
+                            <article class="dresscode-circle dresscode-circle--him">
+                                <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                                    <circle class="dresscode-glow-halo" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-lens-blur)" />
+                                    <circle class="dresscode-glow-edge" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-soft-glow)" />
+                                    <circle class="dresscode-glow-core" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-core-glow)" />
+                                </svg>
+                                <div class="dresscode-gallery" data-gallery aria-roledescription="carousel" aria-label="Примеры образов для него">
+                                    <div class="dresscode-gallery-viewport">
+                                        <ul class="dresscode-gallery-track">
+                                            <li class="dresscode-gallery-slide is-active">
+                                                <img src="images/bg-continuation.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/bg-atmosphere-clean.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/bg-atmosphere.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/hero2.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--prev" aria-label="Предыдущее фото">
+                                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M14.5 5.5L8 12l6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--next" aria-label="Следующее фото">
+                                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9.5 5.5L16 12l-6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
                                 </div>
-                                <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--prev" aria-label="Предыдущее фото">
-                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                        <path d="M14.5 5.5L8 12l6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </button>
-                                <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--next" aria-label="Следующее фото">
-                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                        <path d="M9.5 5.5L16 12l-6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <p class="dresscode-circle-label">Для него</p>
-                        </article>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="dresscode-more">
+                        <p class="dresscode-more-text">
+                            Если хочется больше деталей и конкретики, дополнительные рекомендации по составлению образа — в файле:                        </p>
+                        <a
+                            class="btn-map dresscode-download"
+                            href="files/dresscode-examples.pdf"
+                            download
+                        >
+                            <svg class="btn-map-pin" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                <path
+                                    fill="currentColor"
+                                    d="M12 3.25a.75.75 0 0 1 .75.75v9.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-4 4a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 1 1 1.06-1.06l2.72 2.72V4A.75.75 0 0 1 12 3.25zM5.25 18.5A.75.75 0 0 1 6 17.75h12a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75z"
+                                />
+                            </svg>
+                            Скачать файл
+                        </a>
                     </div>
 
                 </div>

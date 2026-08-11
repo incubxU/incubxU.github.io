@@ -1720,7 +1720,7 @@ html.is-ready .page-loader {
 
 .snake {
     --snake-w: 1000;
-    --snake-h: 1240;
+    --snake-h: 977;
     --snake-y0: 0;
     --snake-r: 82;
     position: relative;
@@ -1902,8 +1902,8 @@ html.is-ready .page-loader {
 
 .dresscode-mist {
     position: absolute;
-    top: 31%;
-    bottom: -140px;
+    top: 34%;
+    bottom: -60px;
     left: 50%;
     z-index: 0;
     width: 100vw;
@@ -1913,15 +1913,15 @@ html.is-ready .page-loader {
     -webkit-mask-image: linear-gradient(
         to bottom,
         #000 0%,
-        #000 70%,
-        rgba(0, 0, 0, 0.4) 88%,
+        #000 55%,
+        rgba(0, 0, 0, 0.35) 78%,
         transparent 100%
     );
     mask-image: linear-gradient(
         to bottom,
         #000 0%,
-        #000 70%,
-        rgba(0, 0, 0, 0.4) 88%,
+        #000 55%,
+        rgba(0, 0, 0, 0.35) 78%,
         transparent 100%
     );
 }
@@ -2016,16 +2016,55 @@ html.is-ready .page-loader {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
-    margin-bottom: 2.2rem;
+    gap: 3.6rem;
+    margin-bottom: 2.6rem;
     overflow: visible;
 }
 
-.dresscode-her-col {
+.dresscode-more {
+    --circle-size: min(74vw, 268px);
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.05rem;
+    gap: 1.35rem;
+    width: min(100%, 28em);
+    margin: 0 auto 0.6rem;
+    text-align: center;
+}
+
+.dresscode-more-text {
+    margin: 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: calc(clamp(37.64px, 9.78cqi + 1.41rem, 52.27px) * 20 / 52.27);
+    line-height: 1.35;
+    color: var(--white);
+}
+
+.dresscode-download {
+    margin-top: 0.15rem;
+}
+
+.dresscode-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.15rem;
+    width: 100%;
+}
+
+.dresscode-block-title {
+    margin: 0;
+    font-family: 'Philosopher', 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: calc(clamp(37.64px, 9.78cqi + 1.41rem, 52.27px) * 0.4);
+    letter-spacing: 0.28em;
+    line-height: 1;
+    text-transform: uppercase;
+    text-indent: 0.28em;
+    color: var(--white);
+    text-align: center;
 }
 
 .dresscode-palette {
@@ -2033,18 +2072,18 @@ html.is-ready .page-loader {
     align-items: center;
     justify-content: center;
     gap: 0.95rem;
-    margin: 0;
+    margin: 0.85rem 0 0.55rem;
     padding: 0;
     list-style: none;
     position: relative;
     z-index: 2;
-    width: min(90vw, 360px);
+    width: min(92vw, 420px);
 }
 
 .dresscode-swatch {
     flex: 1 1 0;
     width: auto;
-    max-width: 3.35rem;
+    max-width: 4.1rem;
     aspect-ratio: 1;
     height: auto;
     border-radius: 50%;
@@ -2053,8 +2092,17 @@ html.is-ready .page-loader {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-clip: padding-box;
     border: none;
-    box-shadow: 0 0 0 1px rgba(20, 24, 28, 0.22);
+    box-shadow:
+        0 0 0 3px rgba(242, 241, 239, 0.58),
+        0 0 12px rgba(242, 241, 239, 0.22),
+        0 0 24px rgba(242, 241, 239, 0.1);
+}
+
+.dresscode-swatch--black {
+    background-image: none;
+    background-color: #000;
 }
 
 .visually-hidden {
@@ -2279,26 +2327,6 @@ html.is-ready .page-loader {
         0 0 64px rgba(255, 255, 255, 0.16),
         0 18px 36px rgba(20, 28, 36, 0.22),
         inset 0 0 28px rgba(0, 0, 0, 0.2);
-}
-
-.dresscode-circle-label {
-    position: absolute;
-    left: 50%;
-    bottom: 11%;
-    z-index: 3;
-    margin: 0;
-    transform: translateX(-50%);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 0.68rem;
-    letter-spacing: 0.36em;
-    text-transform: uppercase;
-    color: rgba(242, 241, 239, 0.95);
-    text-shadow:
-        0 1px 2px rgba(10, 12, 14, 0.55),
-        0 0 18px rgba(10, 12, 14, 0.45);
-    pointer-events: none;
-    white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3257,17 +3285,17 @@ html.is-ready .page-loader {
         width: min(84vw, 260px);
     }
 
-    .dresscode-her-col {
-        gap: 0.95rem;
+    .dresscode-block {
+        gap: 1rem;
     }
 
     .dresscode-palette {
         gap: 0.8rem;
-        width: min(92vw, 340px);
+        width: min(94vw, 400px);
     }
 
     .dresscode-swatch {
-        max-width: 3rem;
+        max-width: 3.75rem;
     }
 
     .snake-node svg {
