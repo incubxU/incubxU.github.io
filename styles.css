@@ -1705,9 +1705,17 @@ html.is-ready .page-loader {
 
 .schedule-heading .gifts-arc__subtitle,
 .location-heading .gifts-arc__subtitle {
-    color: var(--white);
+    color: rgba(242, 241, 239, 0.76);
     -webkit-text-stroke: 0;
     paint-order: normal;
+}
+
+/* «План» короче «Детали» — нужен больший сдвиг, иначе на широких экранах
+   отступ слева у «мероприятия» визуально пропадает.
+   Размер через cqi (не vw), чтобы пропорции с заголовком не ломались на десктопе. */
+.schedule-heading .gifts-arc__subtitle {
+    font-size: calc(clamp(1.755rem, 7.15cqi, 2.405rem) * 1.32);
+    transform: translateX(1.25em);
 }
 
 .location-heading .gifts-arc__subtitle {
