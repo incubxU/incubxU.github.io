@@ -2542,6 +2542,11 @@ html.is-ready .page-loader {
     z-index: 7;
 }
 
+.gifts-arc--3 .btn-map {
+    padding-left: calc(var(--circle-size) * 0.045);
+    padding-right: calc(var(--circle-size) * 0.09);
+}
+
 /*
   Arc titles: letters fanned from the previous circle's center
   along its bottom edge (just outside the radius).
