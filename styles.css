@@ -1572,6 +1572,14 @@ html.is-ready .page-loader {
     opacity: 0.9;
 }
 
+.btn-map-pin--flower {
+    width: calc(var(--circle-size) * 0.155);
+    height: calc(var(--circle-size) * 0.155);
+    object-fit: contain;
+    opacity: 1;
+    transform: translateY(-0.22em);
+}
+
 .btn-map:hover {
     background: rgba(255, 255, 255, 0.16);
     border-color: rgba(249, 249, 246, 0.72);
