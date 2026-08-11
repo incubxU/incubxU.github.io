@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <!-- Interlocking rings with diamond — церемония -->
+  <circle cx="18.5" cy="25" r="9.5" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="29.5" cy="25" r="9.5" stroke="currentColor" stroke-width="1.5"/>
+  <!-- diamond sitting on the right ring -->
+  <path
+    d="M33.2 11.2 L36.4 14 L33.2 18.2 L30 14 Z"
+    stroke="currentColor"
+    stroke-width="1.35"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M30.6 13.5h5.2M33.2 11.2v2.8"
+    stroke="currentColor"
+    stroke-width="1.1"
+    stroke-linecap="round"
+  />
+</svg>

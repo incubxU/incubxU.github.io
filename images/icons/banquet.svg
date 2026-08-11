@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <!-- Fork & knife with ribbon — банкет -->
+  <!-- fork -->
+  <path d="M17 8v10M14 8v7.5M20 8v7.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+  <path d="M14 15.5h6c0 2.8-1.4 4.5-3 4.5s-3-1.7-3-4.5z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>
+  <path d="M17 20v20" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/>
+
+  <!-- knife -->
+  <path d="M28 8.5c3.2 0 5.2 2.4 5.2 5.8 0 2.8-1.3 4.6-3 5.4V40" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30.2 8.5v11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+
+  <!-- ribbon bow around handles (lower) -->
+  <path d="M17 30h13.2" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+  <ellipse cx="23.6" cy="30" rx="2.2" ry="1.8" stroke="currentColor" stroke-width="1.3"/>
+  <path d="M21.4 29.2c-3.2-2.8-6.2-1.6-7.2.8-0.6 1.4.4 2.6 2.2 2.2 1.6-.4 3.4-1.6 5-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M25.8 29.2c3.2-2.8 6.2-1.6 7.2.8 0.6 1.4-.4 2.6-2.2 2.2-1.6-.4-3.4-1.6-5-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22.4 31.4c-1.2 2.4-1.6 4.6-1 6.2M24.8 31.4c1.2 2.4 1.6 4.6 1 6.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+</svg>

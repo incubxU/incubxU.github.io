@@ -1852,19 +1852,19 @@ html.is-ready .page-loader {
 }
 
 .snake-item--left .snake-body {
-    left: 44px;
-    left: calc(var(--snake-r) / var(--snake-w) * 100cqi + 10px);
+    left: 48px;
+    left: calc(var(--snake-r) / var(--snake-w) * 100cqi + 14px);
     text-align: left;
 }
 
 .snake-item--right .snake-body {
-    right: 44px;
-    right: calc(var(--snake-r) / var(--snake-w) * 100cqi + 10px);
+    right: 48px;
+    right: calc(var(--snake-r) / var(--snake-w) * 100cqi + 14px);
     text-align: right;
 }
 
 .snake-body .time {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Kindentosca', cursive;
     font-weight: 300;
     font-size: 1.35rem;
     letter-spacing: 0.12em;
@@ -1873,6 +1873,7 @@ html.is-ready .page-loader {
 }
 
 .snake-body .event {
+    font-family: 'Manrope', sans-serif;
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
