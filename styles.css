@@ -1126,7 +1126,7 @@ html.is-ready .page-loader {
     position: relative;
     width: 100%;
     height: calc(var(--circle-size) * 3.35);
-    margin: 0.35rem auto 0;
+    margin: 0 auto;
     overflow: visible;
 }
 
@@ -1737,7 +1737,7 @@ html.is-ready .page-loader {
 }
 
 .location-heading {
-    margin-bottom: 2.35rem;
+    margin-bottom: 0.2rem;
 }
 
 .snake {
@@ -3090,6 +3090,10 @@ html.is-ready .page-loader {
         letter-spacing: 0.2em;
     }
 
+    .location-heading {
+        margin-bottom: 1rem;
+    }
+
     /*
      * Small screens: larger circle for readable type; pull the twin circles
      * much closer (smaller --split) so the text orb sits higher under the photo.
@@ -4076,7 +4080,8 @@ body {
 }
 
 .section.gifts {
-    padding-bottom: 0;
+    /* Gap between last U tip and the divider before RSVP */
+    padding-bottom: 3rem;
 }
 
 .section + .section,
@@ -4337,7 +4342,7 @@ body {
     }
 
     .section.gifts {
-        padding-bottom: 0;
+        padding-bottom: 3.25rem;
     }
 }
 
