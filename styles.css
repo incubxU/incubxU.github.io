@@ -187,7 +187,7 @@ body {
     color: var(--text);
     line-height: 1.75;
     letter-spacing: 0.01em;
-    /* Matches atmosphere / continuation seam tone */
+    /* Matches continuation plate tone */
     background: #1e2f42;
     overflow-x: hidden;
 }
@@ -311,7 +311,7 @@ html.is-ready .page-loader {
         radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
         radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
         linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continuation.png') center top / 125% 125% no-repeat,
+        url('images/bg-continiation2.png') center top / 125% 125% no-repeat,
         #1e2f42;
     pointer-events: none;
 }
@@ -426,40 +426,13 @@ html.is-ready .page-loader {
         radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
         radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
         linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continuation.png') center top / 125% 125% no-repeat,
+        url('images/bg-continiation2.png') center top / 125% 125% no-repeat,
         #1e2f42;
     background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, scroll;
 }
 
 .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse 28% 55% at 50% 6%, rgba(255, 255, 255, 0.18), transparent 70%),
-        radial-gradient(ellipse 52% 26% at 50% 66%, rgba(255, 236, 220, 0.1), transparent 68%),
-        radial-gradient(ellipse 36% 30% at 72% 38%, rgba(220, 234, 246, 0.12), transparent 66%),
-        linear-gradient(180deg, rgba(24, 40, 58, 0.12), rgba(18, 32, 48, 0.28)),
-        url('images/bg-atmosphere2.png') center center / cover no-repeat;
-    /* Long soft dissolve — gone well above the hero/sheet join */
-    -webkit-mask-image: linear-gradient(
-        180deg,
-        #000 0%,
-        #000 32%,
-        rgba(0, 0, 0, 0.75) 48%,
-        rgba(0, 0, 0, 0.35) 60%,
-        rgba(0, 0, 0, 0.1) 70%,
-        transparent 82%
-    );
-    mask-image: linear-gradient(
-        180deg,
-        #000 0%,
-        #000 32%,
-        rgba(0, 0, 0, 0.75) 48%,
-        rgba(0, 0, 0, 0.35) 60%,
-        rgba(0, 0, 0, 0.1) 70%,
-        transparent 82%
-    );
+    content: none;
 }
 
 .hero::before {
@@ -3912,7 +3885,7 @@ body {
         radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
         radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
         linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continuation.png') center top / 125% 125% no-repeat,
+        url('images/bg-continiation2.png') center top / 125% 125% no-repeat,
         #1e2f42;
     filter: none;
 }
