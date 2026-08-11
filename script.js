@@ -1,4 +1,102 @@
 (function () {
+    const LOAD_TIMEOUT_MS = 12000;
+    const CRITICAL_IMAGES = [
+        'images/bg-continuation.png',
+        'images/bg-atmosphere2.png',
+        'images/location.jpg',
+        'images/hero2.png',
+        'images/1.png',
+        'images/2.png',
+        'images/3.png',
+        'images/4.png',
+        'images/5.png',
+    ];
+
+    function loadImage(src) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+            img.src = src;
+        });
+    }
+
+    function waitForDomImages() {
+        return Promise.all(
+            Array.from(document.images).map((img) => {
+                if (img.complete) return Promise.resolve();
+                return new Promise((resolve) => {
+                    img.addEventListener('load', resolve, { once: true });
+                    img.addEventListener('error', resolve, { once: true });
+                });
+            })
+        );
+    }
+
+    function waitForFonts() {
+        if (!document.fonts || !document.fonts.ready) return Promise.resolve();
+        return document.fonts.ready.then(
+            () => undefined,
+            () => undefined
+        );
+    }
+
+    function waitForWindowLoad() {
+        if (document.readyState === 'complete') return Promise.resolve();
+        return new Promise((resolve) => {
+            window.addEventListener('load', resolve, { once: true });
+        });
+    }
+
+    function waitForAnimationFrame() {
+        return new Promise((resolve) => {
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(resolve);
+            });
+        });
+    }
+
+    function withTimeout(promise, ms) {
+        return Promise.race([
+            promise,
+            new Promise((resolve) => {
+                window.setTimeout(resolve, ms);
+            }),
+        ]);
+    }
+
+    /** Temporary: keep loader visible forever for design preview. */
+    const KEEP_LOADER_FOREVER = false;
+
+    function revealPage() {
+        if (KEEP_LOADER_FOREVER) return;
+
+        const root = document.documentElement;
+        const loader = document.querySelector('.page-loader');
+
+        root.classList.remove('is-loading');
+        root.classList.add('is-ready');
+
+        if (loader) {
+            loader.setAttribute('aria-busy', 'false');
+            const removeLoader = () => {
+                if (loader.isConnected) loader.remove();
+            };
+            loader.addEventListener('transitionend', removeLoader, { once: true });
+            window.setTimeout(removeLoader, 1000);
+        }
+    }
+
+    const pageReady = withTimeout(
+        Promise.all([
+            waitForFonts(),
+            waitForDomImages(),
+            Promise.all(CRITICAL_IMAGES.map(loadImage)),
+            waitForWindowLoad(),
+        ]).then(waitForAnimationFrame),
+        LOAD_TIMEOUT_MS
+    ).then(revealPage);
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealElements = document.querySelectorAll('.reveal');
     const snake = document.querySelector('.snake');
@@ -382,200 +480,204 @@
         expandLocation(locationSection);
     }
 
-    if (reduceMotion) {
-        revealElements.forEach((el) => {
-            el.classList.add('is-visible');
-            if (el.classList.contains('location')) {
-                expandLocation(el);
-            }
-        });
-        showSnakeInstant();
-    } else {
-        const observer = new IntersectionObserver(
-            (entries, obs) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
+    function startInteractions() {
+        if (reduceMotion) {
+            revealElements.forEach((el) => {
+                el.classList.add('is-visible');
+                if (el.classList.contains('location')) {
+                    expandLocation(el);
+                }
+            });
+            showSnakeInstant();
+        } else {
+            const observer = new IntersectionObserver(
+                (entries, obs) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
 
-                    const el = entry.target;
+                        const el = entry.target;
 
-                    if (el.classList.contains('schedule')) {
-                        scheduleInView = true;
-                        revealSchedule();
-                        obs.unobserve(el);
-                        return;
-                    }
+                        if (el.classList.contains('schedule')) {
+                            scheduleInView = true;
+                            revealSchedule();
+                            obs.unobserve(el);
+                            return;
+                        }
 
-                    if (el.classList.contains('location')) {
+                        if (el.classList.contains('location')) {
+                            el.classList.add('is-visible');
+                            obs.unobserve(el);
+                            return;
+                        }
+
                         el.classList.add('is-visible');
                         obs.unobserve(el);
+                    });
+                },
+                {
+                    threshold: 0.16,
+                    rootMargin: '0px 0px -6% 0px',
+                }
+            );
+
+            revealElements.forEach((el) => observer.observe(el));
+
+            let expandRaf = 0;
+            const onScroll = () => {
+                // Immediate clamp — critical for touch/trackpad inertia.
+                enforceGateOnScroll();
+                if (expandRaf) return;
+                expandRaf = window.requestAnimationFrame(() => {
+                    expandRaf = 0;
+                    if (scrollLockCount > 0) {
+                        holdAt(lockedScrollY);
                         return;
                     }
-
-                    el.classList.add('is-visible');
-                    obs.unobserve(el);
+                    updateLocationExpand();
+                    revealSchedule();
+                    tryPlaySnake();
                 });
-            },
-            {
-                threshold: 0.16,
-                rootMargin: '0px 0px -6% 0px',
-            }
-        );
+            };
 
-        revealElements.forEach((el) => observer.observe(el));
+            const onResize = () => {
+                if (expandRaf) return;
+                expandRaf = window.requestAnimationFrame(() => {
+                    expandRaf = 0;
+                    if (scrollLockCount > 0) {
+                        holdAt(lockedScrollY);
+                        return;
+                    }
+                    updateLocationExpand();
+                    revealSchedule();
+                    tryPlaySnake();
+                });
+            };
 
-        let expandRaf = 0;
-        const onScroll = () => {
-            // Immediate clamp — critical for touch/trackpad inertia.
-            enforceGateOnScroll();
-            if (expandRaf) return;
-            expandRaf = window.requestAnimationFrame(() => {
-                expandRaf = 0;
-                if (scrollLockCount > 0) {
-                    holdAt(lockedScrollY);
-                    return;
-                }
-                updateLocationExpand();
-                revealSchedule();
-                tryPlaySnake();
-            });
-        };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onResize);
 
-        const onResize = () => {
-            if (expandRaf) return;
-            expandRaf = window.requestAnimationFrame(() => {
-                expandRaf = 0;
-                if (scrollLockCount > 0) {
-                    holdAt(lockedScrollY);
-                    return;
-                }
-                updateLocationExpand();
-                revealSchedule();
-                tryPlaySnake();
-            });
-        };
+            // Non-passive gates: catch the tick that would cross the animation point.
+            window.addEventListener('wheel', onGateWheel, { passive: false });
+            window.addEventListener('touchstart', onGateTouchStart, { passive: true });
+            window.addEventListener('touchmove', onGateTouchMove, { passive: false });
+            window.addEventListener('touchend', onGateTouchEnd, { passive: true });
+            window.addEventListener('touchcancel', onGateTouchEnd, { passive: true });
+            window.addEventListener('keydown', onGateKeyDown, { passive: false });
 
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onResize);
-
-        // Non-passive gates: catch the tick that would cross the animation point.
-        window.addEventListener('wheel', onGateWheel, { passive: false });
-        window.addEventListener('touchstart', onGateTouchStart, { passive: true });
-        window.addEventListener('touchmove', onGateTouchMove, { passive: false });
-        window.addEventListener('touchend', onGateTouchEnd, { passive: true });
-        window.addEventListener('touchcancel', onGateTouchEnd, { passive: true });
-        window.addEventListener('keydown', onGateKeyDown, { passive: false });
-
-        updateLocationExpand();
-    }
-
-    const target = new Date('2026-05-15T00:00:00').getTime();
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-
-    document.querySelectorAll('[data-gallery]').forEach((gallery) => {
-        const track = gallery.querySelector('.dresscode-gallery-track');
-        const slides = Array.from(gallery.querySelectorAll('.dresscode-gallery-slide'));
-        const prevBtn = gallery.querySelector('.dresscode-gallery-btn--prev');
-        const nextBtn = gallery.querySelector('.dresscode-gallery-btn--next');
-        if (!track || slides.length < 2) return;
-
-        let index = 0;
-        let startX = 0;
-        let deltaX = 0;
-        let dragging = false;
-        let width = gallery.clientWidth || 1;
-
-        function render(offsetPx) {
-            const base = -index * 100;
-            const dragPct = width ? (offsetPx / width) * 100 : 0;
-            track.style.transform = `translate3d(${base + dragPct}%, 0, 0)`;
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('is-active', i === index);
-            });
+            updateLocationExpand();
         }
 
-        function goTo(next) {
-            const total = slides.length;
-            index = ((next % total) + total) % total;
-            deltaX = 0;
-            gallery.classList.remove('is-dragging');
+        const target = new Date('2026-05-15T00:00:00').getTime();
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+            const track = gallery.querySelector('.dresscode-gallery-track');
+            const slides = Array.from(gallery.querySelectorAll('.dresscode-gallery-slide'));
+            const prevBtn = gallery.querySelector('.dresscode-gallery-btn--prev');
+            const nextBtn = gallery.querySelector('.dresscode-gallery-btn--next');
+            if (!track || slides.length < 2) return;
+
+            let index = 0;
+            let startX = 0;
+            let deltaX = 0;
+            let dragging = false;
+            let width = gallery.clientWidth || 1;
+
+            function render(offsetPx) {
+                const base = -index * 100;
+                const dragPct = width ? (offsetPx / width) * 100 : 0;
+                track.style.transform = `translate3d(${base + dragPct}%, 0, 0)`;
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('is-active', i === index);
+                });
+            }
+
+            function goTo(next) {
+                const total = slides.length;
+                index = ((next % total) + total) % total;
+                deltaX = 0;
+                gallery.classList.remove('is-dragging');
+                render(0);
+            }
+
+            function onPointerDown(event) {
+                if (event.target.closest('.dresscode-gallery-btn')) return;
+                if (event.pointerType === 'mouse' && event.button !== 0) return;
+                dragging = true;
+                startX = event.clientX;
+                deltaX = 0;
+                width = gallery.clientWidth || 1;
+                gallery.classList.add('is-dragging');
+                gallery.setPointerCapture(event.pointerId);
+            }
+
+            function onPointerMove(event) {
+                if (!dragging) return;
+                deltaX = event.clientX - startX;
+                render(deltaX);
+            }
+
+            function onPointerUp(event) {
+                if (!dragging) return;
+                dragging = false;
+                gallery.classList.remove('is-dragging');
+                try {
+                    gallery.releasePointerCapture(event.pointerId);
+                } catch (_) {
+                    /* already released */
+                }
+
+                const threshold = Math.min(72, width * 0.18);
+                if (deltaX <= -threshold) goTo(index + 1);
+                else if (deltaX >= threshold) goTo(index - 1);
+                else goTo(index);
+            }
+
+            gallery.addEventListener('pointerdown', onPointerDown);
+            gallery.addEventListener('pointermove', onPointerMove);
+            gallery.addEventListener('pointerup', onPointerUp);
+            gallery.addEventListener('pointercancel', onPointerUp);
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    goTo(index - 1);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    goTo(index + 1);
+                });
+            }
+
             render(0);
+        });
+
+        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+        function updateCountdown() {
+            let diff = target - Date.now();
+            if (diff < 0) diff = 0;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            daysEl.textContent = String(days).padStart(2, '0');
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minutesEl.textContent = String(minutes).padStart(2, '0');
+            secondsEl.textContent = String(seconds).padStart(2, '0');
         }
 
-        function onPointerDown(event) {
-            if (event.target.closest('.dresscode-gallery-btn')) return;
-            if (event.pointerType === 'mouse' && event.button !== 0) return;
-            dragging = true;
-            startX = event.clientX;
-            deltaX = 0;
-            width = gallery.clientWidth || 1;
-            gallery.classList.add('is-dragging');
-            gallery.setPointerCapture(event.pointerId);
-        }
-
-        function onPointerMove(event) {
-            if (!dragging) return;
-            deltaX = event.clientX - startX;
-            render(deltaX);
-        }
-
-        function onPointerUp(event) {
-            if (!dragging) return;
-            dragging = false;
-            gallery.classList.remove('is-dragging');
-            try {
-                gallery.releasePointerCapture(event.pointerId);
-            } catch (_) {
-                /* already released */
-            }
-
-            const threshold = Math.min(72, width * 0.18);
-            if (deltaX <= -threshold) goTo(index + 1);
-            else if (deltaX >= threshold) goTo(index - 1);
-            else goTo(index);
-        }
-
-        gallery.addEventListener('pointerdown', onPointerDown);
-        gallery.addEventListener('pointermove', onPointerMove);
-        gallery.addEventListener('pointerup', onPointerUp);
-        gallery.addEventListener('pointercancel', onPointerUp);
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', (event) => {
-                event.stopPropagation();
-                goTo(index - 1);
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', (event) => {
-                event.stopPropagation();
-                goTo(index + 1);
-            });
-        }
-
-        render(0);
-    });
-
-    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
-
-    function updateCountdown() {
-        let diff = target - Date.now();
-        if (diff < 0) diff = 0;
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        daysEl.textContent = String(days).padStart(2, '0');
-        hoursEl.textContent = String(hours).padStart(2, '0');
-        minutesEl.textContent = String(minutes).padStart(2, '0');
-        secondsEl.textContent = String(seconds).padStart(2, '0');
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    pageReady.then(startInteractions);
 })();
