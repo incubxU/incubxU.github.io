@@ -1536,6 +1536,10 @@ html.is-ready .page-loader {
     white-space: nowrap;
 }
 
+.location-stage .btn-map {
+    font-family: 'Manrope', sans-serif;
+}
+
 .btn-map {
     display: inline-flex;
     align-items: center;
