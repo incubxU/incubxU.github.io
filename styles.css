@@ -2514,7 +2514,7 @@ html.is-ready .page-loader {
 .gifts-arc--3 .btn-map-pin--flower {
     width: 2.85em;
     height: 2.85em;
-    transform: none;
+    transform: translateY(-0.12em);
     margin-right: -0.2em;
 }
 
