@@ -151,6 +151,17 @@
     --frost: rgba(242, 241, 239, 0.08);
     --max: 560px;
     --sheet-radius: 32px;
+    /* Single source of truth for the page plate photo */
+    --page-plate-image: url('images/bg-continiation2.png');
+    --page-plate:
+        radial-gradient(ellipse 26% 68% at 50% -4%, rgba(255, 255, 255, 0.16), transparent 72%),
+        radial-gradient(ellipse 40% 34% at 64% 40%, rgba(236, 244, 250, 0.2), transparent 68%),
+        radial-gradient(ellipse 38% 32% at 16% 18%, rgba(186, 204, 222, 0.14), transparent 70%),
+        radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
+        radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
+        linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
+        var(--page-plate-image) center top / 125% 125% no-repeat,
+        #1e2f42;
 }
 
 *,
@@ -304,15 +315,7 @@ html.is-ready .page-loader {
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background:
-        radial-gradient(ellipse 26% 68% at 50% -4%, rgba(255, 255, 255, 0.16), transparent 72%),
-        radial-gradient(ellipse 40% 34% at 64% 40%, rgba(236, 244, 250, 0.2), transparent 68%),
-        radial-gradient(ellipse 38% 32% at 16% 18%, rgba(186, 204, 222, 0.14), transparent 70%),
-        radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
-        radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
-        linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continiation2.png') center top / 125% 125% no-repeat,
-        #1e2f42;
+    background: var(--page-plate);
     pointer-events: none;
 }
 
@@ -406,33 +409,7 @@ html.is-ready .page-loader {
     justify-content: center;
     padding: 56px 20px 88px;
     text-align: center;
-    /* visible: background-attachment:fixed on .hero-bg must not be
-       demoted by an overflow clipping ancestor */
     overflow: visible;
-}
-
-/* Atmosphere plate — soft horizon / light-leak, full-bleed */
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    /* Opaque continuation locked to the viewport — same plate as .page-bg,
-       so the hero box edge never reveals a different texture. */
-    background:
-        radial-gradient(ellipse 26% 68% at 50% -4%, rgba(255, 255, 255, 0.16), transparent 72%),
-        radial-gradient(ellipse 40% 34% at 64% 40%, rgba(236, 244, 250, 0.2), transparent 68%),
-        radial-gradient(ellipse 38% 32% at 16% 18%, rgba(186, 204, 222, 0.14), transparent 70%),
-        radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
-        radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
-        linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continiation2.png') center top / 125% 125% no-repeat,
-        #1e2f42;
-    background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, scroll;
-}
-
-.hero-bg::after {
-    content: none;
 }
 
 .hero::before {
@@ -3391,23 +3368,6 @@ body {
 }
 
 .page-bg {
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background:
-        radial-gradient(ellipse 26% 68% at 50% -4%, rgba(255, 255, 255, 0.16), transparent 72%),
-        radial-gradient(ellipse 40% 34% at 64% 40%, rgba(236, 244, 250, 0.2), transparent 68%),
-        radial-gradient(ellipse 38% 32% at 16% 18%, rgba(186, 204, 222, 0.14), transparent 70%),
-        radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
-        radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
-        linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continuation.png') center top / 125% 125% no-repeat,
-        #1e2f42;
-    filter: none;
-}
-
-.hero-bg {
     filter: none;
 }
 
@@ -3874,23 +3834,6 @@ body {
 }
 
 .page-bg {
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background:
-        radial-gradient(ellipse 26% 68% at 50% -4%, rgba(255, 255, 255, 0.16), transparent 72%),
-        radial-gradient(ellipse 40% 34% at 64% 40%, rgba(236, 244, 250, 0.2), transparent 68%),
-        radial-gradient(ellipse 38% 32% at 16% 18%, rgba(186, 204, 222, 0.14), transparent 70%),
-        radial-gradient(ellipse 48% 36% at 40% 74%, rgba(210, 226, 238, 0.12), transparent 72%),
-        radial-gradient(ellipse 30% 26% at 88% 82%, rgba(168, 192, 214, 0.1), transparent 65%),
-        linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
-        url('images/bg-continiation2.png') center top / 125% 125% no-repeat,
-        #1e2f42;
-    filter: none;
-}
-
-.hero-bg {
     filter: none;
 }
 

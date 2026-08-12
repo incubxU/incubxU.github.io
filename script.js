@@ -1,7 +1,7 @@
 (function () {
     const LOAD_TIMEOUT_MS = 12000;
     const CRITICAL_IMAGES = [
-        'images/bg-continuation.png',
+        'images/bg-continiation2.png',
         'images/location.jpg',
         'images/hero2.png',
         'images/1.png',
