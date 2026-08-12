@@ -132,7 +132,13 @@
     let scheduleInView = false;
     let touchLastY = null;
 
+    /** App scrollport — window itself does not scroll (iOS rubber-band fix). */
+    const scrollRoot =
+        document.querySelector('.page-scroll') || document.documentElement;
+    const usesPageScroll = scrollRoot !== document.documentElement;
+
     function getScrollY() {
+        if (usesPageScroll) return scrollRoot.scrollTop || 0;
         return window.scrollY || window.pageYOffset || 0;
     }
 
@@ -152,11 +158,14 @@
 
     function setScrollY(targetY) {
         const y = Math.max(0, Math.round(targetY));
-        const html = document.documentElement;
-        const prevBehavior = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto';
-        window.scrollTo(0, y);
-        html.style.scrollBehavior = prevBehavior;
+        const prevBehavior = scrollRoot.style.scrollBehavior;
+        scrollRoot.style.scrollBehavior = 'auto';
+        if (usesPageScroll) {
+            scrollRoot.scrollTop = y;
+        } else {
+            window.scrollTo(0, y);
+        }
+        scrollRoot.style.scrollBehavior = prevBehavior;
         return y;
     }
 
@@ -514,6 +523,7 @@
                     });
                 },
                 {
+                    root: usesPageScroll ? scrollRoot : null,
                     threshold: 0.16,
                     rootMargin: '0px 0px -6% 0px',
                 }
@@ -552,7 +562,7 @@
                 });
             };
 
-            window.addEventListener('scroll', onScroll, { passive: true });
+            scrollRoot.addEventListener('scroll', onScroll, { passive: true });
             window.addEventListener('resize', onResize);
 
             // Non-passive gates: catch the tick that would cross the animation point.
@@ -678,5 +688,27 @@
         setInterval(updateCountdown, 1000);
     }
 
-    pageReady.then(startInteractions);
+    function initAutoResizeTextareas() {
+        const fields = document.querySelectorAll('textarea[data-auto-resize]');
+        if (!fields.length) return;
+
+        function resize(el) {
+            el.style.height = 'auto';
+            el.style.height = `${el.scrollHeight}px`;
+        }
+
+        fields.forEach((el) => {
+            resize(el);
+            el.addEventListener('input', () => resize(el));
+        });
+
+        window.addEventListener('resize', () => {
+            fields.forEach(resize);
+        });
+    }
+
+    pageReady.then(() => {
+        startInteractions();
+        initAutoResizeTextareas();
+    });
 })();

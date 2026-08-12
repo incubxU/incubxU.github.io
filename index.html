@@ -16,6 +16,9 @@
         html.is-loading body > *:not(.page-loader) {
             visibility: hidden !important;
         }
+        html.is-loading .page-scroll {
+            background: #1e2f42;
+        }
     </style>
     <noscript>
         <style>
@@ -45,6 +48,8 @@
     <div class="paper-grain" aria-hidden="true"></div>
     <div class="film-grain" aria-hidden="true"></div>
 
+    <!-- Scrollport: keeps plate fixed while iOS rubber-band / PTR reveals it -->
+    <div class="page-scroll">
     <!-- HERO — overlapping lens circles -->
     <header class="hero">
         <div class="page-bloom" aria-hidden="true"></div>
@@ -783,13 +788,14 @@
 
                     <div class="rsvp-field">
                         <label for="rsvp-song">Укажите до трёх любимых треков:</label>
-                        <input
-                            type="text"
+                        <textarea
                             id="rsvp-song"
                             name="song"
+                            rows="1"
                             placeholder="Исполнитель — название, …"
                             data-fs-field
-                        />
+                            data-auto-resize
+                        ></textarea>
                         <span class="rsvp-field-error" data-fs-error="song"></span>
                     </div>
 
@@ -812,6 +818,7 @@
 
         </div>
     </main>
+    </div>
 
     <script>
         window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };

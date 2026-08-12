@@ -71,8 +71,8 @@
         linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
         var(--page-plate-image) center top / 125% 125% no-repeat,
         #1e2f42;
-    /* Extra paint beyond the viewport for iOS rubber-band / Android URL-bar */
-    --page-bg-bleed: 180px;
+    /* Extra paint below the viewport for Android URL-bar collapse */
+    --page-bg-bleed: 96px;
 }
 
 *,
@@ -84,20 +84,10 @@
 }
 
 html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+    height: 100%;
+    overflow: hidden;
     scrollbar-width: none;
-    /*
-     * iOS Safari paints the root background in the pull-to-refresh /
-     * rubber-band region — fixed layers do not cover that gap. Keep a
-     * viewport-sized plate here so the overscroll matches the page.
-     */
     background-color: #1e2f42;
-    background-image: var(--page-plate-image);
-    background-position: center top;
-    background-size: 125% 125vh;
-    background-size: 125% 125lvh;
-    background-repeat: no-repeat;
 }
 
 html::-webkit-scrollbar {
@@ -106,23 +96,50 @@ html::-webkit-scrollbar {
     height: 0;
 }
 
-html.is-scroll-locked,
-html.is-scroll-locked body {
+html.is-scroll-locked .page-scroll {
     overflow: hidden;
     overscroll-behavior: none;
     touch-action: none;
 }
 
 body {
-    min-height: 100vh;
+    height: 100%;
+    height: 100dvh;
     font-family: 'Jost', sans-serif;
     font-weight: 300;
     color: var(--text);
     line-height: 1.75;
     letter-spacing: 0.01em;
-    /* Matches continuation plate tone */
-    background: #1e2f42;
+    /* Document does not scroll; plate lives on .page-scroll */
+    background: transparent;
+    overflow: hidden;
+}
+
+/*
+ * App-style scrollport: document itself does not bounce.
+ * Plate is painted on this scrollport so iOS rubber-band / overscroll
+ * always reveals the same background image (fixed layers alone cannot).
+ */
+.page-scroll {
+    position: relative;
+    z-index: 1;
+    height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    /*
+     * Background is on the scrollport (not the content), so it stays put while
+     * children scroll — and it is what iOS paints during rubber-band / PTR.
+     */
+    background: var(--page-plate);
+    scrollbar-width: none;
+}
+
+.page-scroll::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 /* ============================================================
@@ -130,6 +147,11 @@ body {
    ============================================================ */
 html.is-loading,
 html.is-loading body {
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+html.is-loading .page-scroll {
     overflow: hidden;
     overscroll-behavior: none;
 }
@@ -232,24 +254,21 @@ html.is-ready .page-loader {
    ============================================================ */
 .page-bg {
     position: fixed;
-    top: calc(-1 * var(--page-bg-bleed));
+    top: 0;
     left: 0;
     z-index: 0;
     width: 100%;
     /*
-     * Bleed past the viewport on both ends:
-     * - bottom: Android Chrome URL-bar collapse underpaint
-     * - top: iOS pull-to-refresh / rubber-band overscroll
-     * background-position is shifted by the same bleed so framing in the
-     * normal viewport stays unchanged.
+     * Sits behind .page-scroll. Document does not bounce; iOS rubber-band
+     * happens inside the scrollport and reveals this stationary plate.
+     * Extra height still covers Android Chrome URL-bar collapse frames.
      */
-    height: calc(100vh + 2 * var(--page-bg-bleed));
-    height: calc(100lvh + 2 * var(--page-bg-bleed));
-    min-height: calc(100lvh + 2 * var(--page-bg-bleed));
+    height: 100vh;
+    height: 100dvh;
+    height: 100lvh;
+    min-height: calc(100lvh + var(--page-bg-bleed));
     background: var(--page-plate);
-    background-position: center var(--page-bg-bleed);
     pointer-events: none;
-    /* Stable compositor layer — reduces Android underpaint during scroll */
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -287,13 +306,10 @@ html.is-ready .page-loader {
 /* Paper grain — nearly silent so film grain leads */
 .paper-grain {
     position: fixed;
-    top: calc(-1 * var(--page-bg-bleed));
-    left: 0;
+    inset: 0;
     z-index: 48;
     width: 100%;
-    height: calc(100vh + 2 * var(--page-bg-bleed));
-    height: calc(100lvh + 2 * var(--page-bg-bleed));
-    min-height: calc(100lvh + 2 * var(--page-bg-bleed));
+    height: 100%;
     pointer-events: none;
     opacity: 0.02;
     mix-blend-mode: soft-light;
@@ -313,13 +329,10 @@ html.is-ready .page-loader {
 /* Film grain — dense frosted / high-ISO texture */
 .film-grain {
     position: fixed;
-    top: calc(-1 * var(--page-bg-bleed));
-    left: 0;
+    inset: 0;
     z-index: 50;
     width: 100%;
-    height: calc(100vh + 2 * var(--page-bg-bleed));
-    height: calc(100lvh + 2 * var(--page-bg-bleed));
-    min-height: calc(100lvh + 2 * var(--page-bg-bleed));
+    height: 100%;
     pointer-events: none;
     opacity: 0.07;
     mix-blend-mode: soft-light;
@@ -2815,6 +2828,14 @@ html.is-ready .page-loader {
     transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
+.rsvp-form textarea {
+    border-radius: 1.5rem;
+    resize: none;
+    overflow: hidden;
+    field-sizing: content;
+    min-height: calc(1.4em + 1.7rem);
+}
+
 .rsvp-form input[type="text"]::placeholder,
 .rsvp-form textarea::placeholder {
     color: var(--text-muted);
@@ -3401,7 +3422,7 @@ html.is-ready .page-loader {
 
 body {
     color: var(--text);
-    background: #1e2f42;
+    background: transparent;
     text-rendering: geometricPrecision;
 }
 
@@ -3866,7 +3887,7 @@ body {
 
 body {
     color: var(--text);
-    background: #1e2f42;
+    background: transparent;
     font-weight: 300;
     letter-spacing: 0.025em;
 }
