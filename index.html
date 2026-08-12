@@ -590,6 +590,37 @@
             <section class="section gifts reveal">
                 <div class="gifts-arcs">
                     <div class="gifts-arc gifts-arc--1">
+                        <svg class="gifts-arc__glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                            <defs>
+                                <filter id="gifts-lens-blur" x="-120%" y="-120%" width="340%" height="340%">
+                                    <feGaussianBlur stdDeviation="22" />
+                                </filter>
+                                <filter id="gifts-soft-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="mid" />
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide" />
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="42" result="bloom" />
+                                    <feMerge>
+                                        <feMergeNode in="bloom" />
+                                        <feMergeNode in="bloom" />
+                                        <feMergeNode in="wide" />
+                                        <feMergeNode in="wide" />
+                                        <feMergeNode in="mid" />
+                                    </feMerge>
+                                </filter>
+                                <filter id="gifts-core-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.8" result="soft" />
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="near" />
+                                    <feMerge>
+                                        <feMergeNode in="soft" />
+                                        <feMergeNode in="near" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- Upper semicircle only (clockwise from left → top → right in SVG y-down) -->
+                            <path class="gifts-glow-halo" d="M 2 140 A 138 138 0 0 1 278 140" fill="none" filter="url(#gifts-lens-blur)" />
+                            <path class="gifts-glow-edge" d="M 2 140 A 138 138 0 0 1 278 140" fill="none" filter="url(#gifts-soft-glow)" />
+                            <path class="gifts-glow-core" d="M 2 140 A 138 138 0 0 1 278 140" fill="none" filter="url(#gifts-core-glow)" />
+                        </svg>
                         <div class="gifts-arc__content gifts-arc__content--hero">
                             <p class="gifts-arc__title">Детали</p>
                             <p class="gifts-arc__subtitle">мероприятия</p>
