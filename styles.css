@@ -2352,8 +2352,8 @@ html.is-ready .page-loader {
     --peek-4: 24.5rem;
     --content-w: min(19em, 68%);
     --band-pad: 0.55rem;
-    /* Darker take on location-orb--bottom mid tone */
-    --circle-fill: #274a72;
+    /* Reference stacked arcs: dark navy circle, cool light U bands */
+    --circle-fill: #2a4158;
     /* Slight lift clears rim seams without opening a bottom navy crescent */
     --circle-lift: 2px;
     position: relative;
@@ -2362,8 +2362,8 @@ html.is-ready .page-loader {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 9999px;
-    /* Last-layer color: bottom tip stays silver, no empty navy capsule */
-    background: var(--silver);
+    /* Last-layer tip: matches arc 4 light end so no empty navy capsule */
+    background: #d6dee8;
 }
 
 /* In-flow strut: 100cqw here resolves against .gifts-arcs (not the viewport) */
@@ -2406,7 +2406,7 @@ html.is-ready .page-loader {
     background: var(--circle-fill);
     /* Soft contact shadow + same-color rim seal against subpixel fringing */
     box-shadow:
-        0 14px 32px rgba(30, 55, 90, 0.28),
+        0 14px 32px rgba(18, 32, 48, 0.32),
         0 0 0 1.5px var(--circle-fill);
 }
 
@@ -2442,16 +2442,30 @@ html.is-ready .page-loader {
     --peek: var(--peek-2);
     height: calc(100cqw + var(--peek-2));
     z-index: 3;
-    background: var(--warm-glow);
-    box-shadow: 0 -18px 36px rgba(30, 55, 90, 0.28);
+    /* Dark → light across this U; ~25% stronger than prior step */
+    background: linear-gradient(
+        180deg,
+        rgba(191, 206, 224, 0.97) 0%,
+        rgba(191, 206, 224, 0.97) calc(100% - var(--peek)),
+        rgba(226, 236, 246, 0.96) calc(100% - var(--peek) * 0.55),
+        rgba(255, 255, 255, 0.98) 100%
+    );
+    box-shadow: 0 -18px 36px rgba(18, 32, 48, 0.26);
 }
 
 .gifts-arc--3 {
     --peek: var(--peek-3);
     height: calc(100cqw + var(--peek-2) + var(--peek-3));
     z-index: 2;
-    background: var(--dove);
-    box-shadow: 0 -16px 32px rgba(18, 32, 48, 0.16);
+    /* Own dark → light band; starts darker than the U above tip */
+    background: linear-gradient(
+        180deg,
+        rgba(194, 205, 218, 0.96) 0%,
+        rgba(194, 205, 218, 0.96) calc(100% - var(--peek)),
+        rgba(214, 222, 232, 0.93) calc(100% - var(--peek) * 0.55),
+        rgba(236, 241, 247, 0.96) 100%
+    );
+    box-shadow: 0 -16px 32px rgba(18, 32, 48, 0.2);
 }
 
 .gifts-arc--4 {
@@ -2471,8 +2485,15 @@ html.is-ready .page-loader {
     inset: 0;
     z-index: 1;
     border-radius: 0 0 50cqw 50cqw;
-    background: var(--silver);
-    box-shadow: 0 -14px 28px rgba(18, 32, 48, 0.12);
+    /* Own dark → light band for the last U */
+    background: linear-gradient(
+        180deg,
+        rgba(170, 184, 200, 0.96) 0%,
+        rgba(170, 184, 200, 0.96) calc(100% - var(--peek)),
+        rgba(188, 198, 212, 0.93) calc(100% - var(--peek) * 0.55),
+        rgba(214, 222, 232, 0.95) 100%
+    );
+    box-shadow: 0 -14px 28px rgba(18, 32, 48, 0.18);
     pointer-events: none;
     -webkit-mask-image: radial-gradient(
         circle 51.5cqw at 50% calc(50cqw - var(--circle-lift)),
@@ -2638,7 +2659,7 @@ html.is-ready .page-loader {
     line-height: 0.9;
     text-transform: none;
     color: rgba(242, 241, 239, 0.76);
-    -webkit-text-stroke: 0.045em var(--circle-fill, #274a72);
+    -webkit-text-stroke: 0.045em var(--circle-fill, #2a4158);
     paint-order: stroke fill;
     margin: 0.08em 0 0;
     text-indent: 0;
