@@ -2493,8 +2493,20 @@ html.is-ready .page-loader {
 }
 
 .gifts-arc--3 .btn-map {
-    padding-left: calc(var(--circle-size) * 0.045);
-    padding-right: calc(var(--circle-size) * 0.09);
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    /* Scale to the gifts band so the long label stays one line inside the pill */
+    font-size: clamp(0.58rem, 2.9cqi, 0.72rem);
+    letter-spacing: 0.05em;
+    gap: clamp(0.28rem, 1.1cqi, 0.45rem);
+    padding: 0.55em 0.95em 0.55em 0.55em;
+}
+
+.gifts-arc--3 .btn-map-pin--flower {
+    width: 1.55em;
+    height: 1.55em;
+    transform: translateY(-0.08em);
 }
 
 /*
