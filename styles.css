@@ -20,101 +20,10 @@
 }
 
 @font-face {
-    font-family: 'Philosopher';
-    src: url('fonts/Philosopher/Philosopher-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Philosopher';
-    src: url('fonts/Philosopher/Philosopher-Italic.ttf') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Philosopher';
-    src: url('fonts/Philosopher/Philosopher-BoldItalic.ttf') format('truetype');
-    font-weight: 700;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Marianna';
-    src: url('fonts/Marianna/Marianna.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
     font-family: 'Czizh';
     src: url('fonts/Czizh/Czizh.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Gogol';
-    src: url('fonts/Gogol/gogol_regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src:
-        url('fonts/Montserrat light/montserrat_light.woff2') format('woff2'),
-        url('fonts/Montserrat light/montserrat_light.woff') format('woff'),
-        url('fonts/Montserrat light/montserrat_light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'The Youngest';
-    src: url('fonts/Youngest/The Youngest Script-Rg.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Arimo';
-    src: url('fonts/Arimo/Arimo.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Arimo';
-    src: url('fonts/Arimo/Arimo-Italic.ttf') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Mulish';
-    src: url('fonts/Mulish/Mulish.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Mulish';
-    src: url('fonts/Mulish/Mulish-Italic.ttf') format('truetype');
-    font-weight: 400;
-    font-style: italic;
     font-display: swap;
 }
 
