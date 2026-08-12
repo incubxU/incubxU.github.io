@@ -1,81 +1,126 @@
-﻿<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="ru" class="is-loading">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ДЕНИС & ВЕРОНИКА · Свадьба</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Raleway:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+        html.is-loading,
+        html.is-loading body {
+            background: #1e2f42;
+        }
+        html.is-loading body > *:not(.page-loader) {
+            visibility: hidden !important;
+        }
+    </style>
+    <noscript>
+        <style>
+            html.is-loading body > *:not(.page-loader) { visibility: visible !important; }
+            .page-loader { display: none !important; }
+        </style>
+    </noscript>
+    <script>
+        window.setTimeout(function () {
+            var root = document.documentElement;
+            if (!root.classList.contains('is-loading')) return;
+            root.classList.remove('is-loading');
+            root.classList.add('is-ready');
+        }, 15000);
+    </script>
 </head>
 <body>
+    <div class="page-loader" role="status" aria-live="polite" aria-busy="true">
+        <div class="page-loader__mark" aria-hidden="true">
+            <span class="page-loader__ring page-loader__ring--top"></span>
+            <span class="page-loader__ring page-loader__ring--bottom"></span>
+        </div>
+        <p class="page-loader__names">Денис <span aria-hidden="true">×</span> Вероника</p>
+        <p class="page-loader__label">Загрузка</p>
+    </div>
     <div class="page-bg" aria-hidden="true"></div>
+    <div class="paper-grain" aria-hidden="true"></div>
+    <div class="film-grain" aria-hidden="true"></div>
 
     <!-- HERO — overlapping lens circles -->
     <header class="hero">
+        <div class="page-bloom" aria-hidden="true"></div>
         <div class="hero-venn reveal">
             <svg class="hero-rings" viewBox="0 0 400 520" aria-hidden="true">
                 <defs>
-                    <filter id="hero-lens-blur" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="6" />
+                    <filter id="hero-lens-blur" x="-120%" y="-120%" width="340%" height="340%">
+                        <feGaussianBlur stdDeviation="22" />
                     </filter>
-                    <filter id="hero-soft-glow" x="-80%" y="-80%" width="260%" height="260%">
-                        <feGaussianBlur stdDeviation="14" result="blur" />
+                    <!-- Soft bloom — diffused line + outer glow -->
+                    <filter id="hero-soft-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="mid" />
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide" />
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="42" result="bloom" />
                         <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
+                            <feMergeNode in="bloom" />
+                            <feMergeNode in="bloom" />
+                            <feMergeNode in="wide" />
+                            <feMergeNode in="wide" />
+                            <feMergeNode in="mid" />
+                        </feMerge>
+                    </filter>
+                    <filter id="hero-core-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="3.8" result="soft" />
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="near" />
+                        <feMerge>
+                            <feMergeNode in="soft" />
+                            <feMergeNode in="near" />
                         </feMerge>
                     </filter>
                     <radialGradient id="hero-fill-top" cx="50%" cy="48%" r="52%">
-                        <stop offset="0%" stop-color="rgba(10,20,24,0.72)" />
-                        <stop offset="55%" stop-color="rgba(19,34,40,0.58)" />
-                        <stop offset="78%" stop-color="rgba(111,117,126,0.12)" />
-                        <stop offset="90%" stop-color="rgba(192,196,201,0.28)" />
-                        <stop offset="97%" stop-color="rgba(220,224,227,0.55)" />
-                        <stop offset="100%" stop-color="rgba(192,196,201,0.18)" />
+                        <stop offset="0%" stop-color="rgba(120,138,152,0.06)" />
+                        <stop offset="55%" stop-color="rgba(150,168,182,0.04)" />
+                        <stop offset="78%" stop-color="rgba(190,206,216,0.08)" />
+                        <stop offset="90%" stop-color="rgba(220,232,240,0.12)" />
+                        <stop offset="96%" stop-color="rgba(236,244,248,0.18)" />
+                        <stop offset="100%" stop-color="rgba(160,178,190,0.06)" />
                     </radialGradient>
                     <radialGradient id="hero-fill-bottom" cx="50%" cy="52%" r="52%">
-                        <stop offset="0%" stop-color="rgba(10,20,24,0.72)" />
-                        <stop offset="55%" stop-color="rgba(19,34,40,0.58)" />
-                        <stop offset="78%" stop-color="rgba(111,117,126,0.12)" />
-                        <stop offset="90%" stop-color="rgba(192,196,201,0.28)" />
-                        <stop offset="97%" stop-color="rgba(220,224,227,0.55)" />
-                        <stop offset="100%" stop-color="rgba(192,196,201,0.18)" />
+                        <stop offset="0%" stop-color="rgba(110,128,142,0.07)" />
+                        <stop offset="55%" stop-color="rgba(140,158,172,0.04)" />
+                        <stop offset="78%" stop-color="rgba(180,196,208,0.09)" />
+                        <stop offset="90%" stop-color="rgba(214,226,234,0.14)" />
+                        <stop offset="96%" stop-color="rgba(232,242,248,0.17)" />
+                        <stop offset="100%" stop-color="rgba(148,166,178,0.06)" />
                     </radialGradient>
                 </defs>
 
                 <circle class="hero-ring hero-ring--top" cx="200" cy="168" r="148" fill="url(#hero-fill-top)" />
                 <circle class="hero-ring hero-ring--bottom" cx="200" cy="352" r="148" fill="url(#hero-fill-bottom)" />
 
-                <circle class="hero-ring-halo hero-ring-halo--top" cx="200" cy="168" r="150" fill="none" filter="url(#hero-lens-blur)" />
-                <circle class="hero-ring-halo hero-ring-halo--bottom" cx="200" cy="352" r="150" fill="none" filter="url(#hero-lens-blur)" />
+                <circle class="hero-ring-halo hero-ring-halo--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-lens-blur)" />
+                <circle class="hero-ring-halo hero-ring-halo--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-lens-blur)" />
 
-                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="118" ry="28" filter="url(#hero-lens-blur)" />
-                <line class="hero-intersection-line" x1="72" y1="260" x2="328" y2="260" filter="url(#hero-lens-blur)" />
+                <ellipse class="hero-intersection-glow" cx="200" cy="260" rx="118" ry="48" filter="url(#hero-lens-blur)" />
 
                 <circle class="hero-ring-edge hero-ring-edge--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-soft-glow)" />
                 <circle class="hero-ring-edge hero-ring-edge--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-soft-glow)" />
+                <circle class="hero-ring-core hero-ring-core--top" cx="200" cy="168" r="148" fill="none" filter="url(#hero-core-glow)" />
+                <circle class="hero-ring-core hero-ring-core--bottom" cx="200" cy="352" r="148" fill="none" filter="url(#hero-core-glow)" />
 
-                <path id="hero-arc-upper" d="M 78 278 A 122 122 0 0 1 322 278" fill="none" />
-                <path id="hero-arc-lower" d="M 322 242 A 122 122 0 0 1 78 242" fill="none" />
-                <path id="hero-arc-foot" d="M 92 468 A 108 108 0 0 0 308 468" fill="none" />
+                <!-- Lens arcs: same edge/core glow as the rest of the rings -->
+                <path class="hero-ring-edge" d="M84.07 260 A148 148 0 0 0 315.93 260" fill="none" filter="url(#hero-soft-glow)" />
+                <path class="hero-ring-edge" d="M84.07 260 A148 148 0 0 1 315.93 260" fill="none" filter="url(#hero-soft-glow)" />
+                <path class="hero-ring-core" d="M84.07 260 A148 148 0 0 0 315.93 260" fill="none" filter="url(#hero-core-glow)" />
+                <path class="hero-ring-core" d="M84.07 260 A148 148 0 0 1 315.93 260" fill="none" filter="url(#hero-core-glow)" />
 
-                <g class="hero-lens-mark hero-lens-mark--left" transform="translate(52 258)">
-                    <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
-                </g>
-                <g class="hero-lens-mark hero-lens-mark--right" transform="translate(348 258)">
-                    <path d="M0 -5 L5 0 L0 5 L-5 0 Z" />
-                </g>
             </svg>
 
             <div class="hero-venn-content">
                 <h1 class="hero-names">
+                    <span class="hero-cross" aria-hidden="true">&amp;</span>
                     <span>ДЕНИС</span>
-                    <span class="hero-cross" aria-hidden="true">×</span>
                     <span>ВЕРОНИКА</span>
                 </h1>
-                <p class="hero-wedding-day">Wedding&nbsp;Day</p>
+                <p class="hero-wedding-day">Wedding day</p>
                 <p class="hero-date">16.11.2026</p>
             </div>
         </div>
@@ -85,46 +130,31 @@
         </div>
     </header>
 
-    <!-- Content sheet — blurs background -->
+    <!-- Content sheet -->
     <main class="sheet">
         <div class="sheet-inner">
 
             <!-- INTRO -->
             <section class="section intro reveal">
-                <p class="intro-greeting">Дорогие и любимые!</p>
-                <p>
-                    Рады сообщить о важном событии — мы создаём семью!
-                    Будем счастливы провести этот день с близкими и родными нам людьми.
+                <p class="intro-greeting">
+                    <span class="intro-greeting__line">Дорогие наши</span>
+                    <span class="intro-greeting__line">
+                        <span class="intro-greeting__pad" aria-hidden="true">Дорогие н</span>родные и близкие!
+                    </span>
                 </p>
-                <p>
-                    Мы приглашаем Вас вместе открыть новую главу нашей истории
-                    и разделить с нами особенный день нашей жизни —
-                    <strong>нашу свадьбу!</strong>
+                <p class="intro-step">
+                    Мы не будем говорить,<br>
+                    что это самый важный день в нашей жизни.<br>
+                    Важных дней было много, и впереди еще больше
                 </p>
-            </section>
-
-            <!-- QUOTE -->
-            <section class="section quote reveal">
-                <div class="quote-mark" aria-hidden="true">“</div>
-                <blockquote>
-                    Счастье — это когда ты нашёл того, кто искал тебя
-                </blockquote>
-            </section>
-
-            <!-- DATE -->
-            <section class="section date-block reveal">
-                <p class="section-label">Дата</p>
-                <div class="calendar" aria-label="Ноябрь 2026">
-                    <div class="calendar-month">НОЯБРЬ</div>
-                    <div class="calendar-grid">
-                        <span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span class="is-empty"></span><span>1</span>
-                        <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
-                        <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
-                        <span class="is-active">16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span>
-                        <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
-                        <span>30</span>
-                    </div>
-                </div>
+                <p class="intro-step">
+                    Но этот день станет для нас по-настоящему особенным.<br>
+                    Именно поэтому мы хотим разделить его с самыми близкими людьми
+                </p>
+                <p class="intro-step">
+                    С большим удовольствием приглашаем вас стать частью этого дня<br>
+                    и разделить с нами радость нашей свадьбы
+                </p>
                 <div class="date-strip" aria-label="16 ноября, понедельник">
                     <span class="date-strip-month">НОЯБРЬ</span>
                     <span class="date-strip-day">16</span>
@@ -134,24 +164,56 @@
 
             <!-- LOCATION -->
             <section class="section location reveal">
-                <p class="section-label">Место проведения</p>
+                <h2 class="location-heading">
+                    <span class="gifts-arc__title">Место</span>
+                    <span class="gifts-arc__subtitle">проведения</span>
+                </h2>
                 <div class="location-stage">
-                    <div class="location-frame">
-                        <div class="location-photo" role="img" aria-label="Фото места проведения"></div>
-                        <div class="location-cylinder">
-                            <div class="location-details">
-                                <h2 class="location-name">Касание Горизонта</h2>
-                                <p class="location-place">Ленинградская область, Ладожское озеро</p>
-                                <p class="location-note">
-                                    Трогательная церемония и последующий уютный вечер
-                                    пройдут на берегу Ладожского озера —
-                                    в атмосфере свежего воздуха, тишины и гармонии с природой.
-                                </p>
-                                <p class="location-note">
-                                    Адрес и схема проезда появятся здесь позже —
-                                    пока это заглушка с кратким описанием места торжества.
-                                </p>
-                            </div>
+                    <div class="location-orbs" aria-hidden="true">
+                        <div class="location-orb location-orb--bridge"></div>
+                    </div>
+
+                    <div class="location-circle location-circle--top">
+                        <div class="location-orb location-orb--top" aria-hidden="true"></div>
+                        <div class="location-orb location-orb--aura-top" aria-hidden="true"></div>
+                        <div class="location-photo-wrap">
+                            <div class="location-photo" role="img" aria-label="Фото места проведения"></div>
+                        </div>
+                        <svg class="location-arc" viewBox="-8 0 288 260" aria-hidden="true">
+                            <defs>
+                                <path id="location-arc-1" d="M 18,138 A 128 128 0 0 0 254,138" fill="none" />
+                                <path id="location-arc-2" d="M 4,150 A 148 148 0 0 0 268,150" fill="none" />
+                            </defs>
+                            <text class="location-arc-text location-arc-text--1" text-anchor="middle">
+                                <textPath href="#location-arc-1" startOffset="50%">«КАСАНИЕ ГОРИЗОНТА»</textPath>
+                            </text>
+                            <text class="location-arc-text location-arc-text--2" text-anchor="middle">
+                                <textPath href="#location-arc-2" startOffset="50%">ЛЕНИНГРАДСКАЯ ОБЛАСТЬ</textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <div class="location-circle location-circle--bottom">
+                        <div class="location-orb location-orb--bottom" aria-hidden="true"></div>
+                        <div class="location-orb location-orb--aura" aria-hidden="true"></div>
+                        <div class="location-details">
+                            <p class="location-note">
+                                Церемония и уютный ужин состоятся в&nbsp;<span class="location-note__keep">эко-отеле</span> на берегу Ладожского озера
+                            </p>
+                            <a
+                                class="btn-map"
+                                href="https://yandex.ru/maps/-/CTbviPYs"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <svg class="btn-map-pin" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                    <path
+                                        fill="currentColor"
+                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"
+                                    />
+                                </svg>
+                                Место на карте
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -159,89 +221,145 @@
 
             <!-- SCHEDULE -->
             <section class="section schedule reveal">
-                <p class="section-label">Программа дня</p>
-                <div class="snake" aria-label="Программа дня">
-                    <svg class="snake-svg" viewBox="0 0 360 420" fill="none" aria-hidden="true">
+                <div class="schedule-heading">
+                    <p class="gifts-arc__title">План</p>
+                    <p class="gifts-arc__subtitle">мероприятия</p>
+                </div>
+                <div class="snake" aria-label="План мероприятия">
+                    <svg class="snake-svg" viewBox="0 0 1000 977" fill="none" aria-hidden="true">
+                        <defs>
+                            <!--
+                              Fixed userSpaceOnUse region keeps blur cost constant while the
+                              stroke draws — percent regions grow with the path bbox and hitch
+                              past the midpoint (around the 3rd circle).
+                            -->
+                            <filter
+                                id="snakeGlow"
+                                x="-60"
+                                y="-60"
+                                width="1120"
+                                height="1100"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="blur" />
+                                </feMerge>
+                            </filter>
+                            <filter
+                                id="snakeLineGlow"
+                                x="-40"
+                                y="-40"
+                                width="1080"
+                                height="1060"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <!--
+                          Turns R=115; circles r=82 touch at apex. Last turn ends at apex (no tail).
+                          c1 (250,120) · c2 (750,343) · c3 (250,599) · c4 (750,855)
+                        -->
+                        <path
+                            class="snake-line-bloom"
+                            pathLength="100"
+                            d="M 250 202
+                               C 405.6 211.3, 561.4 218.7, 717 228
+                               A 115 115 0 0 1 717 458
+                               C 572.3 466.7, 427.7 475.3, 283 484
+                               A 115 115 0 0 0 283 714
+                               C 427.7 722.7, 572.3 731.3, 717 740
+                               A 115 115 0 0 1 832 855"
+                        />
                         <path
                             class="snake-line"
                             pathLength="100"
-                            d="M 80 50
-                               H 280
-                               A 50 50 0 0 1 280 150
-                               H 80
-                               A 50 50 0 0 0 80 250
-                               H 280
-                               A 50 50 0 0 1 280 350
-                               H 80"
+                            d="M 250 202
+                               C 405.6 211.3, 561.4 218.7, 717 228
+                               A 115 115 0 0 1 717 458
+                               C 572.3 466.7, 427.7 475.3, 283 484
+                               A 115 115 0 0 0 283 714
+                               C 427.7 722.7, 572.3 731.3, 717 740
+                               A 115 115 0 0 1 832 855"
                         />
                     </svg>
                     <ol class="snake-list">
-                        <li class="snake-item snake-item--left" style="--x: 80; --y: 50" data-at="0">
+                        <li class="snake-item snake-item--left" style="--x: 250; --y: 120" data-at="5">
                             <div class="snake-node" aria-hidden="true">
+                                <!-- pin+heart: images/icons/guests.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
-                                    <circle cx="18" cy="24" r="9" stroke="currentColor" stroke-width="1.8" />
-                                    <circle cx="30" cy="24" r="9" stroke="currentColor" stroke-width="1.8" />
-                                    <path d="M35 16.5c1.2-.2 2.2.5 2.4 1.6.1.6-.1 1.1-.5 1.5l-2.2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M24 42c0 0-12.5-11.2-12.5-21.2C11.5 13.2 17.1 8 24 8s12.5 5.2 12.5 12.8C36.5 30.8 24 42 24 42z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                    <path d="M24 26.2c-1.1-1.1-4.2-3.2-4.2-5.4 0-1.3 1-2.3 2.2-2.3.8 0 1.5.4 2 1 .5-.6 1.2-1 2-1 1.2 0 2.2 1 2.2 2.3 0 2.2-3.1 4.3-4.2 5.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
                                 </svg>
                             </div>
                             <div class="snake-body">
-                                <span class="time">14:00</span>
+                                <span class="time">15:30</span>
                                 <span class="event">Сбор гостей</span>
                             </div>
                         </li>
-                        <li class="snake-item snake-item--right" style="--x: 330; --y: 100" data-at="22">
+                        <li class="snake-item snake-item--right" style="--x: 750; --y: 343" data-at="30">
                             <div class="snake-node" aria-hidden="true">
+                                <!-- rings+diamond: images/icons/ceremony.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
-                                    <path d="M24 10c-1.8 2.6-4.4 4.5-7.4 5.8C20 17.2 22.6 19 24 21.6c1.4-2.6 4-4.4 7.4-5.8C28.4 14.5 25.8 12.6 24 10z" fill="currentColor" />
-                                    <path d="M14 28h20M16 28c0 8 3.5 12 8 12s8-4 8-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                                </svg>
-                            </div>
-                            <div class="snake-body">
-                                <span class="time">15:00</span>
-                                <span class="event">Церемония</span>
-                            </div>
-                        </li>
-                        <li class="snake-item snake-item--left" style="--x: 30; --y: 200" data-at="50">
-                            <div class="snake-node" aria-hidden="true">
-                                <svg viewBox="0 0 48 48" fill="none">
-                                    <path d="M16 14v22M32 14v22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                                    <path d="M13 14h6c0 4-1.5 7-3 7s-3-3-3-7zM29 14h6c0 4-1.5 7-3 7s-3-3-3-7z" stroke="currentColor" stroke-width="1.8" />
-                                    <path d="M16 36h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                                    <path d="M11 18l2-2M37 18l-2-2M24 12l1-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                                    <circle cx="18.5" cy="25" r="9.5" stroke="currentColor" stroke-width="1.5" />
+                                    <circle cx="29.5" cy="25" r="9.5" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M33.2 11.2 36.4 14 33.2 18.2 30 14Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" />
+                                    <path d="M30.6 13.5h5.2M33.2 11.2v2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" />
                                 </svg>
                             </div>
                             <div class="snake-body">
                                 <span class="time">16:00</span>
+                                <span class="event">Церемония</span>
+                            </div>
+                        </li>
+                        <li class="snake-item snake-item--left" style="--x: 250; --y: 599" data-at="60">
+                            <div class="snake-node" aria-hidden="true">
+                                <!-- fork+knife+ribbon: images/icons/banquet.svg -->
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <path d="M17 8v10M14 8v7.5M20 8v7.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+                                    <path d="M14 15.5h6c0 2.8-1.4 4.5-3 4.5s-3-1.7-3-4.5z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" />
+                                    <path d="M17 20v20" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" />
+                                    <path d="M28 8.5c3.2 0 5.2 2.4 5.2 5.8 0 2.8-1.3 4.6-3 5.4V40" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M30.2 8.5v11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+                                    <path d="M17 30h13.2" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+                                    <ellipse cx="23.6" cy="30" rx="2.2" ry="1.8" stroke="currentColor" stroke-width="1.3" />
+                                    <path d="M21.4 29.2c-3.2-2.8-6.2-1.6-7.2.8-.6 1.4.4 2.6 2.2 2.2 1.6-.4 3.4-1.6 5-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M25.8 29.2c3.2-2.8 6.2-1.6 7.2.8.6 1.4-.4 2.6-2.2 2.2-1.6-.4-3.4-1.6-5-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M22.4 31.4c-1.2 2.4-1.6 4.6-1 6.2M24.8 31.4c1.2 2.4 1.6 4.6 1 6.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="snake-body">
+                                <span class="time">16:30</span>
                                 <span class="event">Банкет</span>
                             </div>
                         </li>
-                        <li class="snake-item snake-item--right" style="--x: 330; --y: 300" data-at="78">
+                        <li class="snake-item snake-item--right" style="--x: 750; --y: 855" data-at="96">
                             <div class="snake-node" aria-hidden="true">
+                                <!-- heart notes: images/icons/ending.svg -->
                                 <svg viewBox="0 0 48 48" fill="none">
-                                    <path d="M18 30c0-6 2.5-10 6-12 3.5 2 6 6 6 12H18z" stroke="currentColor" stroke-width="1.8" />
-                                    <path d="M16 30h16v2a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4v-2z" stroke="currentColor" stroke-width="1.8" />
-                                    <path d="M24 12v6M20 14l4 2 4-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M9 31.5s-2.6-1.6-2.6-3.2c0-.9.7-1.6 1.5-1.6.6 0 1.1.3 1.4.8.3-.5.8-.8 1.4-.8.8 0 1.5.7 1.5 1.6 0 1.6-2.6 3.2-2.6 3.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                                    <path d="M24.5 28.5s-2.6-1.6-2.6-3.2c0-.9.7-1.6 1.5-1.6.6 0 1.1.3 1.4.8.3-.5.8-.8 1.4-.8.8 0 1.5.7 1.5 1.6 0 1.6-2.6 3.2-2.6 3.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                                    <path d="M11.6 27.1V13M27.1 24.1V10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                                    <path d="M11.6 13h15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M39 22.5s-2.6-1.6-2.6-3.2c0-.9.7-1.6 1.5-1.6.6 0 1.1.3 1.4.8.3-.5.8-.8 1.4-.8.8 0 1.5.7 1.5 1.6 0 1.6-2.6 3.2-2.6 3.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                                    <path d="M41.6 18.3V7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                                    <path d="M41.6 7c2 1.1 3.1 2.6 3.1 4.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                                    <path d="M30.5 38.5s-2.6-1.6-2.6-3.2c0-.9.7-1.6 1.5-1.6.6 0 1.1.3 1.4.8.3-.5.8-.8 1.4-.8.8 0 1.5.7 1.5 1.6 0 1.6-2.6 3.2-2.6 3.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                                    <path d="M33.1 34.3V21.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                                    <path d="M33.1 21.5c2.2 1.2 3.4 2.8 3.4 4.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
                                 </svg>
                             </div>
                             <div class="snake-body">
-                                <span class="time">20:00</span>
-                                <span class="event">Торт</span>
-                            </div>
-                        </li>
-                        <li class="snake-item snake-item--left snake-item--end" style="--x: 80; --y: 350" data-at="100">
-                            <div class="snake-node" aria-hidden="true">
-                                <svg viewBox="0 0 48 48" fill="none">
-                                    <path d="M24 38V22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                                    <path d="M24 22l-8-6M24 22l8-6M24 18l-5-8M24 18l5-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                                    <circle cx="16" cy="16" r="1.5" fill="currentColor" />
-                                    <circle cx="32" cy="16" r="1.5" fill="currentColor" />
-                                    <circle cx="19" cy="10" r="1.2" fill="currentColor" />
-                                    <circle cx="29" cy="10" r="1.2" fill="currentColor" />
-                                </svg>
-                            </div>
-                            <div class="snake-body">
-                                <span class="time">22:00</span>
-                                <span class="event">Окончание</span>
+                                <span class="time">21:00</span>
+                                <span class="event">Окончание<br>официальной части</span>
                             </div>
                         </li>
                     </ol>
@@ -250,133 +368,436 @@
 
             <!-- DRESS CODE -->
             <section class="section dresscode reveal">
-                <p class="section-label">Дресс-код</p>
-                <p class="section-text">
-                    Мы очень старались сделать праздник красивым и будем рады,
-                    если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы:
-                </p>
-                <div class="palette" aria-label="Цветовая палитра">
-                    <span class="swatch swatch--azurite" title="Azurite"></span>
-                    <span class="swatch swatch--mountain" title="Mountain View"></span>
-                    <span class="swatch swatch--contrail" title="Contrail"></span>
-                    <span class="swatch swatch--silver" title="Silver"></span>
-                    <span class="swatch swatch--dove" title="Dove Gray"></span>
+                <div class="dresscode-heading">
+                    <p class="gifts-arc__title">Дресс-код</p>
                 </div>
-                <p class="palette-hint">Глубокий синий · Лесной зелёный · Благородный серый</p>
-                <div class="dress-gallery" aria-label="Примеры образов в цветах дресс-кода">
-                    <button type="button" class="dress-gallery-btn dress-gallery-btn--prev" aria-label="Предыдущие фото">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M15 5L8 12l7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <div class="dress-gallery-track">
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Мужской образ в глубоком синем"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Женский образ в лесном зелёном"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Мужской образ в благородном сером"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Вечерний образ в серебристо-серых тонах"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Элегантный образ в сине-зелёной гамме"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
-                        <figure class="dress-gallery-item">
-                            <img
-                                src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&amp;fit=crop&amp;w=480&amp;h=640&amp;q=80"
-                                alt="Классический костюм в спокойных тонах"
-                                width="240"
-                                height="320"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </figure>
+                <div class="dresscode-copy">
+                    <div class="dresscode-intro">
+                        <p class="section-text">
+                            Мы долго и с любовью продумывали концепцию этого дня, чтобы создать особую атмосферу нашего праздника.
+                        </p>
+                        <p class="section-text">
+                            Для завершения общей картины нам очень важно, чтобы вы поддержали цветовую гамму нашей свадьбы и подобрали образ в её&nbsp;<span class="dresscode-asterisk-wrap">стилистике<span class="dresscode-asterisk" aria-hidden="true">*</span></span>
+                        </p>
                     </div>
-                    <button type="button" class="dress-gallery-btn dress-gallery-btn--next" aria-label="Следующие фото">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    <p class="dresscode-footnote">
+                        <span class="dresscode-asterisk-wrap"><span class="dresscode-asterisk" aria-hidden="true">*</span>А&nbsp;если</span> не подберете… то для вас наша свадьба проходит по адресу: село Ям, Центральная улица, кафе «У&nbsp;Ашота».
+                    </p>
+                </div>
+
+                <div class="dresscode-stage">
+                    <div class="dresscode-mist" aria-hidden="true">
+                        <svg class="dresscode-mist-svg" viewBox="0 0 1000 700" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="dresscode-light" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#b0b8c2" stop-opacity="0.18" />
+                                    <stop offset="10%" stop-color="#bcc4cc" stop-opacity="0.64" />
+                                    <stop offset="36%" stop-color="#d0d6dc" stop-opacity="0.9" />
+                                    <stop offset="78%" stop-color="#dae0e6" stop-opacity="0.7" />
+                                    <stop offset="100%" stop-color="#dae0e6" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="dresscode-crease-left" gradientUnits="userSpaceOnUse" x1="-40" y1="0" x2="210" y2="0">
+                                    <stop offset="0%" stop-color="#e8ecef" stop-opacity="0.11" />
+                                    <stop offset="30%" stop-color="#e8ecef" stop-opacity="0.44" />
+                                    <stop offset="100%" stop-color="#e8ecef" stop-opacity="0" />
+                                </linearGradient>
+                                <linearGradient id="dresscode-crease-right" gradientUnits="userSpaceOnUse" x1="800" y1="0" x2="1045" y2="0">
+                                    <stop offset="0%" stop-color="#e8ecef" stop-opacity="0" />
+                                    <stop offset="70%" stop-color="#e8ecef" stop-opacity="0.44" />
+                                    <stop offset="100%" stop-color="#e8ecef" stop-opacity="0.11" />
+                                </linearGradient>
+                                <filter id="dresscode-wave-blur" x="-25%" y="-30%" width="150%" height="160%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="22" />
+                                </filter>
+                                <filter id="dresscode-crease-soft" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
+                                </filter>
+                            </defs>
+                            <!-- Gentle wave: mild left dip → soft crest mid-right -->
+                            <path
+                                d="M-60 120
+                                   C 120 165, 220 175, 340 130
+                                   C 470 80, 560 50, 690 60
+                                   C 810 70, 920 105, 1060 90
+                                   L 1060 760 L -60 760 Z"
+                                fill="url(#dresscode-light)"
+                                filter="url(#dresscode-wave-blur)"
+                            />
+                            <!-- Short crease accents only at left / right edges -->
+                            <path
+                                class="dresscode-crease"
+                                d="M-40 125 C 50 152, 120 170, 205 160"
+                                fill="none"
+                                stroke="url(#dresscode-crease-left)"
+                                stroke-width="1.15"
+                                stroke-linecap="round"
+                                vector-effect="non-scaling-stroke"
+                                filter="url(#dresscode-crease-soft)"
+                            />
+                            <path
+                                class="dresscode-crease"
+                                d="M 825 74 C 900 92, 970 108, 1038 96"
+                                fill="none"
+                                stroke="url(#dresscode-crease-right)"
+                                stroke-width="1.15"
+                                stroke-linecap="round"
+                                vector-effect="non-scaling-stroke"
+                                filter="url(#dresscode-crease-soft)"
+                            />
                         </svg>
-                    </button>
+                    </div>
+
+                    <div class="dresscode-circles">
+                        <div class="dresscode-block dresscode-block--her">
+                            <h3 class="dresscode-block-title">Для неё</h3>
+                            <ul class="dresscode-palette" aria-label="Рекомендуемая палитра для неё">
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/1.png')" title="Eclipse"><span class="visually-hidden">Eclipse</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/2.png')" title="Patriot Blue"><span class="visually-hidden">Patriot Blue</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/5.png')" title="Steel Gray"><span class="visually-hidden">Steel Gray</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/3.png')" title="PANTONE 15-4307"><span class="visually-hidden">PANTONE 15-4307</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/4.png')" title="Glacier Gray"><span class="visually-hidden">Glacier Gray</span></li>
+                            </ul>
+                            <article class="dresscode-circle dresscode-circle--her">
+                                <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                                    <defs>
+                                        <filter id="dresscode-lens-blur" x="-120%" y="-120%" width="340%" height="340%">
+                                            <feGaussianBlur stdDeviation="22" />
+                                        </filter>
+                                        <filter id="dresscode-soft-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="mid" />
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide" />
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="42" result="bloom" />
+                                            <feMerge>
+                                                <feMergeNode in="bloom" />
+                                                <feMergeNode in="bloom" />
+                                                <feMergeNode in="wide" />
+                                                <feMergeNode in="wide" />
+                                                <feMergeNode in="mid" />
+                                            </feMerge>
+                                        </filter>
+                                        <filter id="dresscode-core-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="3.8" result="soft" />
+                                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="near" />
+                                            <feMerge>
+                                                <feMergeNode in="soft" />
+                                                <feMergeNode in="near" />
+                                            </feMerge>
+                                        </filter>
+                                    </defs>
+                                    <circle class="dresscode-glow-halo" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-lens-blur)" />
+                                    <circle class="dresscode-glow-edge" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-soft-glow)" />
+                                    <circle class="dresscode-glow-core" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-core-glow)" />
+                                </svg>
+                                <div class="dresscode-gallery" data-gallery aria-roledescription="carousel" aria-label="Примеры образов для неё">
+                                    <div class="dresscode-gallery-viewport">
+                                        <ul class="dresscode-gallery-track">
+                                            <li class="dresscode-gallery-slide is-active">
+                                                <img src="images/hero2.png" alt="Пример образа для неё" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/bg-atmosphere.png" alt="Пример образа для неё" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/bg-atmosphere-clean.png" alt="Пример образа для неё" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/location.jpg" alt="Пример образа для неё" draggable="false" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--prev" aria-label="Предыдущее фото">
+                                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M14.5 5.5L8 12l6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--next" aria-label="Следующее фото">
+                                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9.5 5.5L16 12l-6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="dresscode-block dresscode-block--him">
+                            <h3 class="dresscode-block-title">Для него</h3>
+                            <ul class="dresscode-palette" aria-label="Рекомендуемая палитра для него">
+                                <li class="dresscode-swatch dresscode-swatch--black" title="Black"><span class="visually-hidden">Black</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/5.png')" title="Steel Gray"><span class="visually-hidden">Steel Gray</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/3.png')" title="PANTONE 15-4307"><span class="visually-hidden">PANTONE 15-4307</span></li>
+                                <li class="dresscode-swatch" style="--swatch-image: url('images/4.png')" title="Glacier Gray"><span class="visually-hidden">Glacier Gray</span></li>
+                            </ul>
+                            <article class="dresscode-circle dresscode-circle--him">
+                                <svg class="dresscode-circle-glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                                    <circle class="dresscode-glow-halo" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-lens-blur)" />
+                                    <circle class="dresscode-glow-edge" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-soft-glow)" />
+                                    <circle class="dresscode-glow-core" cx="140" cy="140" r="138" fill="none" filter="url(#dresscode-core-glow)" />
+                                </svg>
+                                <div class="dresscode-gallery" data-gallery aria-roledescription="carousel" aria-label="Примеры образов для него">
+                                    <div class="dresscode-gallery-viewport">
+                                        <ul class="dresscode-gallery-track">
+                                            <li class="dresscode-gallery-slide is-active">
+                                                <img src="images/bg-continuation.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/bg-atmosphere-clean.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/bg-atmosphere.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                            <li class="dresscode-gallery-slide">
+                                                <img src="images/hero2.png" alt="Пример образа для него" draggable="false" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--prev" aria-label="Предыдущее фото">
+                                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M14.5 5.5L8 12l6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="dresscode-gallery-btn dresscode-gallery-btn--next" aria-label="Следующее фото">
+                                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9.5 5.5L16 12l-6.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="dresscode-more">
+                        <p class="dresscode-more-text">
+                            Если хочется больше деталей и конкретики, дополнительные рекомендации по составлению образа — в файле:                        </p>
+                        <a
+                            class="btn-map dresscode-download"
+                            href="files/dresscode-examples.pdf"
+                            download
+                        >
+                            <svg class="btn-map-pin" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                <path
+                                    fill="currentColor"
+                                    d="M12 3.25a.75.75 0 0 1 .75.75v9.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-4 4a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 1 1 1.06-1.06l2.72 2.72V4A.75.75 0 0 1 12 3.25zM5.25 18.5A.75.75 0 0 1 6 17.75h12a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75z"
+                                />
+                            </svg>
+                            Скачать файл
+                        </a>
+                    </div>
+
                 </div>
             </section>
 
-            <!-- GIFTS -->
+            <!-- DETAILS (stacked nested circles) -->
             <section class="section gifts reveal">
-                <div class="icon-wrap" aria-hidden="true">
-                    <svg viewBox="0 0 64 64" fill="none">
-                        <rect x="14" y="26" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2" />
-                        <path d="M14 34h36M32 26v28" stroke="currentColor" stroke-width="2" />
-                        <path d="M32 26c-4-8-12-8-12-2 0 4 6 6 12 8 6-2 12-4 12-8 0-6-8-6-12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                    </svg>
+                <div class="gifts-arcs">
+                    <div class="gifts-arc gifts-arc--1">
+                        <svg class="gifts-arc__glow" viewBox="0 0 280 280" aria-hidden="true" focusable="false">
+                            <defs>
+                                <filter id="gifts-lens-blur" x="-120%" y="-120%" width="340%" height="340%">
+                                    <feGaussianBlur stdDeviation="22" />
+                                </filter>
+                                <filter id="gifts-soft-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="mid" />
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="wide" />
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="42" result="bloom" />
+                                    <feMerge>
+                                        <feMergeNode in="bloom" />
+                                        <feMergeNode in="bloom" />
+                                        <feMergeNode in="wide" />
+                                        <feMergeNode in="wide" />
+                                        <feMergeNode in="mid" />
+                                    </feMerge>
+                                </filter>
+                                <filter id="gifts-core-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.8" result="soft" />
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="near" />
+                                    <feMerge>
+                                        <feMergeNode in="soft" />
+                                        <feMergeNode in="near" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- Upper semicircle only (clockwise from left → top → right in SVG y-down) -->
+                            <path class="gifts-glow-halo" d="M 2 140 A 138 138 0 0 1 278 140" fill="none" filter="url(#gifts-lens-blur)" />
+                            <path class="gifts-glow-edge" d="M 2 140 A 138 138 0 0 1 278 140" fill="none" filter="url(#gifts-soft-glow)" />
+                            <path class="gifts-glow-core" d="M 2 140 A 138 138 0 0 1 278 140" fill="none" filter="url(#gifts-core-glow)" />
+                        </svg>
+                        <div class="gifts-arc__content gifts-arc__content--hero">
+                            <p class="gifts-arc__title">Детали</p>
+                            <p class="gifts-arc__subtitle">мероприятия</p>
+                        </div>
+                    </div>
+                    <div class="gifts-arc gifts-arc--2">
+                        <div class="gifts-arc__curve" style="--mid: 3; --step: 5.2deg" aria-hidden="true">
+                            <span style="--i: 0">п</span><span style="--i: 1">о</span><span style="--i: 2">д</span><span style="--i: 3">а</span><span style="--i: 4">р</span><span style="--i: 5">к</span><span style="--i: 6">и</span>
+                        </div>
+                        <div class="gifts-arc__content">
+                            <p class="visually-hidden">Подарки</p>
+                            <p class="gifts-arc__text">
+                                Ваше присутствие — самый ценный подарок для нас.
+                                Если же вы захотите нас поздравить, мы будем благодарны
+                                за вклад в наш семейный бюджет.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gifts-arc gifts-arc--3">
+                        <div class="gifts-arc__curve" style="--mid: 2; --step: 6deg" aria-hidden="true">
+                            <span style="--i: 0">ц</span><span style="--i: 1">в</span><span style="--i: 2">е</span><span style="--i: 3">т</span><span style="--i: 4">ы</span>
+                        </div>
+                        <div class="gifts-arc__content">
+                            <p class="visually-hidden">Цветы</p>
+                            <p class="gifts-arc__text">
+                                Для того чтобы праздничное настроение длилось дольше,
+                                предлагаем не дарить нам цветы в день торжества,
+                                а средства, которые вы планировали потратить на них,
+                                перевести в копилку нашей цветочной подписки.
+                                После свадьбы ваши цветы будут радовать нас ещё долгое время!
+                            </p>
+                            <a
+                                class="btn-map btn-map--ink"
+                                href="https://example.com/flower-subscription"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    class="btn-map-pin btn-map-pin--flower"
+                                    src="images/icons/flower-bow.png"
+                                    alt=""
+                                    width="12"
+                                    height="12"
+                                    aria-hidden="true"
+                                />
+                                Цветочная подписка
+                            </a>
+                        </div>
+                    </div>
+                    <div class="gifts-arc gifts-arc--4">
+                        <div class="gifts-arc__curve gifts-arc__curve--long" style="--mid: 5; --step: 4deg" aria-hidden="true">
+                            <span style="--i: 0">о</span><span style="--i: 1">р</span><span style="--i: 2">г</span><span style="--i: 3">а</span><span style="--i: 4">н</span><span style="--i: 5">и</span><span style="--i: 6">з</span><span style="--i: 7">а</span><span style="--i: 8">т</span><span style="--i: 9">о</span><span style="--i: 10">р</span>
+                        </div>
+                        <div class="gifts-arc__content">
+                            <p class="visually-hidden">Организатор</p>
+                            <p class="gifts-arc__text">
+                                Если вы подготовили для нас сюрприз или у вас возникли вопросы,
+                                пожалуйста, свяжитесь с нашим свадебным организатором Юлией.
+                            </p>
+                            <a class="btn-map btn-map--ink" href="tel:+79111803853">
+                                <svg class="btn-map-pin" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                    <path
+                                        fill="currentColor"
+                                        d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.5 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                                    />
+                                </svg>
+                                +7 (911) 180-38-53
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <p class="section-label">Подарки</p>
-                <p class="section-text">
-                    Сразу после свадьбы мы улетаем в свадебное путешествие,
-                    поэтому не успеем насладиться красотой подаренных цветов.
-                    Будем рады, если вместо цветов Вы решите подарить нам
-                    <strong>бутылочку хорошего вина</strong>.
-                </p>
             </section>
 
-            <!-- RSVP -->
-            <section class="section rsvp reveal">
-                <p class="section-label">Подтвердите присутствие</p>
+            <!-- RSVP / Feedback -->
+            <section class="section rsvp reveal" id="rsvp">
+                <div class="rsvp-heading">
+                    <p class="gifts-arc__title">Анкета</p>
+                    <p class="gifts-arc__subtitle">гостя</p>
+                </div>
                 <p class="section-text">
-                    Мы очень старались сделать праздник незабываемым,
-                    поэтому будем рады, если Вы подтвердите своё присутствие
-                    до <strong>16.11.2026</strong>
+                    Пожалуйста, заполните форму отдельно для каждого приглашённого до&nbsp;<strong>15.10.2026</strong>
                 </p>
-                <p class="rsvp-date">16 / 11 / 2026</p>
-                <button type="button" class="btn-rsvp">Подтвердить</button>
-            </section>
+                <div class="rsvp-status rsvp-status--success" data-fs-success>Спасибо! Мы получили ваш ответ.</div>
+                <div class="rsvp-status rsvp-status--error" data-fs-error></div>
 
-            <!-- COORDINATOR -->
-            <section class="section coordinator reveal">
-                <p class="section-text">
-                    По всем организационным вопросам Вы можете связаться
-                    с нашим организатором:
-                </p>
-                <p class="coordinator-name">Юлия</p>
-                <p class="coordinator-role">Организатор</p>
+                <form id="rsvp-form" class="rsvp-form">
+                    <div class="rsvp-field">
+                        <label for="rsvp-name">Ваше ФИО:</label>
+                        <input
+                            type="text"
+                            id="rsvp-name"
+                            name="name"
+                            autocomplete="name"
+                            placeholder="Иванов Иван Иванович"
+                            required
+                            data-fs-field
+                        />
+                        <span class="rsvp-field-error" data-fs-error="name"></span>
+                    </div>
+
+                    <fieldset class="rsvp-field rsvp-field--choice">
+                        <legend>Планируете ли вы присутствовать на свадьбе?</legend>
+                        <div class="rsvp-choice" role="radiogroup" aria-label="Присутствие">
+                            <label class="rsvp-choice__option">
+                                <input type="radio" name="attendance" value="Да, с радостью приду!" required data-fs-field />
+                                <span>Да, с радостью приду!</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="radio" name="attendance" value="К сожалению, не смогу" data-fs-field />
+                                <span>К сожалению, не смогу</span>
+                            </label>
+                        </div>
+                        <span class="rsvp-field-error" data-fs-error="attendance"></span>
+                    </fieldset>
+
+                    <!-- TEMP: drinks preferences — restore later
+                    <fieldset class="rsvp-field rsvp-field--choice">
+                        <legend>Ваши предпочтения в напитках:</legend>
+                        <div class="rsvp-choice rsvp-choice--checks" role="group" aria-label="Предпочтения в напитках">
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Безалкогольные напитки" data-fs-field />
+                                <span>Безалкогольные напитки</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино красное сухое" data-fs-field />
+                                <span>Вино красное сухое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино красное полусладкое" data-fs-field />
+                                <span>Вино красное полусладкое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино белое сухое" data-fs-field />
+                                <span>Вино белое сухое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Вино белое полусладкое" data-fs-field />
+                                <span>Вино белое полусладкое</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Шампанское" data-fs-field />
+                                <span>Шампанское</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Водка" data-fs-field />
+                                <span>Водка</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Виски" data-fs-field />
+                                <span>Виски</span>
+                            </label>
+                            <label class="rsvp-choice__option">
+                                <input type="checkbox" name="drinks" value="Коньяк" data-fs-field />
+                                <span>Коньяк</span>
+                            </label>
+                        </div>
+                        <span class="rsvp-field-error" data-fs-error="drinks"></span>
+                    </fieldset>
+                    -->
+
+                    <div class="rsvp-field">
+                        <label for="rsvp-song">Укажите до трёх любимых треков:</label>
+                        <input
+                            type="text"
+                            id="rsvp-song"
+                            name="song"
+                            placeholder="Исполнитель — название, …"
+                            data-fs-field
+                        />
+                        <span class="rsvp-field-error" data-fs-error="song"></span>
+                    </div>
+
+                    <!-- Formspree honeypot -->
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="rsvp-honeypot" aria-hidden="true" />
+
+                    <button type="submit" class="btn-rsvp" data-fs-submit-btn>Отправить</button>
+                </form>
             </section>
 
             <footer class="footer reveal">
@@ -392,6 +813,15 @@
         </div>
     </main>
 
+    <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', {
+            formElement: '#rsvp-form',
+            formId: 'mqpzkyez',
+            useDefaultStyles: false
+        });
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
     <script src="script.js"></script>
 </body>
 </html>
