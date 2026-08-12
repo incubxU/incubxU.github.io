@@ -71,6 +71,8 @@
         linear-gradient(180deg, rgba(28, 46, 66, 0.22), rgba(18, 32, 48, 0.38)),
         var(--page-plate-image) center top / 125% 125% no-repeat,
         #1e2f42;
+    /* Extra paint beyond the viewport for iOS rubber-band / Android URL-bar */
+    --page-bg-bleed: 180px;
 }
 
 *,
@@ -85,6 +87,17 @@ html {
     scroll-behavior: smooth;
     overflow-x: hidden;
     scrollbar-width: none;
+    /*
+     * iOS Safari paints the root background in the pull-to-refresh /
+     * rubber-band region — fixed layers do not cover that gap. Keep a
+     * viewport-sized plate here so the overscroll matches the page.
+     */
+    background-color: #1e2f42;
+    background-image: var(--page-plate-image);
+    background-position: center top;
+    background-size: 125% 125vh;
+    background-size: 125% 125lvh;
+    background-repeat: no-repeat;
 }
 
 html::-webkit-scrollbar {
@@ -219,13 +232,27 @@ html.is-ready .page-loader {
    ============================================================ */
 .page-bg {
     position: fixed;
-    inset: 0;
+    top: calc(-1 * var(--page-bg-bleed));
+    left: 0;
     z-index: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    width: 100%;
+    /*
+     * Bleed past the viewport on both ends:
+     * - bottom: Android Chrome URL-bar collapse underpaint
+     * - top: iOS pull-to-refresh / rubber-band overscroll
+     * background-position is shifted by the same bleed so framing in the
+     * normal viewport stays unchanged.
+     */
+    height: calc(100vh + 2 * var(--page-bg-bleed));
+    height: calc(100lvh + 2 * var(--page-bg-bleed));
+    min-height: calc(100lvh + 2 * var(--page-bg-bleed));
     background: var(--page-plate);
+    background-position: center var(--page-bg-bleed);
     pointer-events: none;
+    /* Stable compositor layer — reduces Android underpaint during scroll */
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* Full-viewport soft light leak behind content */
@@ -260,8 +287,13 @@ html.is-ready .page-loader {
 /* Paper grain — nearly silent so film grain leads */
 .paper-grain {
     position: fixed;
-    inset: 0;
+    top: calc(-1 * var(--page-bg-bleed));
+    left: 0;
     z-index: 48;
+    width: 100%;
+    height: calc(100vh + 2 * var(--page-bg-bleed));
+    height: calc(100lvh + 2 * var(--page-bg-bleed));
+    min-height: calc(100lvh + 2 * var(--page-bg-bleed));
     pointer-events: none;
     opacity: 0.02;
     mix-blend-mode: soft-light;
@@ -275,19 +307,26 @@ html.is-ready .page-loader {
         url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: auto, 320px 320px;
+    transform: translateZ(0);
 }
 
 /* Film grain — dense frosted / high-ISO texture */
 .film-grain {
     position: fixed;
-    inset: 0;
+    top: calc(-1 * var(--page-bg-bleed));
+    left: 0;
     z-index: 50;
+    width: 100%;
+    height: calc(100vh + 2 * var(--page-bg-bleed));
+    height: calc(100lvh + 2 * var(--page-bg-bleed));
+    min-height: calc(100lvh + 2 * var(--page-bg-bleed));
     pointer-events: none;
     opacity: 0.07;
     mix-blend-mode: soft-light;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 120px 120px;
+    transform: translateZ(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
