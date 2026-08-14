@@ -217,32 +217,36 @@
     }
 
     /**
-     * Frame kicker + stage together so the heading stays in view with the
-     * animation and the final expanded scene (not stage-only centering).
-     * Uses layout offsets so the gate Y stays stable during reveal motion.
+     * Frame heading + expanded scene together when they fit; otherwise
+     * park on the photo so the lock doesn't clip the circle.
+     * Narrow: lock between photo-flush and extra air above the heading.
+     * Wide: lock further down the page so the expanded scene sits higher.
      */
     function getLocationFrameY() {
         if (!locationSection) return getScrollY();
 
         const kicker = locationSection.querySelector('.location-heading');
         const stage = locationSection.querySelector('.location-stage');
-        if (!kicker || !stage) {
-            return getScrollYToFrame(stage || kicker || locationSection);
+        if (!stage) {
+            return getScrollYToFrame(kicker || locationSection);
         }
 
-        const vh = window.innerHeight || 1;
-        const top = getOffsetTop(kicker);
-        const bottom = getOffsetTop(stage) + stage.offsetHeight;
-        const height = Math.max(0, bottom - top);
-        // Keep a little air so the composition isn't flush to the viewport edge.
-        const pad = Math.min(28, Math.max(12, Math.round(vh * 0.03)));
+        const vh = scrollRoot.clientHeight || window.innerHeight || 1;
+        const narrow = (window.innerWidth || 0) <= 480;
+        const kickerTop = kicker ? getOffsetTop(kicker) : getOffsetTop(stage);
+        const topPad = narrow
+            ? Math.round(Math.min(18, Math.max(6, vh * 0.02)))
+            : Math.round(Math.min(20, Math.max(8, vh * 0.02)));
+        const shift = narrow
+            ? Math.round(Math.min(64, Math.max(32, vh * 0.07)))
+            : Math.round(Math.min(288, Math.max(160, vh * 0.25)));
 
-        if (height + pad * 2 >= vh) {
-            // Prefer the heading; show as much of the scene as fits below it.
-            return Math.max(0, Math.round(top - pad));
+        if (narrow) {
+            return Math.max(0, Math.round(kickerTop - topPad + shift));
         }
 
-        return Math.max(0, Math.round(top - (vh - height) / 2));
+        // Wide: further down the page than a centered frame (not extra space above).
+        return Math.max(0, Math.round(kickerTop - topPad + shift));
     }
 
     function normalizeWheelDeltaY(event) {
