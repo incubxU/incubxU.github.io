@@ -128,8 +128,8 @@
     const SNAKE_LOCK_MS = 3300;
     /** Longest location expand transition (arc/details ≈ 2.15s). */
     const LOCATION_EXPAND_MS = 2050;
-    /** Temporary: set true to re-enable scroll lock while animations play. */
-    const SCROLL_LOCK_DURING_ANIMATION = false;
+    /** Lock page scroll while gated animations (snake, location) play. */
+    const SCROLL_LOCK_DURING_ANIMATION = true;
     const SCROLL_LOCK_KEYS = new Set([
         'ArrowUp',
         'ArrowDown',

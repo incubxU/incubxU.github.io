@@ -41,11 +41,18 @@
 </head>
 <body>
     <div class="page-loader" role="status" aria-live="polite" aria-busy="true">
-        <div class="page-loader__mark" aria-hidden="true">
-            <span class="page-loader__ring page-loader__ring--top"></span>
-            <span class="page-loader__ring page-loader__ring--bottom"></span>
+        <div class="page-loader__stage">
+            <div class="page-loader__mark" aria-hidden="true">
+                <span class="page-loader__lens"></span>
+                <span class="page-loader__ring page-loader__ring--top"></span>
+                <span class="page-loader__ring page-loader__ring--bottom"></span>
+            </div>
+            <p class="page-loader__names">
+                <span>Денис</span>
+                <span class="page-loader__amp" aria-hidden="true">&amp;</span>
+                <span>Вероника</span>
+            </p>
         </div>
-        <p class="page-loader__names">Денис <span aria-hidden="true">×</span> Вероника</p>
         <p class="page-loader__label">Загрузка</p>
     </div>
     <div class="page-bg" aria-hidden="true"></div>
