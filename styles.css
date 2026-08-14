@@ -2240,15 +2240,21 @@ html.is-ready .page-loader {
 }
 
 .dresscode-circle--him .dresscode-glow-halo {
-    stroke: rgba(255, 255, 255, 0.5);
+    stroke: rgba(56, 88, 122, 0.9);
+    stroke-width: 10;
+    opacity: 0.62;
 }
 
 .dresscode-circle--him .dresscode-glow-edge {
-    stroke: rgba(255, 255, 255, 0.88);
+    stroke: rgba(78, 116, 156, 1);
+    stroke-width: 2.8;
+    opacity: 0.88;
 }
 
 .dresscode-circle--him .dresscode-glow-core {
-    stroke: rgba(255, 255, 255, 0.7);
+    stroke: rgba(102, 140, 178, 0.98);
+    stroke-width: 1.45;
+    opacity: 0.82;
 }
 
 .dresscode-circle--her {
@@ -2260,13 +2266,13 @@ html.is-ready .page-loader {
 }
 
 .dresscode-circle--him {
-    border-color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(78, 116, 156, 0.6);
     background:
         radial-gradient(circle at 50% 40%, #3a4654 0%, #2a3440 52%, #1e2832 100%);
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 0 28px rgba(255, 255, 255, 0.38),
-        0 0 64px rgba(255, 255, 255, 0.16),
+        0 0 0 1px rgba(56, 88, 122, 0.42),
+        0 0 14px rgba(42, 78, 118, 0.86),
+        0 0 32px rgba(24, 42, 62, 0.62),
         0 18px 36px rgba(20, 28, 36, 0.22),
         inset 0 0 28px rgba(0, 0, 0, 0.2);
 }
@@ -3796,13 +3802,13 @@ body {
 }
 
 .dresscode-circle--him {
-    border-color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(78, 116, 156, 0.6);
     background:
         radial-gradient(circle at 50% 40%, #405060 0%, #2e3c4a 52%, #22303c 100%);
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 0 28px rgba(255, 255, 255, 0.4),
-        0 0 64px rgba(245, 251, 254, 0.18),
+        0 0 0 1px rgba(56, 88, 122, 0.42),
+        0 0 14px rgba(42, 78, 118, 0.88),
+        0 0 32px rgba(24, 42, 62, 0.64),
         0 18px 36px rgba(20, 28, 36, 0.22),
         inset 0 0 28px rgba(0, 0, 0, 0.2);
 }
@@ -3833,12 +3839,22 @@ body {
     stroke: rgba(255, 255, 255, 0.78);
 }
 
+.dresscode-circle--him .dresscode-glow-halo {
+    stroke: rgba(56, 88, 122, 0.9);
+    stroke-width: 10;
+    opacity: 0.62;
+}
+
 .dresscode-circle--him .dresscode-glow-edge {
-    stroke: rgba(239, 247, 252, 0.8);
+    stroke: rgba(78, 116, 156, 1);
+    stroke-width: 2.8;
+    opacity: 0.88;
 }
 
 .dresscode-circle--him .dresscode-glow-core {
-    stroke: rgba(239, 247, 252, 0.62);
+    stroke: rgba(102, 140, 178, 0.98);
+    stroke-width: 1.45;
+    opacity: 0.82;
 }
 
 @media (min-width: 720px) {
@@ -4286,13 +4302,13 @@ body {
 }
 
 .dresscode-circle--him {
-    border-color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(78, 116, 156, 0.6);
     background:
         radial-gradient(circle at 50% 40%, #3c4a56 0%, #2c3844 52%, #1e2a34 100%);
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 0 28px rgba(255, 255, 255, 0.38),
-        0 0 64px rgba(239, 243, 242, 0.16),
+        0 0 0 1px rgba(56, 88, 122, 0.42),
+        0 0 14px rgba(42, 78, 118, 0.86),
+        0 0 32px rgba(24, 42, 62, 0.62),
         0 18px 36px rgba(20, 28, 36, 0.22),
         inset 0 0 28px rgba(0, 0, 0, 0.2);
 }
@@ -4304,19 +4320,35 @@ body {
 }
 
 .dresscode-glow-edge,
-.dresscode-circle--her .dresscode-glow-edge,
-.dresscode-circle--him .dresscode-glow-edge {
+.dresscode-circle--her .dresscode-glow-edge {
     stroke: rgba(255, 255, 255, 0.72);
     stroke-width: 1.1;
     opacity: 0.55;
 }
 
 .dresscode-glow-core,
-.dresscode-circle--her .dresscode-glow-core,
-.dresscode-circle--him .dresscode-glow-core {
+.dresscode-circle--her .dresscode-glow-core {
     stroke: rgba(255, 255, 255, 0.55);
     stroke-width: 0.65;
     opacity: 0.5;
+}
+
+.dresscode-circle--him .dresscode-glow-halo {
+    stroke: rgba(56, 88, 122, 0.9);
+    stroke-width: 10;
+    opacity: 0.62;
+}
+
+.dresscode-circle--him .dresscode-glow-edge {
+    stroke: rgba(78, 116, 156, 1);
+    stroke-width: 1.8;
+    opacity: 0.82;
+}
+
+.dresscode-circle--him .dresscode-glow-core {
+    stroke: rgba(102, 140, 178, 0.95);
+    stroke-width: 0.95;
+    opacity: 0.75;
 }
 
 .btn-map:focus-visible,
