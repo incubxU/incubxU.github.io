@@ -67,12 +67,29 @@
     /** Temporary: keep loader visible forever for design preview. */
     const KEEP_LOADER_FOREVER = false;
 
+    function forceScrollTop() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+        const scroller = document.querySelector('.page-scroll');
+        if (!scroller) return;
+        const prevBehavior = scroller.style.scrollBehavior;
+        scroller.style.scrollBehavior = 'auto';
+        scroller.scrollTop = 0;
+        scroller.style.scrollBehavior = prevBehavior;
+    }
+
+    forceScrollTop();
+    window.addEventListener('pageshow', forceScrollTop);
+    window.addEventListener('beforeunload', forceScrollTop);
+
     function revealPage() {
         if (KEEP_LOADER_FOREVER) return;
 
         const root = document.documentElement;
         const loader = document.querySelector('.page-loader');
 
+        forceScrollTop();
         root.classList.remove('is-loading');
         root.classList.add('is-ready');
 
@@ -584,16 +601,29 @@
 
         document.querySelectorAll('[data-gallery]').forEach((gallery) => {
             const track = gallery.querySelector('.dresscode-gallery-track');
-            const slides = Array.from(gallery.querySelectorAll('.dresscode-gallery-slide'));
+            const originalSlides = Array.from(gallery.querySelectorAll('.dresscode-gallery-slide'));
             const prevBtn = gallery.querySelector('.dresscode-gallery-btn--prev');
             const nextBtn = gallery.querySelector('.dresscode-gallery-btn--next');
-            if (!track || slides.length < 2) return;
+            if (!track || originalSlides.length < 2) return;
 
-            let index = 0;
+            const firstClone = originalSlides[0].cloneNode(true);
+            const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
+            [firstClone, lastClone].forEach((clone) => {
+                clone.classList.remove('is-active');
+                clone.setAttribute('aria-hidden', 'true');
+            });
+            track.appendChild(firstClone);
+            track.insertBefore(lastClone, track.firstElementChild);
+
+            const slides = Array.from(track.querySelectorAll('.dresscode-gallery-slide'));
+            const realCount = originalSlides.length;
+            let index = 1;
             let startX = 0;
             let deltaX = 0;
             let dragging = false;
             let width = gallery.clientWidth || 1;
+            let wrapTimer = 0;
+            let wrapHandler = null;
 
             function render(offsetPx) {
                 const base = -index * 100;
@@ -604,17 +634,64 @@
                 });
             }
 
+            function jumpTo(nextIndex) {
+                gallery.classList.add('is-jumping');
+                index = nextIndex;
+                render(0);
+                void track.offsetWidth;
+                gallery.classList.remove('is-jumping');
+            }
+
+            function snapIfClone() {
+                if (index === 0) {
+                    jumpTo(realCount);
+                    return true;
+                }
+                if (index === realCount + 1) {
+                    jumpTo(1);
+                    return true;
+                }
+                return false;
+            }
+
+            function clearWrapWatch() {
+                if (wrapHandler) {
+                    track.removeEventListener('transitionend', wrapHandler);
+                    wrapHandler = null;
+                }
+                clearTimeout(wrapTimer);
+            }
+
+            function scheduleSnap() {
+                clearWrapWatch();
+                if (index !== 0 && index !== realCount + 1) return;
+
+                const snap = () => {
+                    clearWrapWatch();
+                    snapIfClone();
+                };
+                wrapHandler = (event) => {
+                    if (event.target !== track || event.propertyName !== 'transform') return;
+                    snap();
+                };
+                track.addEventListener('transitionend', wrapHandler);
+                wrapTimer = setTimeout(snap, 500);
+            }
+
             function goTo(next) {
-                const total = slides.length;
-                index = ((next % total) + total) % total;
+                const from = index;
+                snapIfClone();
+                index += next - from;
                 deltaX = 0;
                 gallery.classList.remove('is-dragging');
                 render(0);
+                scheduleSnap();
             }
 
             function onPointerDown(event) {
                 if (event.target.closest('.dresscode-gallery-btn')) return;
                 if (event.pointerType === 'mouse' && event.button !== 0) return;
+                snapIfClone();
                 dragging = true;
                 startX = event.clientX;
                 deltaX = 0;
@@ -664,7 +741,10 @@
                 });
             }
 
+            gallery.classList.add('is-jumping');
             render(0);
+            void track.offsetWidth;
+            gallery.classList.remove('is-jumping');
         });
 
         if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;

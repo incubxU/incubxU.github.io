@@ -2138,7 +2138,8 @@ html.is-ready .page-loader {
     will-change: transform;
 }
 
-.dresscode-gallery.is-dragging .dresscode-gallery-track {
+.dresscode-gallery.is-dragging .dresscode-gallery-track,
+.dresscode-gallery.is-jumping .dresscode-gallery-track {
     transition: none;
 }
 
