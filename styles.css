@@ -2244,7 +2244,8 @@ html.is-ready .page-loader {
 }
 
 .dresscode-gallery-btn {
-    display: none;
+    display: grid;
+    place-items: center;
     position: absolute;
     top: 50%;
     z-index: 4;
@@ -2260,6 +2261,7 @@ html.is-ready .page-loader {
     transform: translateY(-50%);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    -webkit-tap-highlight-color: transparent;
     transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
@@ -2278,21 +2280,22 @@ html.is-ready .page-loader {
     right: 0.55rem;
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .dresscode-gallery-btn {
-        display: grid;
-        place-items: center;
-    }
+.dresscode-gallery-btn:focus-visible {
+    outline: 1px solid rgba(242, 241, 239, 0.75);
+    outline-offset: 2px;
+}
 
+.dresscode-gallery-btn:active {
+    background: rgba(18, 22, 26, 0.55);
+    border-color: rgba(242, 241, 239, 0.7);
+    color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
     .dresscode-gallery-btn:hover {
         background: rgba(18, 22, 26, 0.55);
         border-color: rgba(242, 241, 239, 0.7);
         color: #fff;
-    }
-
-    .dresscode-gallery-btn:focus-visible {
-        outline: 1px solid rgba(242, 241, 239, 0.75);
-        outline-offset: 2px;
     }
 }
 
@@ -2375,6 +2378,24 @@ html.is-ready .page-loader {
     .dresscode-footnote {
         margin-top: 2.4rem;
         max-width: min(15.5em, 78%);
+    }
+
+    .dresscode-gallery-btn {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+
+    .dresscode-gallery-btn svg {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+
+    .dresscode-gallery-btn--prev {
+        left: 0.38rem;
+    }
+
+    .dresscode-gallery-btn--next {
+        right: 0.38rem;
     }
 }
 
