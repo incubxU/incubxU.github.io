@@ -1965,9 +1965,13 @@ html.is-ready .page-loader {
     transform: none;
 }
 
-.dresscode-copy {
+.dresscode-copy,
+.dresscode-more {
     --intro-heading-size: clamp(37.64px, 9.78cqi + 1.41rem, 52.27px);
     --intro-body-size: calc(var(--intro-heading-size) * 20 / 52.27);
+}
+
+.dresscode-copy {
     width: min(100%, 34em);
     margin: 0 auto 2.6rem;
     font-family: 'Manrope', sans-serif;
@@ -2025,7 +2029,8 @@ html.is-ready .page-loader {
 }
 
 @container (max-width: 380px) {
-    .dresscode-copy {
+    .dresscode-copy,
+    .dresscode-more {
         --intro-heading-size: clamp(28px, 8.2cqi + 0.9rem, 43.91px);
     }
 }
@@ -2056,7 +2061,7 @@ html.is-ready .page-loader {
 .dresscode-more-text {
     margin: 0;
     font-family: 'Manrope', sans-serif;
-    font-size: calc(clamp(37.64px, 9.78cqi + 1.41rem, 52.27px) * 20 / 52.27);
+    font-size: var(--intro-body-size);
     line-height: 1.35;
     color: var(--white);
 }
@@ -2822,6 +2827,14 @@ html.is-ready .page-loader {
     font-size: inherit;
     line-height: inherit;
     color: var(--white);
+}
+
+@container (max-width: 380px) {
+    .rsvp .section-text,
+    .rsvp-status,
+    .rsvp-form {
+        font-size: calc(clamp(28px, 8.2cqi + 0.9rem, 43.91px) * 20 / 52.27);
+    }
 }
 
 .rsvp-date {
